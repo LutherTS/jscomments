@@ -198,6 +198,8 @@ async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
 
 // MAKES THE FLOW FOR compressCommentsInProject.
 
+const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 const makeReverseJsCommentsRule = (reversedFlattenedConfig) => {
   // Sort the resolved values by descending length to prevent partial replacements.
   const sortedReversedFlattenedConfig = Object.entries(
@@ -231,16 +233,29 @@ const makeReverseJsCommentsRule = (reversedFlattenedConfig) => {
           resolvedValue,
           commentKey,
         ] of sortedReversedFlattenedConfig) {
-          if (fixedText.includes(resolvedValue)) {
-            fixedText = fixedText.replaceAll(
-              resolvedValue,
-              `$COMMENT#${commentKey}`
-            );
+          //   if (fixedText.includes(resolvedValue)) {
+          //     fixedText = fixedText.replaceAll(
+          //       resolvedValue,
+          //       `$COMMENT#${commentKey}`
+          //     );
+          //     modified = true;
+          //   }
+          // }
+
+          // if (modified) {
+
+          const pattern = new RegExp(
+            `(?<=\\s|^)${escapeRegex(resolvedValue)}(?=\\s|$)`,
+            "g"
+          );
+
+          fixedText = fixedText.replace(pattern, () => {
             modified = true;
-          }
+            return `$COMMENT#${commentKey}`;
+          });
         }
 
-        if (modified) {
+        if (modified && fixedText !== comment.value) {
           context.report({
             loc: comment.loc,
             messageId: "message",
