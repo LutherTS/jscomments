@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "bin": {
-    "hello-cli-example": "./index.js"
+    "jscomments": "./index.js"
   },
   "main": "index.js",
   "scripts": {
