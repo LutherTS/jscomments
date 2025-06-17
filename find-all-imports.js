@@ -225,4 +225,7 @@ export const findAllImports = (
 So here I want to make
 - resolveImportPath
 - getSourceCodeFromFilePath (remember the reason I favored the sourceCode is because it grants access to the AST and to the comments.)
+
+js-comments is taken on npm. 
+JSComments, jscomments is free.
 */

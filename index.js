@@ -11,6 +11,8 @@ import { findAllImports } from "./find-all-imports.js";
 
 const cwd = process.cwd();
 
+// ENSURES THE CLI TOOL ONLY RUN IN FOLDER THAT POSSESS A package.json FILE AND A .git FOLDER.
+
 const hasPackageJson = fs.existsSync(path.join(cwd, "package.json"));
 if (!hasPackageJson) {
   console.error(
@@ -26,7 +28,11 @@ if (!hasGitFolder) {
   process.exit(1);
 }
 
+// GATHERS COMMANDS.
+
 const commands = process.argv;
+
+// OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, AND CONFIG PATH.
 
 const configFlagIndex = commands.indexOf("--config");
 const passedConfigPath =
@@ -42,6 +48,8 @@ console.log("Config path is:", configPath);
 const keys = new Set([...Object.keys(flattenedConfig)]);
 const values = new Set([...Object.values(flattenedConfig)]);
 
+// VALIDATES ONE LAST TIME THE REVERSABILITY OF flattenedConfig AND reversedFlattenedConfig.
+
 keys.forEach((key) => {
   if (values.has(key)) {
     console.error(
@@ -50,6 +58,9 @@ keys.forEach((key) => {
     process.exit(1);
   }
 });
+
+// ADDRESSES THE --include-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
+
 const includeConfigImports = commands.indexOf("--include-config-imports") >= 2;
 const rawConfigIgnores = includeConfigImports
   ? [configPath]
@@ -61,6 +72,8 @@ console.log(
   includeConfigImports ? "Config ignore is:" : "Config ignores are",
   configIgnores
 );
+
+// DEFINES DEFAULT ESLINT IGNORES AND FILES.
 
 const knownIgnores = [
   ".next",
@@ -79,6 +92,8 @@ const allJSTSFileGlobs = [
   "**/*.mjs",
   "**/*.cjs",
 ];
+
+// MAKES THE FLOW FOR resolveCommentsInProject.
 
 /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
 const jsCommentsRule = {
@@ -143,9 +158,7 @@ async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
 
   const eslint = new ESLint({
     fix: true,
-    // globInputPaths: true,
     errorOnUnmatchedPattern: false,
-    ignore: true,
     overrideConfigFile: true,
     overrideConfig: [
       {
@@ -181,59 +194,70 @@ async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
   console.log(`✅ Resolved ${total} comment${total === 1 ? "" : "s"}.`);
 }
 
-// Sort the resolved values by descending length to prevent partial replacements.
-const sortedReversedFlattenedConfig = Object.entries(
-  reversedFlattenedConfig
-).sort(([a], [b]) => b.length - a.length);
+// MAKES THE FLOW FOR compressCommentsInProject.
 
-/** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
-const reverseJsCommentsRule = {
-  meta: {
-    type: "suggestion",
-    docs: {
-      description: "Resolve $COMMENT#... using js-comments config in reverse",
+const makeReverseJsCommentsRule = (reversedFlattenedConfig) => {
+  // Sort the resolved values by descending length to prevent partial replacements.
+  const sortedReversedFlattenedConfig = Object.entries(
+    reversedFlattenedConfig
+  ).sort(([a], [b]) => b.length - a.length);
+
+  /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
+  const reverseJsCommentsRule = {
+    meta: {
+      type: "suggestion",
+      docs: {
+        description: "Resolve $COMMENT#... using js-comments config in reverse",
+      },
+      messages: {
+        message: `Comment compressed.`,
+      },
+      fixable: "code",
+      schema: [],
     },
-    messages: {
-      message: `Comment compressed.`,
-    },
-    fixable: "code",
-    schema: [],
-  },
-  create(context) {
-    const sourceCode = context.sourceCode;
-    const comments = sourceCode
-      .getAllComments()
-      .filter((e) => e.type !== "Shebang");
+    create(context) {
+      const sourceCode = context.sourceCode;
+      const comments = sourceCode
+        .getAllComments()
+        .filter((e) => e.type !== "Shebang");
 
-    for (const comment of comments) {
-      let fixedText = comment.value;
-      let modified = false;
+      for (const comment of comments) {
+        let fixedText = comment.value;
+        let modified = false;
 
-      for (const [resolvedValue, commentKey] of sortedReversedFlattenedConfig) {
-        if (fixedText.includes(resolvedValue)) {
-          fixedText = fixedText.replaceAll(
-            resolvedValue,
-            `$COMMENT#${commentKey}`
-          );
-          modified = true;
+        for (const [
+          resolvedValue,
+          commentKey,
+        ] of sortedReversedFlattenedConfig) {
+          if (fixedText.includes(resolvedValue)) {
+            fixedText = fixedText.replaceAll(
+              resolvedValue,
+              `$COMMENT#${commentKey}`
+            );
+            modified = true;
+          }
+        }
+
+        if (modified) {
+          context.report({
+            loc: comment.loc,
+            messageId: "message",
+            fix(fixer) {
+              const fullCommentText =
+                comment.type === "Block"
+                  ? `/*${fixedText}*/`
+                  : `//${fixedText}`;
+              return fixer.replaceText(comment, fullCommentText);
+            },
+          });
         }
       }
 
-      if (modified) {
-        context.report({
-          loc: comment.loc,
-          messageId: "message",
-          fix(fixer) {
-            const fullCommentText =
-              comment.type === "Block" ? `/*${fixedText}*/` : `//${fixedText}`;
-            return fixer.replaceText(comment, fullCommentText);
-          },
-        });
-      }
-    }
+      return {};
+    },
+  };
 
-    return {};
-  },
+  return reverseJsCommentsRule;
 };
 
 async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
@@ -241,9 +265,7 @@ async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
 
   const eslint = new ESLint({
     fix: true,
-    // globInputPaths: true,
     errorOnUnmatchedPattern: false,
-    ignore: true,
     overrideConfigFile: true,
     overrideConfig: [
       {
@@ -256,7 +278,9 @@ async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
         plugins: {
           "js-comments": {
             rules: {
-              "js-comments-autofix": reverseJsCommentsRule,
+              "js-comments-autofix": makeReverseJsCommentsRule(
+                reversedFlattenedConfig
+              ),
             },
           },
         },
@@ -279,15 +303,26 @@ async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
   console.log(`✅ Compressed ${total} comment${total === 1 ? "" : "s"}.`);
 }
 
+// ADDRESSES THE CORE COMMANDS "resolve" AND "compress".
+
 const coreCommand = commands[2];
 
-if (coreCommand === "resolve") {
-  console.log("Verified flattened config is:", flattenedConfig);
-  await resolveCommentsInProject();
-}
-if (coreCommand === "compress") {
-  console.log("Reversed flattened config is:", reversedFlattenedConfig);
-  await compressCommentsInProject();
+switch (coreCommand) {
+  case "resolve":
+    console.log("Verified flattened config is:", flattenedConfig);
+    await resolveCommentsInProject();
+    break;
+  case "compress":
+    console.log("Reversed flattened config is:", reversedFlattenedConfig);
+    await compressCommentsInProject();
+    break;
+  case undefined:
+    break;
+  default:
+    console.log(
+      `Core command not recognized. Choose between "resolve" and "compress".`
+    );
+    break;
 }
 
 /* Notes
