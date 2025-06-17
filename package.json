@@ -1,17 +1,21 @@
 {
-  "name": "jscomments",
+  "name": "comment-variables",
   "version": "0.0.1",
   "description": "",
   "bin": {
     "jscomments": "./index.js"
   },
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LutherTS/jscomments.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "eslint": "^9.29.0",
