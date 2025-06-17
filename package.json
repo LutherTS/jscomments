@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "bin": {
-    "jscomments": "./index.js"
+    "jscomments": "./index.js",
+    "comment-variables": "./index.js"
   },
   "main": "index.js",
   "repository": {

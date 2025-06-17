@@ -87,6 +87,8 @@ export const resolveImportPath = (
   return null; // not found
 };
 
+/* getSourceCodeFromFilePath */
+
 // ESLint configs language options
 const typeScriptAndJSXCompatible = {
   // for compatibility with .ts and .tsx
@@ -98,8 +100,6 @@ const typeScriptAndJSXCompatible = {
     },
   },
 };
-
-/* getSourceCodeFromFilePath */
 
 /**
  * Gets the ESLint-generated SourceCode object of a file from its resolved path.
@@ -228,4 +228,5 @@ So here I want to make
 
 js-comments is taken on npm. 
 JSComments, jscomments is free.
+comment-variables in the end.
 */
