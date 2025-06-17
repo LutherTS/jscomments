@@ -36,14 +36,16 @@ const commands = process.argv;
 
 const configFlagIndex = commands.indexOf("--config");
 const passedConfigPath =
-  configFlagIndex >= 2 ? commands[configFlagIndex + 1] : null;
-const rawConfigPath = passedConfigPath ?? "./comments.config.js";
+  configFlagIndex >= 2 ? path.join(cwd, commands[configFlagIndex + 1]) : null;
+const rawConfigPath = passedConfigPath ?? path.join(cwd, "comments.config.js");
 
 const results = await runWithConfig(rawConfigPath);
 if (!results) process.exit(1);
 
 const { flattenedConfig, reversedFlattenedConfig, configPath } = results;
 console.log("Config path is:", configPath);
+console.log("Verified flattened config is:", flattenedConfig);
+console.log("Reversed flattened config is:", reversedFlattenedConfig);
 
 const keys = new Set([...Object.keys(flattenedConfig)]);
 const values = new Set([...Object.values(flattenedConfig)]);
@@ -309,14 +311,15 @@ const coreCommand = commands[2];
 
 switch (coreCommand) {
   case "resolve":
-    console.log("Verified flattened config is:", flattenedConfig);
     await resolveCommentsInProject();
     break;
   case "compress":
-    console.log("Reversed flattened config is:", reversedFlattenedConfig);
     await compressCommentsInProject();
     break;
   case undefined:
+    console.log(
+      `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT#* forms.`
+    );
     break;
   default:
     console.log(

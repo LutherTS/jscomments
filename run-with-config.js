@@ -1,6 +1,5 @@
 import { existsSync } from "fs";
-import { fileURLToPath, pathToFileURL } from "url";
-import { dirname, join } from "path";
+import { pathToFileURL } from "url";
 
 import { z } from "zod";
 
@@ -13,7 +12,10 @@ function flattenConfig(
 ) {
   for (const [key, value] of Object.entries(config)) {
     const currentPath = [...pathStack, key];
-    normalizedPath = currentPath.map((k) => k.toUpperCase()).join("#");
+    normalizedPath = currentPath
+      .map((k) => k.toUpperCase())
+      .join("#")
+      .replaceAll(" ", "_"); // spaces are replaced by underscores
 
     if (typeof value === "string") {
       if (map[normalizedPath]) {
@@ -58,10 +60,11 @@ function flattenConfig(
 }
 
 export async function runWithConfig(rawConfigPath) {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
+  // const __filename = fileURLToPath(import.meta.url);
+  // const __dirname = dirname(__filename);
 
-  const configPath = join(__dirname, rawConfigPath);
+  // const configPath = join(__dirname, rawConfigPath);
+  const configPath = rawConfigPath;
 
   // Step 1: Check if config file exists
   if (!existsSync(configPath)) {
