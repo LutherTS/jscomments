@@ -5,12 +5,10 @@ import path from "path";
 import fs from "fs";
 
 import { ESLint } from "eslint";
+import tseslint from "typescript-eslint";
 
 import { runWithConfig } from "./run-with-config.js";
-import {
-  findAllImports,
-  typeScriptAndJSXCompatible,
-} from "./find-all-imports.js";
+import { findAllImports } from "./find-all-imports.js";
 
 const cwd = process.cwd();
 
@@ -99,6 +97,17 @@ const allJSTSFileGlobs = [
 ];
 
 // MAKES THE FLOW FOR resolveCommentsInProject.
+
+const typeScriptAndJSXCompatible = {
+  // for compatibility with TypeScript (.ts and .tsx)
+  parser: tseslint.parser,
+  // for compatibility with JSX (React, etc.)
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+};
 
 /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
 const jsCommentsRule = {

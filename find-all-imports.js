@@ -1,46 +1,8 @@
 import fs from "fs";
 import path from "path";
 
-import { Linter } from "eslint";
-import tseslint from "typescript-eslint";
 import { resolveImportingPath } from "resolve-importing-path";
-
-/* getSourceCodeFromFilePath */
-
-// ESLint configs language options
-export const typeScriptAndJSXCompatible = {
-  // for compatibility with .ts and .tsx
-  parser: tseslint.parser,
-  // for compatibility with JSX
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-};
-
-/**
- * Gets the ESLint-generated SourceCode object of a file from its resolved path.
- * @param {string} resolvedPath The resolved path of the file.
- * @param {LanguageOptions} languageOptions The languageOptions object used by `linter.verify()` defaulting to a version that is TypeScript- and JSX-compatible.
- * @returns The ESLint-generated SourceCode object of the file.
- */
-export const getSourceCodeFromFilePath = (
-  resolvedPath,
-  languageOptions = typeScriptAndJSXCompatible
-) => {
-  // ensures each instance of the function is based on its own linter
-  // (just in case somehow some linters were running concurrently)
-  const linter = new Linter();
-  // the raw code of the file at the end of the resolved path
-  const text = fs.readFileSync(resolvedPath, "utf8");
-  // utilizes linter.verify ...
-  linter.verify(text, { languageOptions });
-  // ... to retrieve the raw code as a SourceCode object
-  const code = linter.getSourceCode();
-
-  return code;
-};
+import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
 
 /* findAllImports */
 
@@ -57,7 +19,7 @@ const processImport = (
   maxDepth
 ) => {
   const resolvedPath = resolveImportingPath(currentDir, importPath, cwd);
-  if (!resolvedPath) return true; // Skip unresolved paths (not an error)
+  if (!resolvedPath) return true; // Skips unresolved paths (not an error).
 
   const result = findAllImports(
     resolvedPath,
@@ -66,7 +28,7 @@ const processImport = (
     depth + 1,
     maxDepth
   );
-  return result !== null; // Returns false if child failed
+  return result !== null; // Returns false if child failed.
 };
 
 export const findAllImports = (
@@ -76,7 +38,7 @@ export const findAllImports = (
   depth = 0,
   maxDepth = 100
 ) => {
-  // Early failure checks (with logging)
+  // Early failure checks (with logging).
   if (depth > maxDepth) {
     console.error(`ERROR. Max depth ${maxDepth} reached at ${filePath}.`);
     return null;
@@ -87,7 +49,7 @@ export const findAllImports = (
   }
   if (visited.has(filePath)) return visited;
 
-  // Parse AST
+  // Parses AST.
   visited.add(filePath);
   const sourceCode = getSourceCodeFromFilePath(filePath);
   if (!sourceCode?.ast) {
@@ -95,7 +57,7 @@ export const findAllImports = (
     return null;
   }
 
-  // Process all imports
+  // Processes all imports.
   const currentDir = path.dirname(filePath);
   for (const node of sourceCode.ast.body) {
     // ES Modules (import x from 'y')
@@ -136,15 +98,5 @@ export const findAllImports = (
     }
   }
 
-  return visited; // Success
+  return visited; // success
 };
-
-/* Notes
-So here I want to make
-- resolveImportPath
-- getSourceCodeFromFilePath (remember the reason I favored the sourceCode is because it grants access to the AST and to the comments.)
-
-js-comments is taken on npm. 
-JSComments, jscomments is free.
-comment-variables in the end.
-*/
