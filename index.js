@@ -233,17 +233,6 @@ const makeReverseJsCommentsRule = (reversedFlattenedConfig) => {
           resolvedValue,
           commentKey,
         ] of sortedReversedFlattenedConfig) {
-          //   if (fixedText.includes(resolvedValue)) {
-          //     fixedText = fixedText.replaceAll(
-          //       resolvedValue,
-          //       `$COMMENT#${commentKey}`
-          //     );
-          //     modified = true;
-          //   }
-          // }
-
-          // if (modified) {
-
           const pattern = new RegExp(
             `(?<=\\s|^)${escapeRegex(resolvedValue)}(?=\\s|$)`,
             "g"
