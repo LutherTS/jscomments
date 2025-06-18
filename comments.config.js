@@ -11,6 +11,10 @@ const config = {
       levelThreeAlso: "Also level three here.",
       levelThreeToo: "This too is level three.",
       // test: "LEVELONE#LEVELTWO#LEVELTHREE", // errors
+      [`level$Three#First
+        whitespace`]: `This is level three
+      with whitespaces. `,
+      testing: 2,
     },
   },
 };

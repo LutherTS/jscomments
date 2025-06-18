@@ -15,7 +15,7 @@ function flattenConfig(
     normalizedPath = currentPath
       .map((k) => k.toUpperCase())
       .join("#")
-      .replaceAll(" ", "_"); // spaces are replaced by underscores
+      .replace(/\s/g, "_"); // whitespaces are replaced by underscores
 
     if (typeof value === "string") {
       if (map[normalizedPath]) {
@@ -59,13 +59,7 @@ function flattenConfig(
   return { flattenedConfig, reversedFlattenedConfig };
 }
 
-export async function runWithConfig(rawConfigPath) {
-  // const __filename = fileURLToPath(import.meta.url);
-  // const __dirname = dirname(__filename);
-
-  // const configPath = join(__dirname, rawConfigPath);
-  const configPath = rawConfigPath;
-
+export async function runWithConfig(configPath) {
   // Step 1: Check if config file exists
   if (!existsSync(configPath)) {
     console.warn("No config file found. Exiting gracefully.");
@@ -82,13 +76,59 @@ export async function runWithConfig(rawConfigPath) {
     return null;
   }
 
-  const RecursiveObject = z.lazy(() =>
-    z.record(z.union([z.string(), RecursiveObject]))
-  );
+  const RecursiveObject = z
+    .lazy(() =>
+      z.record(
+        z.any().superRefine((val, ctx) => {
+          if (typeof val === "string") {
+            return;
+          }
+
+          if (typeof val === "object" && val !== null && !Array.isArray(val)) {
+            const parsed = RecursiveObject.safeParse(val);
+            if (!parsed.success) {
+              for (const issue of parsed.error.issues) {
+                ctx.addIssue({
+                  ...issue,
+                  path: [...ctx.path, ...issue.path], // proper path propagation
+                });
+              }
+            }
+            return;
+          }
+
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `Value \`${val}\` of type "${typeof val}" should be a string or a nested object.`,
+            path: ctx.path,
+          });
+        })
+      )
+    )
+    .superRefine((obj, ctx) => {
+      for (const key of Object.keys(obj)) {
+        if (key.includes("$")) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `Key "${key}" should not include the "$" character.`,
+            path: [key],
+          });
+        }
+        if (key.includes("#")) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `Key "${key}" should not include the "#" character.`,
+            path: [key],
+          });
+        }
+      }
+    });
+
   const result = RecursiveObject.safeParse(config);
 
   if (!result.success) {
     console.warn("Config could not pass validation from zod.");
+    result.error.errors.map((e) => console.log(e.message));
     return null;
   }
 
