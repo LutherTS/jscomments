@@ -90,7 +90,7 @@ export const resolveImportPath = (
 /* getSourceCodeFromFilePath */
 
 // ESLint configs language options
-const typeScriptAndJSXCompatible = {
+export const typeScriptAndJSXCompatible = {
   // for compatibility with .ts and .tsx
   parser: tseslint.parser,
   // for compatibility with JSX

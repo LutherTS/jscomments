@@ -7,7 +7,10 @@ import fs from "fs";
 import { ESLint } from "eslint";
 
 import { runWithConfig } from "./run-with-config.js";
-import { findAllImports } from "./find-all-imports.js";
+import {
+  findAllImports,
+  typeScriptAndJSXCompatible,
+} from "./find-all-imports.js";
 
 const cwd = process.cwd();
 
@@ -93,6 +96,7 @@ const allJSTSFileGlobs = [
   "**/*.js",
   "**/*.mjs",
   "**/*.cjs",
+  "**/*.d.ts",
 ];
 
 // MAKES THE FLOW FOR resolveCommentsInProject.
@@ -115,6 +119,8 @@ const jsCommentsRule = {
     const comments = sourceCode
       .getAllComments()
       .filter((e) => e.type !== "Shebang");
+    // console.log({ comments });
+    console.log({ sourceCode });
 
     for (const comment of comments) {
       const matches = [...comment.value.matchAll(/\$COMMENT#([A-Z0-9#_]+)/g)];
@@ -166,10 +172,7 @@ async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
       {
         files: fileGlobs,
         ignores: [...configIgnores, ...knownIgnores], // 🚫 Ensure config isn't linted
-        languageOptions: {
-          ecmaVersion: "latest",
-          sourceType: "module",
-        },
+        languageOptions: typeScriptAndJSXCompatible,
         plugins: {
           "js-comments": {
             rules: {
@@ -277,10 +280,7 @@ async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
       {
         files: fileGlobs,
         ignores: [...configIgnores, ...knownIgnores], // 🚫 Ensure config isn't linted
-        languageOptions: {
-          ecmaVersion: "latest",
-          sourceType: "module",
-        },
+        languageOptions: typeScriptAndJSXCompatible,
         plugins: {
           "js-comments": {
             rules: {
