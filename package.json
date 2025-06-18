@@ -19,6 +19,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "@eslint/markdown": "^6.5.0",
     "eslint": "^9.29.0",
     "get-sourcecode-from-file-path": "^1.0.0",
     "resolve-importing-path": "^1.0.2",

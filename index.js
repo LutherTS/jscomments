@@ -6,6 +6,7 @@ import fs from "fs";
 
 import { ESLint } from "eslint";
 import tseslint from "typescript-eslint";
+import markdown from "@eslint/markdown";
 
 import { runWithConfig } from "./run-with-config.js";
 import { findAllImports } from "./find-all-imports.js";
@@ -190,10 +191,30 @@ async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
           [ruleName]: "warn", // Don't block builds, just apply fix
         },
       },
+      {
+        files: ["**/*.md"],
+        plugins: { markdown },
+        processor: "markdown/markdown",
+      },
+      {
+        files: [
+          "**/*.md/*.js",
+          "**/*.md/*.jsx",
+          "**/*.md/*.ts",
+          "**/*.md/*.tsx",
+          "**/*.md/*.cjs",
+          "**/*.md/*.mjs",
+        ],
+        ignores: [...knownIgnores],
+        languageOptions: typeScriptAndJSXCompatible,
+        rules: {
+          [ruleName]: "warn", // Don't block builds, just apply fix
+        },
+      },
     ],
   });
 
-  const results = await eslint.lintFiles(fileGlobs);
+  const results = await eslint.lintFiles([...fileGlobs, "**/*.md"]);
   await ESLint.outputFixes(results);
 
   console.log({ results });
@@ -300,10 +321,30 @@ async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
           [ruleName]: "warn", // Don't block builds, just apply fix
         },
       },
+      {
+        files: ["**/*.md"],
+        plugins: { markdown },
+        processor: "markdown/markdown",
+      },
+      {
+        files: [
+          "**/*.md/*.js",
+          "**/*.md/*.jsx",
+          "**/*.md/*.ts",
+          "**/*.md/*.tsx",
+          "**/*.md/*.cjs",
+          "**/*.md/*.mjs",
+        ],
+        ignores: [...knownIgnores],
+        languageOptions: typeScriptAndJSXCompatible,
+        rules: {
+          [ruleName]: "warn", // Don't block builds, just apply fix
+        },
+      },
     ],
   });
 
-  const results = await eslint.lintFiles(fileGlobs);
+  const results = await eslint.lintFiles([...fileGlobs, "**/*.md"]);
   await ESLint.outputFixes(results);
 
   console.log({ results });
