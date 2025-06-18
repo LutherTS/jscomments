@@ -1,6 +1,6 @@
 {
   "name": "comment-variables",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "bin": {
     "jscomments": "./index.js",
