@@ -14,7 +14,7 @@ import {
 
 const cwd = process.cwd();
 
-// ENSURES THE CLI TOOL ONLY RUN IN FOLDER THAT POSSESS A package.json FILE AND A .git FOLDER.
+// ENSURES THE CLI TOOL ONLY RUN IN FOLDERS THAT POSSESS A package.json FILE AND A .git FOLDER.
 
 const hasPackageJson = fs.existsSync(path.join(cwd, "package.json"));
 if (!hasPackageJson) {
@@ -96,7 +96,6 @@ const allJSTSFileGlobs = [
   "**/*.js",
   "**/*.mjs",
   "**/*.cjs",
-  "**/*.d.ts",
 ];
 
 // MAKES THE FLOW FOR resolveCommentsInProject.
@@ -119,8 +118,6 @@ const jsCommentsRule = {
     const comments = sourceCode
       .getAllComments()
       .filter((e) => e.type !== "Shebang");
-    // console.log({ comments });
-    console.log({ sourceCode });
 
     for (const comment of comments) {
       const matches = [...comment.value.matchAll(/\$COMMENT#([A-Z0-9#_]+)/g)];
