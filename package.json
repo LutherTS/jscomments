@@ -21,7 +21,7 @@
   "dependencies": {
     "@eslint/markdown": "^6.5.0",
     "eslint": "^9.29.0",
-    "get-sourcecode-from-file-path": "^1.0.0",
+    "get-sourcecode-from-file-path": "^1.0.1",
     "resolve-importing-path": "^1.0.2",
     "tsconfig-paths": "^4.2.0",
     "typescript-eslint": "^8.34.1",
