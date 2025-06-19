@@ -1,6 +1,5 @@
-import { test } from "./import.js";
-
 const config = {
+  // for testing
   levelOne: {
     levelTwo: {
       levelThree: "Level three.",
@@ -11,14 +10,16 @@ const config = {
       levelThreeAlso: "Also level three here.",
       levelThreeToo: "This too is level three.",
       // test: "LEVELONE#LEVELTWO#LEVELTHREE", // errors
-      [`level$Three#First
-        whitespace`]: `This is level three
-      with whitespaces. `,
-      testing: 2,
+      // [`level$Three#First
+      //   whitespace`]: `This is level three
+      // with whitespaces. `, // fails
+      // testing: 2, // fails
     },
+  },
+  // for deving
+  jsDoc: {
+    exitDueToFailure: "Terminates the whole process with a 'failure' code (1).",
   },
 };
 
 export default config;
-
-// This too is level three.

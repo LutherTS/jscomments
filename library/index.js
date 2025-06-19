@@ -1,33 +1,42 @@
 #!/usr/bin/env node
-// The hashbang (#!) is necessary to communicate with Unix-based systems, like Linux and macOS. On Windows, it is ignored, but npm tooling bridges the gap by generating wrappers that make the CLI work anyway.
+// The shebang (#!) is necessary to communicate with Unix-based systems, like Linux and macOS. On Windows, it is ignored, but npm tooling bridges the gap by generating wrappers that make the CLI work anyway.
 
 import path from "path";
-import fs from "fs";
 
 import { ESLint } from "eslint";
-import tseslint from "typescript-eslint";
 import markdown from "@eslint/markdown";
 
-import { runWithConfig } from "./run-with-config.js";
-import { findAllImports } from "./find-all-imports.js";
+import {
+  cwd,
+  hasPackageJson,
+  hasGitFolder,
+  defaultConfigFileName,
+  configFlag,
+  lintConfigImportsFlag,
+  knownIgnores,
+  allJSTSFileGlobs,
+  allMDFileGlobs,
+  allMDVirtualJSTSFileGlobs,
+  typeScriptAndJSXCompatible,
+} from "./_commons/constants/bases.js";
 
-const cwd = process.cwd();
+import { exitDueToFailure } from "./_commons/utilities/helpers.js";
+import { runWithConfig } from "./_commons/utilities/run-with-config.js";
+import { findAllImports } from "./_commons/utilities/find-all-imports.js";
 
 // ENSURES THE CLI TOOL ONLY RUN IN FOLDERS THAT POSSESS A package.json FILE AND A .git FOLDER.
 
-const hasPackageJson = fs.existsSync(path.join(cwd, "package.json"));
 if (!hasPackageJson) {
   console.error(
     "ERROR. No package.json file found in this directory. Aborting to prevent accidental changes."
   );
-  process.exit(1);
+  exitDueToFailure();
 }
-const hasGitFolder = fs.existsSync(path.join(cwd, ".git"));
 if (!hasGitFolder) {
   console.error(
     "ERROR. No git folder found in this directory. Aborting to prevent irreversible changes."
   );
-  process.exit(1);
+  exitDueToFailure();
 }
 
 // GATHERS COMMANDS.
@@ -36,79 +45,51 @@ const commands = process.argv;
 
 // OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, AND CONFIG PATH.
 
-const configFlagIndex = commands.indexOf("--config");
+// extracts the position of the --config flag
+const configFlagIndex = commands.indexOf(configFlag);
+// gets the absolute passed config path if the --config flag is set
 const passedConfigPath =
   configFlagIndex >= 2 ? path.join(cwd, commands[configFlagIndex + 1]) : null;
-const rawConfigPath = passedConfigPath ?? path.join(cwd, "comments.config.js");
+// defaults to comments.config.js if no --config flag is set
+const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
 const results = await runWithConfig(rawConfigPath);
-if (!results) process.exit(1);
+if (!results) exitDueToFailure();
 
 const { flattenedConfig, reversedFlattenedConfig, configPath } = results;
 console.log("Config path is:", configPath);
 console.log("Verified flattened config is:", flattenedConfig);
 console.log("Reversed flattened config is:", reversedFlattenedConfig);
 
+// VALIDATES THE REVERSABILITY OF flattenedConfig
+
 const keys = new Set([...Object.keys(flattenedConfig)]);
 const values = new Set([...Object.values(flattenedConfig)]);
-
-// VALIDATES ONE LAST TIME THE REVERSABILITY OF flattenedConfig AND reversedFlattenedConfig.
 
 keys.forEach((key) => {
   if (values.has(key)) {
     console.error(
       `The key "${key}" is and shouldn't be among the values of flattenedConfig.`
     );
-    process.exit(1);
+    exitDueToFailure();
   }
 });
 
-// ADDRESSES THE --include-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
+// ADDRESSES THE --lint-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
-const includeConfigImports = commands.indexOf("--include-config-imports") >= 2;
-const rawConfigIgnores = includeConfigImports
+const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
+const rawConfigIgnores = lintConfigImports
   ? [configPath]
   : [...findAllImports(configPath)];
 
 // the ignore paths must be relative
 const configIgnores = rawConfigIgnores.map((e) => path.relative(cwd, e));
 console.log(
-  includeConfigImports ? "Config ignore is:" : "Config ignores are",
+  lintConfigImports ? "Config ignore is:" : "Config ignores are:",
   configIgnores
 );
 
-// DEFINES DEFAULT ESLINT IGNORES AND FILES.
-
-const knownIgnores = [
-  ".next",
-  ".react-router",
-  "node_modules",
-  ".parcel-cache",
-  ".react-router-parcel",
-  "dist",
-];
-
-const allJSTSFileGlobs = [
-  "**/*.tsx",
-  "**/*.ts",
-  "**/*.jsx",
-  "**/*.js",
-  "**/*.mjs",
-  "**/*.cjs",
-];
-
 // MAKES THE FLOW FOR resolveCommentsInProject.
-
-const typeScriptAndJSXCompatible = {
-  // for compatibility with TypeScript (.ts and .tsx)
-  parser: tseslint.parser,
-  // for compatibility with JSX (React, etc.)
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-};
 
 /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
 const jsCommentsRule = {
@@ -168,7 +149,10 @@ const jsCommentsRule = {
   },
 };
 
-async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
+async function resolveCommentsInProject(
+  ignores = knownIgnores,
+  fileGlobs = [...allJSTSFileGlobs, ...allMDFileGlobs]
+) {
   const ruleName = "js-comments/js-comments-autofix";
 
   const eslint = new ESLint({
@@ -177,8 +161,8 @@ async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
     overrideConfigFile: true,
     overrideConfig: [
       {
+        ignores: [...ignores, ...configIgnores], // 🚫 Ensure config isn't linted
         files: fileGlobs,
-        ignores: [...configIgnores, ...knownIgnores], // 🚫 Ensure config isn't linted
         languageOptions: typeScriptAndJSXCompatible,
         plugins: {
           "js-comments": {
@@ -192,20 +176,13 @@ async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
         },
       },
       {
-        files: ["**/*.md"],
+        files: allMDFileGlobs,
         plugins: { markdown },
         processor: "markdown/markdown",
       },
       {
-        files: [
-          "**/*.md/*.js",
-          "**/*.md/*.jsx",
-          "**/*.md/*.ts",
-          "**/*.md/*.tsx",
-          "**/*.md/*.cjs",
-          "**/*.md/*.mjs",
-        ],
-        ignores: [...knownIgnores],
+        files: allMDVirtualJSTSFileGlobs,
+        ignores,
         languageOptions: typeScriptAndJSXCompatible,
         rules: {
           [ruleName]: "warn", // Don't block builds, just apply fix
@@ -214,7 +191,7 @@ async function resolveCommentsInProject(fileGlobs = allJSTSFileGlobs) {
     ],
   });
 
-  const results = await eslint.lintFiles([...fileGlobs, "**/*.md"]);
+  const results = await eslint.lintFiles(fileGlobs);
   await ESLint.outputFixes(results);
 
   console.log({ results });
@@ -296,7 +273,10 @@ const makeReverseJsCommentsRule = (reversedFlattenedConfig) => {
   return reverseJsCommentsRule;
 };
 
-async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
+async function compressCommentsInProject(
+  ignores = knownIgnores,
+  fileGlobs = [...allJSTSFileGlobs, ...allMDFileGlobs]
+) {
   const ruleName = "js-comments/js-comments-autofix";
 
   const eslint = new ESLint({
@@ -305,8 +285,8 @@ async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
     overrideConfigFile: true,
     overrideConfig: [
       {
+        ignores: [...ignores, ...configIgnores], // 🚫 Ensure config isn't linted
         files: fileGlobs,
-        ignores: [...configIgnores, ...knownIgnores], // 🚫 Ensure config isn't linted
         languageOptions: typeScriptAndJSXCompatible,
         plugins: {
           "js-comments": {
@@ -322,20 +302,13 @@ async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
         },
       },
       {
-        files: ["**/*.md"],
+        files: allMDFileGlobs,
         plugins: { markdown },
         processor: "markdown/markdown",
       },
       {
-        files: [
-          "**/*.md/*.js",
-          "**/*.md/*.jsx",
-          "**/*.md/*.ts",
-          "**/*.md/*.tsx",
-          "**/*.md/*.cjs",
-          "**/*.md/*.mjs",
-        ],
-        ignores: [...knownIgnores],
+        files: allMDVirtualJSTSFileGlobs,
+        ignores,
         languageOptions: typeScriptAndJSXCompatible,
         rules: {
           [ruleName]: "warn", // Don't block builds, just apply fix
@@ -344,7 +317,7 @@ async function compressCommentsInProject(fileGlobs = allJSTSFileGlobs) {
     ],
   });
 
-  const results = await eslint.lintFiles([...fileGlobs, "**/*.md"]);
+  const results = await eslint.lintFiles(fileGlobs);
   await ESLint.outputFixes(results);
 
   console.log({ results });
@@ -373,12 +346,20 @@ switch (coreCommand) {
     );
     break;
   default:
-    console.log(
-      `Core command not recognized. Choose between "resolve" and "compress".`
-    );
+    // doesn't print when a flag is used without a core command
+    if (!coreCommand.startsWith("--"))
+      console.log(
+        `Core command not recognized. Choose between "resolve" and "compress".`
+      );
+    // prints the same as undefined if used with flag(s) without a command
+    else
+      console.log(
+        `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT#* forms.`
+      );
     break;
 }
 
 /* Notes
 I'm going to have to redo this, but for now I just want to vibe code it in order to see how it is possible to make this. 
+Edit: Code vibing, not vibe coding. That's what I did here.
 */

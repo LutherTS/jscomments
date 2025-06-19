@@ -1,12 +1,12 @@
 {
   "name": "comment-variables",
   "version": "0.1.0",
-  "description": "",
+  "description": "A CLI tool for configuring, managing and maintaining JavaScript comments as JavaScript variables.",
   "bin": {
-    "jscomments": "./index.js",
-    "comment-variables": "./index.js"
+    "jscomments": "./library/index.js",
+    "comment-variables": "./library/index.js"
   },
-  "main": "index.js",
+  "main": "library/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LutherTS/jscomments.git"
@@ -14,8 +14,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "cli",
+    "javascript",
+    "comments",
+    "variables"
+  ],
+  "author": "Luther Tchofo Safo <luther@tchofo-safo-portfolio.me>",
   "license": "MIT",
   "type": "module",
   "dependencies": {
