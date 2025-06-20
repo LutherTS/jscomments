@@ -3,14 +3,16 @@ import { pathToFileURL } from "url";
 
 import { z } from "zod";
 
-function flattenConfig(
-  config,
+import { configKeyRegex } from "../constants/bases.js";
+
+function flattenConfigData(
+  configData,
   normalizedPath = "",
   map = {},
   pathStack = [],
-  reversedFlattenedConfig = {}
+  reversedFlattenedConfigData = {}
 ) {
-  for (const [key, value] of Object.entries(config)) {
+  for (const [key, value] of Object.entries(configData)) {
     const currentPath = [...pathStack, key];
     normalizedPath = currentPath
       .map((k) => k.toUpperCase())
@@ -31,18 +33,18 @@ function flattenConfig(
         __source: currentPath.join(" > "), // for debugging
       };
     } else if (typeof value === "object") {
-      flattenConfig(value, normalizedPath, map, currentPath);
+      flattenConfigData(value, normalizedPath, map, currentPath);
     }
   }
 
-  const flattenedConfig = Object.fromEntries(
+  const flattenedConfigData = Object.fromEntries(
     Object.entries(map).map(([k, v]) => [k, v.value])
   ); // strip metadata
 
   const set = new Set();
 
   // the integrity of the config needs to be established before working with it
-  for (const value of Object.values(flattenedConfig)) {
+  for (const value of Object.values(flattenedConfigData)) {
     if (set.has(value)) {
       // checks that no two values are duplicate
       throw new Error(
@@ -52,11 +54,14 @@ function flattenConfig(
     set.add(value);
   }
 
-  for (const [key, value] of Object.entries(flattenedConfig)) {
-    reversedFlattenedConfig[value] = key;
+  for (const [key, value] of Object.entries(flattenedConfigData)) {
+    reversedFlattenedConfigData[value] = key;
   }
 
-  return { flattenedConfig, reversedFlattenedConfig };
+  return {
+    flattenedConfigData,
+    reversedFlattenedConfigData,
+  };
 }
 
 export async function runWithConfig(configPath) {
@@ -71,10 +76,14 @@ export async function runWithConfig(configPath) {
   const config = configModule.default;
 
   // Step 3: Validate config object
-  if (!config || typeof config !== "object") {
-    console.warn("Invalid config format. Exiting.");
+  if (!config || typeof config !== "object" || Array.isArray(config)) {
+    console.warn(
+      "Invalid config format. The config should be an object. Exiting."
+    );
     return null;
   }
+
+  // data
 
   const RecursiveObject = z
     .lazy(() =>
@@ -121,18 +130,48 @@ export async function runWithConfig(configPath) {
             path: [key],
           });
         }
+        if (!configKeyRegex.test(key)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `Key "${key}" should only include whitespaces (s), lowercase letters (Ll), uppercase letters (Lu), other letters (Lo), numbers (N), dash punctuation (Pd), and connector punctuation (Pc).`,
+            path: [key],
+          });
+        }
       }
     });
 
-  const result = RecursiveObject.safeParse(config);
+  const recursiveObjectResult = RecursiveObject.safeParse(config.data);
 
-  if (!result.success) {
-    console.warn("Config could not pass validation from zod.");
-    result.error.errors.map((e) => console.log(e.message));
+  if (!recursiveObjectResult.success) {
+    console.warn("Config data could not pass validation from zod.");
+    recursiveObjectResult.error.errors.map((e) => console.log(e.message));
+    return null;
+  }
+
+  // ignores
+
+  const StringArraySchema = z.array(
+    z.string({
+      message: `The config's "ignores" key array should be made of string or be empty.`,
+    }),
+    {
+      message: `The config's "ignores" key value should be an array of strings (or at the very least an empty array).`,
+    }
+  );
+
+  const stringArraySchemaResult = StringArraySchema.safeParse(config.ignores);
+
+  if (!stringArraySchemaResult.success) {
+    console.warn("Config ignores could not pass validation from zod.");
+    stringArraySchemaResult.error.errors.map((e) => console.log(e.message));
     return null;
   }
 
   // Step 4: Do your thing
   console.log("Running with config:", config);
-  return { ...flattenConfig(config), configPath };
+  return {
+    ...flattenConfigData(config.data), // finalized
+    configPath, // finalized
+    passedIgnores: config.ignores, // could be treated here eventually
+  };
 }

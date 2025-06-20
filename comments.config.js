@@ -14,6 +14,7 @@ const config = {
       //   whitespace`]: `This is level three
       // with whitespaces. `, // fails
       // testing: 2, // fails
+      // ".'e": "",
     },
   },
   // for deving
@@ -22,4 +23,11 @@ const config = {
   },
 };
 
-export default config;
+// export default config;
+
+const trueConfig = {
+  data: config,
+  ignores: ["chocolat.js"],
+};
+
+export default trueConfig;

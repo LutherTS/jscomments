@@ -3,9 +3,6 @@
 
 import path from "path";
 
-import { ESLint } from "eslint";
-import markdown from "@eslint/markdown";
-
 import {
   cwd,
   hasPackageJson,
@@ -13,16 +10,18 @@ import {
   defaultConfigFileName,
   configFlag,
   lintConfigImportsFlag,
+  myIgnoresOnlyFlag,
   knownIgnores,
-  allJSTSFileGlobs,
-  allMDFileGlobs,
-  allMDVirtualJSTSFileGlobs,
-  typeScriptAndJSXCompatible,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure } from "./_commons/utilities/helpers.js";
 import { runWithConfig } from "./_commons/utilities/run-with-config.js";
 import { findAllImports } from "./_commons/utilities/find-all-imports.js";
+
+import {
+  resolveCommentsFlow,
+  compressCommentsFlow,
+} from "./_commons/utilities/flows.js";
 
 // ENSURES THE CLI TOOL ONLY RUN IN FOLDERS THAT POSSESS A package.json FILE AND A .git FOLDER.
 
@@ -47,29 +46,40 @@ const commands = process.argv;
 
 // extracts the position of the --config flag
 const configFlagIndex = commands.indexOf(configFlag);
+// determines if there's a valid config flag input
+const hasConfigFlag = configFlagIndex >= 2;
+// determines if there's an actual config path passed to the config flag
+const passedConfig = commands[configFlagIndex + 1];
 // gets the absolute passed config path if the --config flag is set
 const passedConfigPath =
-  configFlagIndex >= 2 ? path.join(cwd, commands[configFlagIndex + 1]) : null;
+  hasConfigFlag && passedConfig ? path.join(cwd, passedConfig) : null;
 // defaults to comments.config.js if no --config flag is set
 const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
 const results = await runWithConfig(rawConfigPath);
 if (!results) exitDueToFailure();
 
-const { flattenedConfig, reversedFlattenedConfig, configPath } = results;
+const {
+  flattenedConfigData,
+  reversedFlattenedConfigData,
+  configPath,
+  passedIgnores,
+} = results;
+
+console.log("Flattened config is:", flattenedConfigData);
+console.log("Reversed flattened config is:", reversedFlattenedConfigData);
 console.log("Config path is:", configPath);
-console.log("Verified flattened config is:", flattenedConfig);
-console.log("Reversed flattened config is:", reversedFlattenedConfig);
+console.log("Passed ignores are:", passedIgnores);
 
-// VALIDATES THE REVERSABILITY OF flattenedConfig
+// VALIDATES THE REVERSABILITY OF THE CONCEIVED flattenedConfigData
 
-const keys = new Set([...Object.keys(flattenedConfig)]);
-const values = new Set([...Object.values(flattenedConfig)]);
+const keys = new Set([...Object.keys(flattenedConfigData)]);
+const values = new Set([...Object.values(flattenedConfigData)]);
 
 keys.forEach((key) => {
   if (values.has(key)) {
     console.error(
-      `The key "${key}" is and shouldn't be among the values of flattenedConfig.`
+      `The key "${key}" is and shouldn't be among the values of flattenedConfigData.`
     );
     exitDueToFailure();
   }
@@ -78,256 +88,27 @@ keys.forEach((key) => {
 // ADDRESSES THE --lint-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
 const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
-const rawConfigIgnores = lintConfigImports
+const rawConfigPathIgnores = lintConfigImports
   ? [configPath]
   : [...findAllImports(configPath)];
 
 // the ignore paths must be relative
-const configIgnores = rawConfigIgnores.map((e) => path.relative(cwd, e));
-console.log(
-  lintConfigImports ? "Config ignore is:" : "Config ignores are:",
-  configIgnores
+const configPathIgnores = rawConfigPathIgnores.map((e) =>
+  path.relative(cwd, e)
 );
 
-// MAKES THE FLOW FOR resolveCommentsInProject.
+console.log(
+  lintConfigImports ? "Config path ignore is:" : "Config path ignores are:",
+  configPathIgnores
+);
 
-/** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
-const jsCommentsRule = {
-  meta: {
-    type: "suggestion",
-    docs: {
-      description: "Resolve $COMMENT#... using js-comments config.",
-    },
-    messages: {
-      message: `Resolved $COMMENT placeholder(s) in comment.`,
-    },
-    fixable: "code",
-    schema: [],
-  },
-  create: (context) => {
-    const sourceCode = context.sourceCode;
-    const comments = sourceCode
-      .getAllComments()
-      .filter((e) => e.type !== "Shebang");
+// ADDRESSES THE --my-ignores-only FLAG, GIVEN THAT KNOWN IGNORES ARE IGNORED BY DEFAULT
 
-    for (const comment of comments) {
-      const matches = [...comment.value.matchAll(/\$COMMENT#([A-Z0-9#_]+)/g)];
+const myIgnoresOnly = commands.indexOf(myIgnoresOnlyFlag) >= 2;
+const rawIgnores = [...configPathIgnores, ...passedIgnores];
+const ignores = myIgnoresOnly ? rawIgnores : [...rawIgnores, ...knownIgnores];
 
-      if (matches.length === 0) continue;
-
-      let fixedText = comment.value;
-      let hasValidFix = false;
-
-      for (const match of matches) {
-        const fullMatch = match[0]; // e.g. $COMMENT#LEVELONE#LEVELTWO
-        const key = match[1]; // e.g. LEVELONE#LEVELTWO
-        const replacement = flattenedConfig[key];
-
-        if (replacement) {
-          fixedText = fixedText.replace(fullMatch, replacement);
-          hasValidFix = true;
-        }
-      }
-
-      if (hasValidFix && fixedText !== comment.value) {
-        context.report({
-          loc: comment.loc,
-          messageId: "message",
-          fix(fixer) {
-            const range = comment.range;
-            const prefix = comment.type === "Block" ? "/*" : "//";
-            const suffix = comment.type === "Block" ? "*/" : "";
-            const newComment = `${prefix}${fixedText}${suffix}`;
-
-            return fixer.replaceTextRange(range, newComment);
-          },
-        });
-      }
-    }
-
-    return {};
-  },
-};
-
-async function resolveCommentsInProject(
-  ignores = knownIgnores,
-  fileGlobs = [...allJSTSFileGlobs, ...allMDFileGlobs]
-) {
-  const ruleName = "js-comments/js-comments-autofix";
-
-  const eslint = new ESLint({
-    fix: true,
-    errorOnUnmatchedPattern: false,
-    overrideConfigFile: true,
-    overrideConfig: [
-      {
-        ignores: [...ignores, ...configIgnores], // 🚫 Ensure config isn't linted
-        files: fileGlobs,
-        languageOptions: typeScriptAndJSXCompatible,
-        plugins: {
-          "js-comments": {
-            rules: {
-              "js-comments-autofix": jsCommentsRule,
-            },
-          },
-        },
-        rules: {
-          [ruleName]: "warn", // Don't block builds, just apply fix
-        },
-      },
-      {
-        files: allMDFileGlobs,
-        plugins: { markdown },
-        processor: "markdown/markdown",
-      },
-      {
-        files: allMDVirtualJSTSFileGlobs,
-        ignores,
-        languageOptions: typeScriptAndJSXCompatible,
-        rules: {
-          [ruleName]: "warn", // Don't block builds, just apply fix
-        },
-      },
-    ],
-  });
-
-  const results = await eslint.lintFiles(fileGlobs);
-  await ESLint.outputFixes(results);
-
-  console.log({ results });
-
-  const total = results.reduce((sum, r) => {
-    const add = r.output ? 1 : 0;
-    return sum + add;
-  }, 0);
-  console.log(`✅ Resolved ${total} comment${total === 1 ? "" : "s"}.`);
-}
-
-// MAKES THE FLOW FOR compressCommentsInProject.
-
-const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-const makeReverseJsCommentsRule = (reversedFlattenedConfig) => {
-  // Sort the resolved values by descending length to prevent partial replacements.
-  const sortedReversedFlattenedConfig = Object.entries(
-    reversedFlattenedConfig
-  ).sort(([a], [b]) => b.length - a.length);
-
-  /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
-  const reverseJsCommentsRule = {
-    meta: {
-      type: "suggestion",
-      docs: {
-        description: "Resolve $COMMENT#... using js-comments config in reverse",
-      },
-      messages: {
-        message: `Comment compressed.`,
-      },
-      fixable: "code",
-      schema: [],
-    },
-    create(context) {
-      const sourceCode = context.sourceCode;
-      const comments = sourceCode
-        .getAllComments()
-        .filter((e) => e.type !== "Shebang");
-
-      for (const comment of comments) {
-        let fixedText = comment.value;
-        let modified = false;
-
-        for (const [
-          resolvedValue,
-          commentKey,
-        ] of sortedReversedFlattenedConfig) {
-          const pattern = new RegExp(
-            `(?<=\\s|^)${escapeRegex(resolvedValue)}(?=\\s|$)`,
-            "g"
-          );
-
-          fixedText = fixedText.replace(pattern, () => {
-            modified = true;
-            return `$COMMENT#${commentKey}`;
-          });
-        }
-
-        if (modified && fixedText !== comment.value) {
-          context.report({
-            loc: comment.loc,
-            messageId: "message",
-            fix(fixer) {
-              const fullCommentText =
-                comment.type === "Block"
-                  ? `/*${fixedText}*/`
-                  : `//${fixedText}`;
-              return fixer.replaceText(comment, fullCommentText);
-            },
-          });
-        }
-      }
-
-      return {};
-    },
-  };
-
-  return reverseJsCommentsRule;
-};
-
-async function compressCommentsInProject(
-  ignores = knownIgnores,
-  fileGlobs = [...allJSTSFileGlobs, ...allMDFileGlobs]
-) {
-  const ruleName = "js-comments/js-comments-autofix";
-
-  const eslint = new ESLint({
-    fix: true,
-    errorOnUnmatchedPattern: false,
-    overrideConfigFile: true,
-    overrideConfig: [
-      {
-        ignores: [...ignores, ...configIgnores], // 🚫 Ensure config isn't linted
-        files: fileGlobs,
-        languageOptions: typeScriptAndJSXCompatible,
-        plugins: {
-          "js-comments": {
-            rules: {
-              "js-comments-autofix": makeReverseJsCommentsRule(
-                reversedFlattenedConfig
-              ),
-            },
-          },
-        },
-        rules: {
-          [ruleName]: "warn", // Don't block builds, just apply fix
-        },
-      },
-      {
-        files: allMDFileGlobs,
-        plugins: { markdown },
-        processor: "markdown/markdown",
-      },
-      {
-        files: allMDVirtualJSTSFileGlobs,
-        ignores,
-        languageOptions: typeScriptAndJSXCompatible,
-        rules: {
-          [ruleName]: "warn", // Don't block builds, just apply fix
-        },
-      },
-    ],
-  });
-
-  const results = await eslint.lintFiles(fileGlobs);
-  await ESLint.outputFixes(results);
-
-  console.log({ results });
-
-  const total = results.reduce((sum, r) => {
-    const add = r.output ? 1 : 0;
-    return sum + add;
-  }, 0);
-  console.log(`✅ Compressed ${total} comment${total === 1 ? "" : "s"}.`);
-}
+console.log("Ignores are:", ignores);
 
 // ADDRESSES THE CORE COMMANDS "resolve" AND "compress".
 
@@ -335,26 +116,24 @@ const coreCommand = commands[2];
 
 switch (coreCommand) {
   case "resolve":
-    await resolveCommentsInProject();
+    await resolveCommentsFlow(ignores, flattenedConfigData);
     break;
   case "compress":
-    await compressCommentsInProject();
+    await compressCommentsFlow(ignores, reversedFlattenedConfigData);
     break;
-  case undefined:
-    console.log(
-      `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT#* forms.`
-    );
-    break;
+  case undefined: // falls through the default
   default:
-    // doesn't print when a flag is used without a core command
-    if (!coreCommand.startsWith("--"))
+    if (coreCommand && !coreCommand.startsWith("--"))
       console.log(
         `Core command not recognized. Choose between "resolve" and "compress".`
       );
-    // prints the same as undefined if used with flag(s) without a command
     else
       console.log(
-        `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT#* forms.`
+        `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT#* forms.${
+          passedConfigPath || lintConfigImports || myIgnoresOnly
+            ? " (And DON'T FORGET YOUR FLAGS!)"
+            : ""
+        }`
       );
     break;
 }

@@ -3,6 +3,13 @@ import path from "path";
 
 import tseslint from "typescript-eslint";
 
+// plugin name
+export const commentVariablesPluginName = "comment-variables";
+
+// rule names
+export const resolveRuleName = "resolve";
+export const compressRuleName = "compress";
+
 // current working directory
 export const cwd = process.cwd();
 
@@ -17,6 +24,7 @@ export const defaultConfigFileName = "comments.config.js";
 // flags
 export const configFlag = "--config";
 export const lintConfigImportsFlag = "--lint-config-imports";
+export const myIgnoresOnlyFlag = "--my-ignores-only";
 
 // ESLint ignores
 export const knownIgnores = [
@@ -58,3 +66,12 @@ export const typeScriptAndJSXCompatible = {
     },
   },
 };
+
+// messageId
+export const placeholderMessageId = "placeholderMessageId";
+
+// regexes
+export const configKeyRegex = /^[\p{Ll}\p{Lu}\p{Lo}\p{Pd}\p{Pc}\p{N}\s]+$/u;
+export const flattenedConfigKeyRegex = /^[\p{Lu}\p{Lo}\p{Pd}\p{Pc}\p{N}#]+$/u; // same as configKeyRegex but without lowercase letters (\p{Ll}), without whitespaces (\s which are replaced by underscores) and with the '#' character (that links each subkey together)
+export const flattenedConfigPlaceholderRegex =
+  /\$COMMENT#([\p{Lu}\p{Lo}\p{Pd}\p{Pc}\p{N}_#]+)/gu; // same as flattenedConfigKeyRegex but taking the prefix $COMMENT# into consideration, removing ^ and $ in the capture group, globally
