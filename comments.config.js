@@ -27,13 +27,17 @@ const config = {
         "The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT#* placeholders into actual comments.",
       makeRuleCompress:
         "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into $COMMENT#* placeholders.",
+      resolveCommentsFlow:
+        "The flow that resolves $COMMENT#* placeholders intro actual comments.",
+      compressCommentsFlow:
+        "The flow that compresses actual comments into $COMMENT#* placeholders.",
     }),
     params: Object.freeze({
       string: "The string.",
       flattenedConfigData:
         "The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.",
       reversedFlattenedConfigData:
-        "The reversed flattened config data, with and actual comments as keys and $COMMENT#* placeholders as values.",
+        "The reversed flattened config data, with actual comments as keys and $COMMENT#* placeholders as values.",
       ruleName:
         'The name of the rule currently used. (Either `"resolve"` or `"compress"`.)',
       ignores:
