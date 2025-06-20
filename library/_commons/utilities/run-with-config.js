@@ -3,60 +3,99 @@ import { pathToFileURL } from "url";
 
 import { z } from "zod";
 
-import { configKeyRegex } from "../constants/bases.js";
+import { configKeyRegex, flattenedConfigKeyRegex } from "../constants/bases.js";
+
+import { exitDueToFailure } from "../utilities/helpers.js";
 
 function flattenConfigData(
   configData,
-  normalizedPath = "",
-  map = {},
-  pathStack = [],
-  reversedFlattenedConfigData = {}
+  configDataMap = new Map(),
+  parentKeys = []
 ) {
   for (const [key, value] of Object.entries(configData)) {
-    const currentPath = [...pathStack, key];
-    normalizedPath = currentPath
+    const newKeys = [...parentKeys, key];
+    const normalizedKey = newKeys
       .map((k) => k.toUpperCase())
       .join("#")
-      .replace(/\s/g, "_"); // whitespaces are replaced by underscores
+      .replace(/\s/g, "_");
+    const source = newKeys.join(" > ");
 
     if (typeof value === "string") {
-      if (map[normalizedPath]) {
-        // checks that no two keys are duplicate
-        throw new Error(
-          `Duplicate normalized key detected: "${normalizedPath}".\nConflict between:\n  - ${
-            map[normalizedPath].__source
-          }\n  - ${currentPath.join(" > ")}`
+      if (configDataMap.has(normalizedKey)) {
+        console.error(
+          `ERROR. The normalized key "${normalizedKey}" has already been assigned. Check between the two following key paths: \n"${
+            configDataMap.get(normalizedKey).source
+          }" \n"${source}"`
         );
+        exitDueToFailure();
       }
-      map[normalizedPath] = {
+
+      configDataMap.set(normalizedKey, {
         value,
-        __source: currentPath.join(" > "), // for debugging
-      };
-    } else if (typeof value === "object") {
-      flattenConfigData(value, normalizedPath, map, currentPath);
+        source,
+      });
+    } else if (
+      typeof value === "object" &&
+      value !== null &&
+      !Array.isArray(value)
+    ) {
+      flattenConfigData(value, configDataMap, newKeys);
     }
   }
 
-  const flattenedConfigData = Object.fromEntries(
-    Object.entries(map).map(([k, v]) => [k, v.value])
-  ); // strip metadata
+  // At this point we're out of the recursion, and we can start working with the complete data.
+
+  // strips metadata
+  const map = new Map();
+  configDataMap.forEach((value, key) => {
+    map.set(key, value.value);
+  });
+
+  // makes the flattened config data object
+  const flattenedConfigData = Object.fromEntries(map);
+
+  // The integrity of the flattened config data needs to be established before working with it safely.
+
+  const flattenedConfigDataKeysSet = new Set(Object.keys(flattenedConfigData));
+
+  const flattenedConfigDataValuesArray = Object.values(flattenedConfigData);
+  const flattenedConfigDataValuesSet = new Set(flattenedConfigDataValuesArray);
+
+  flattenedConfigDataKeysSet.forEach((key) => {
+    // checks the reversability of flattenedConfigData
+    if (flattenedConfigDataValuesSet.has(key)) {
+      console.error(
+        `ERROR. The key "${key}" is and shouldn't be among the values of flattenedConfigData.`
+      );
+      exitDueToFailure();
+    }
+    if (!flattenedConfigKeyRegex.test(key)) {
+      // checks if each key for flattenedConfigData passes the flattenedConfigKeyRegex test
+      console.error(
+        `ERROR. Somehow the key "${key}" is not properly formatted. (This is mostly an internal mistake.)`
+      );
+      exitDueToFailure();
+    }
+  });
 
   const set = new Set();
 
-  // the integrity of the config needs to be established before working with it
-  for (const value of Object.values(flattenedConfigData)) {
+  flattenedConfigDataValuesArray.forEach((value) => {
     if (set.has(value)) {
       // checks that no two values are duplicate
-      throw new Error(
-        `Value "${value}" is already assigned to an existing key.`
+      console.error(
+        `ERROR. The value "${value}" is already assigned to an existing key.`
       );
+      exitDueToFailure();
     }
     set.add(value);
-  }
+  });
 
-  for (const [key, value] of Object.entries(flattenedConfigData)) {
-    reversedFlattenedConfigData[value] = key;
-  }
+  // Also including the reversed flattened config data.
+
+  const reversedFlattenedConfigData = Object.fromEntries(
+    Object.entries(flattenedConfigData).map(([key, value]) => [value, key])
+  );
 
   return {
     flattenedConfigData,
@@ -172,6 +211,6 @@ export async function runWithConfig(configPath) {
   return {
     ...flattenConfigData(config.data), // finalized
     configPath, // finalized
-    passedIgnores: config.ignores, // could be treated here eventually
+    passedIgnores: config.ignores, // addressed with --my-ignores-only
   };
 }

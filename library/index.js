@@ -72,27 +72,6 @@ console.log("Reversed flattened config is:", reversedFlattenedConfigData);
 console.log("Config path is:", configPath);
 console.log("Passed ignores are:", passedIgnores);
 
-// VALIDATES THE REVERSABILITY OF THE CONCEIVED flattenedConfigData
-
-const keys = new Set([...Object.keys(flattenedConfigData)]);
-const values = new Set([...Object.values(flattenedConfigData)]);
-
-keys.forEach((key) => {
-  if (values.has(key)) {
-    console.error(
-      `ERROR. The key "${key}" is and shouldn't be among the values of flattenedConfigData.`
-    );
-    exitDueToFailure();
-  }
-  // also checks if each key for flattenedConfigData passes the flattenedConfigKeyRegex test
-  if (!flattenedConfigKeyRegex.test(key)) {
-    console.error(
-      `ERROR. Somehow the key "${key}" is not properly formatted. (This is mostly an internal mistake.)`
-    );
-    exitDueToFailure();
-  }
-});
-
 // ADDRESSES THE --lint-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
 const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
