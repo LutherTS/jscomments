@@ -12,6 +12,7 @@ import {
   lintConfigImportsFlag,
   myIgnoresOnlyFlag,
   knownIgnores,
+  flattenedConfigKeyRegex,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure } from "./_commons/utilities/helpers.js";
@@ -79,7 +80,14 @@ const values = new Set([...Object.values(flattenedConfigData)]);
 keys.forEach((key) => {
   if (values.has(key)) {
     console.error(
-      `The key "${key}" is and shouldn't be among the values of flattenedConfigData.`
+      `ERROR. The key "${key}" is and shouldn't be among the values of flattenedConfigData.`
+    );
+    exitDueToFailure();
+  }
+  // also checks if each key for flattenedConfigData passes the flattenedConfigKeyRegex test
+  if (!flattenedConfigKeyRegex.test(key)) {
+    console.error(
+      `ERROR. Somehow the key "${key}" is not properly formatted. (This is mostly an internal mistake.)`
     );
     exitDueToFailure();
   }
