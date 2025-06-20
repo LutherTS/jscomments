@@ -10,23 +10,15 @@ import {
   allMDVirtualJSTSFileGlobs,
   typeScriptAndJSXCompatible,
 } from "../constants/bases.js";
-
-import makeResolveRule from "../rules/resolve.js";
-import makeCompressRule from "../rules/compress.js";
+import { ruleNames_makeRules } from "../constants/rules.js";
 
 /**
  *
- * @param {typeof resolveRuleName | typeof compressRuleName} ruleName
- * @param {string[]} ignores
- * @param {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} makeCommentsRule
- * @param {{[key: string]: string}} flattenedConfigData
+ * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`)
+ * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
+ * @param {{[key: string]: string}} flattenedConfigData Either the flattened config data or the reversed flattened config data, since they share the same structure.
  */
-const coreCommentsFlow = async (
-  ruleName,
-  ignores,
-  makeCommentsRule,
-  flattenedConfigData
-) => {
+const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
   const eslint = new ESLint({
     fix: true,
     errorOnUnmatchedPattern: false,
@@ -39,7 +31,7 @@ const coreCommentsFlow = async (
         plugins: {
           [commentVariablesPluginName]: {
             rules: {
-              [ruleName]: makeCommentsRule(flattenedConfigData),
+              [ruleName]: ruleNames_makeRules[ruleName](flattenedConfigData),
             },
           },
         },
@@ -92,20 +84,9 @@ const coreCommentsFlow = async (
 };
 
 export const resolveCommentsFlow = async (ignores, flattenedConfigData) =>
-  coreCommentsFlow(
-    resolveRuleName,
-    ignores,
-    makeResolveRule,
-    flattenedConfigData
-  );
+  coreCommentsFlow(resolveRuleName, ignores, flattenedConfigData);
 
 export const compressCommentsFlow = async (
   ignores,
   reversedFlattenedConfigData
-) =>
-  coreCommentsFlow(
-    compressRuleName,
-    ignores,
-    makeCompressRule,
-    reversedFlattenedConfigData
-  );
+) => coreCommentsFlow(compressRuleName, ignores, reversedFlattenedConfigData);
