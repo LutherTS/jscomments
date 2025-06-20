@@ -24,23 +24,23 @@ const config = {
         "Terminates the whole process with a 'failure' code (1).",
       escapeRegex: `Escapes all regex characters with a \`"\\"\` in a string to prepare it for use in a regex.`,
       makeRuleResolve:
-        "The utility that creates the resolve rule based on the flattened config, used to transform $COMMENT#* placeholders into actual comments.",
+        "The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT#* placeholders into actual comments.",
       makeRuleCompress:
-        "The utility that creates the compress rule based on the reversed flattened config, used to transform actual comments into $COMMENT#* placeholders.",
+        "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into $COMMENT#* placeholders.",
     },
     params: {
       string: "The string.",
       flattenedConfigData:
-        "The flattened config, with $COMMENT#* placeholders as keys and actual comments as values.",
+        "The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.",
       reversedFlattenedConfigData:
-        "The reversed flattened config, with and actual comments as keys and $COMMENT#* placeholders as values.",
+        "The reversed flattened config data, with and actual comments as keys and $COMMENT#* placeholders as values.",
     },
     returns: {
       exitDueToFailure: "Never.",
       escapeRegex: `The string with regex characters escaped.`,
-      makeRuleResolve: "The resolve rule based on the flattened config.",
+      makeRuleResolve: "The resolve rule based on the flattened config data.",
       makeRuleCompress:
-        "The compress rule based on the reversed flattened config.",
+        "The compress rule based on the reversed flattened config data.",
     },
   },
 };

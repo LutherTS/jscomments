@@ -3,9 +3,9 @@ import { placeholderMessageId } from "../constants/bases.js";
 import { escapeRegex } from "..//utilities/helpers.js";
 
 /**
- * The utility that creates the compress rule based on the reversed flattened config, used to transform actual comments into $COMMENT#* placeholders.
- * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config, with and actual comments as keys and $COMMENT#* placeholders as values.
- * @returns The compress rule based on the reversed flattened config.
+ * The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into $COMMENT#* placeholders.
+ * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with and actual comments as keys and $COMMENT#* placeholders as values.
+ * @returns The compress rule based on the reversed flattened config data.
  */
 const makeRule = (reversedFlattenedConfigData) => {
   // Turns the whole reversedFlattenedConfig from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements.

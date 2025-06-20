@@ -4,9 +4,9 @@ import {
 } from "../constants/bases.js";
 
 /**
- * The utility that creates the resolve rule based on the flattened config, used to transform $COMMENT#* placeholders into actual comments.
- * @param {{[key: string]: string}} flattenedConfigData The flattened config, with $COMMENT#* placeholders as keys and actual comments as values.
- * @returns The resolve rule based on the flattened config.
+ * The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT#* placeholders into actual comments.
+ * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.
+ * @returns The resolve rule based on the flattened config data.
  */
 const makeRule = (flattenedConfigData) => {
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
