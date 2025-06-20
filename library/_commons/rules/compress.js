@@ -3,9 +3,9 @@ import { placeholderMessageId } from "../constants/bases.js";
 import { escapeRegex } from "..//utilities/helpers.js";
 
 /**
- *
- * @param {{[key: string]: string}} reversedFlattenedConfig
- * @returns
+ * The utility that creates the compress rule based on the reversed flattened config, used to transform actual comments into $COMMENT#* placeholders.
+ * @param {{[key: string]: string}} reversedFlattenedConfig The reversed flattened config, with and actual comments as keys and $COMMENT#* placeholders as values.
+ * @returns The compress rule based on the reversed flattened config.
  */
 const makeRule = (reversedFlattenedConfig) => {
   // Turns the whole reversedFlattenedConfig from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements.
@@ -13,7 +13,7 @@ const makeRule = (reversedFlattenedConfig) => {
     reversedFlattenedConfig
   ).sort(([a], [b]) => b.length - a.length);
 
-  /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
+  /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
   const rule = {
     meta: {
       type: "suggestion",

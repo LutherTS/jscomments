@@ -4,12 +4,12 @@ import {
 } from "../constants/bases.js";
 
 /**
- *
- * @param {{[key: string]: string}} flattenedConfig
- * @returns
+ * The utility that creates the resolve rule based on the flattened config, used to transform $COMMENT#* placeholders into actual comments.
+ * @param {{[key: string]: string}} flattenedConfig The flattened config, with $COMMENT#* placeholders as keys and actual comments as values.
+ * @returns The resolve rule based on the flattened config.
  */
 const makeRule = (flattenedConfig) => {
-  /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<string, []>} */
+  /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
   const rule = {
     meta: {
       type: "suggestion",
