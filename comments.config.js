@@ -35,6 +35,7 @@ const config = {
         "The flow that compresses actual comments into $COMMENT#* placeholders.",
       findAllImports:
         "Finds all import paths recursively related to a given file path.",
+      processImport: "Processes recursively and resolves a single import path.",
     }),
     params: Object.freeze({
       string: "The string.",
@@ -57,6 +58,9 @@ const config = {
         "The current depth of the recursion, instantiated at `0` by default.",
       maxDepth:
         "The maximum depth allowed for the recursion, instantiated at `100` by default.",
+      importPath: "The import path currently being addressed.",
+      currentDir:
+        "The directory containing the import path currently being addressed.",
     }),
     returns: Object.freeze({
       exitDueToFailure: "Never.",
@@ -66,6 +70,8 @@ const config = {
         "The compress rule based on the reversed flattened config data.",
       findAllImports:
         "The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.",
+      processImport:
+        "`true` to skip unresolved paths, `false` if resolution fails at any level.",
     }),
   }),
 };

@@ -1,15 +1,15 @@
 /* exitDueToFailure */
 
 /**
- * Terminates the whole process with a 'failure' code (1).
- * @returns Never.
+ * $COMMENT#JSDOC#DEFINITIONS#EXITDUETOFAILURE
+ * @returns $COMMENT#JSDOC#RETURNS#EXITDUETOFAILURE
  */
 export const exitDueToFailure = () => process.exit(1);
 
 /**
- * Escapes all regex characters with a `"\"` in a string to prepare it for use in a regex.
- * @param {string} string The string.
- * @returns The string with regex characters escaped.
+ * $COMMENT#JSDOC#DEFINITIONS#ESCAPEREGEX
+ * @param {string} string $COMMENT#JSDOC#PARAMS#STRING
+ * @returns $COMMENT#JSDOC#RETURNS#ESCAPEREGEX
  */
 export const escapeRegex = (string) =>
   string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

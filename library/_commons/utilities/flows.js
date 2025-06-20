@@ -13,10 +13,10 @@ import {
 import { ruleNames_makeRules } from "../constants/rules.js";
 
 /**
- * The core flow at the heart of resolving and compressing comments.
- * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`.)
- * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
- * @param {{[key: string]: string}} flattenedConfigData Either the flattened config data or the reversed flattened config data, since they share the same structure.
+ * $COMMENT#JSDOC#DEFINITIONS#CORECOMMENTSFLOW
+ * @param {typeof resolveRuleName | typeof compressRuleName} ruleName $COMMENT#JSDOC#PARAMS#RULENAME
+ * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
+ * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA
  */
 const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
   const eslint = new ESLint({
@@ -84,18 +84,18 @@ const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
 };
 
 /**
- * The flow that resolves $COMMENT#* placeholders intro actual comments.
- * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
- * @param {*} flattenedConfigData The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.
+ * $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
+ * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
+ * @param {*} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
  * @returns
  */
 export const resolveCommentsFlow = async (ignores, flattenedConfigData) =>
   coreCommentsFlow(resolveRuleName, ignores, flattenedConfigData);
 
 /**
- * The flow that compresses actual comments into $COMMENT#* placeholders.
- * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
- * @param {*} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and $COMMENT#* placeholders as values.
+ * $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW
+ * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
+ * @param {*} reversedFlattenedConfigData $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA
  * @returns
  */
 export const compressCommentsFlow = async (
