@@ -132,8 +132,8 @@ switch (coreCommand) {
   case undefined: // falls through the default
   default:
     if (coreCommand && !coreCommand.startsWith("--"))
-      console.log(
-        `Core command not recognized. Choose between "resolve" and "compress".`
+      console.error(
+        `ERROR. Core command not recognized. Choose between "resolve" and "compress".`
       );
     else
       console.log(

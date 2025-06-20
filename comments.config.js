@@ -19,7 +19,18 @@ const config = {
   },
   // for deving
   jsDoc: {
-    exitDueToFailure: "Terminates the whole process with a 'failure' code (1).",
+    definitions: {
+      exitDueToFailure:
+        "Terminates the whole process with a 'failure' code (1).",
+      escapeRegex: `Escapes all regex characters with a \`"\\"\` in a string to prepare it for use in a regex.`,
+    },
+    params: {
+      string: "The string.",
+    },
+    returns: {
+      exitDueToFailure: "Never.",
+      escapeRegex: `The string with regex characters escaped.`,
+    },
   },
 };
 

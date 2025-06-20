@@ -78,7 +78,9 @@ const coreCommentsFlow = async (
   }, 0);
 
   console.log(
-    `✅ ${resolvedOrCompressed} ${total} comment${total === 1 ? "" : "s"}.`
+    `✅ ${resolvedOrCompressed} comments on ${total} file${
+      total === 1 ? "" : "s"
+    }.`
   );
 };
 
