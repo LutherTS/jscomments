@@ -10,10 +10,10 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
  * Processes recursively and resolves a single import path.
  * @param {string} importPath The import path currently being addressed.
  * @param {string} currentDir The directory containing the import path currently being addressed.
- * @param {string} cwd $COMMENT#JSDOC#PARAMS#CWD
- * @param {Set<string>} visited $COMMENT#JSDOC#PARAMS#VISITED
- * @param {number} depth $COMMENT#JSDOC#PARAMS#DEPTH
- * @param {number} maxDepth $COMMENT#JSDOC#PARAMS#MAXDEPTH
+ * @param {string} cwd The current working directory, set as `process.cwd()` by default.
+ * @param {Set<string>} visited The set of strings tracking the import paths that have already been visited.
+ * @param {number} depth The current depth of the recursion, instantiated at `0` by default.
+ * @param {number} maxDepth The maximum depth allowed for the recursion, instantiated at `100` by default.
  * @returns `true` to skip unresolved paths, `false` if resolution fails at any level.
  */
 const processImport = (
@@ -38,13 +38,13 @@ const processImport = (
 };
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#FINDALLIMPORTS
- * @param {string} filePath $COMMENT#JSDOC#PARAMS#FILEPATH
- * @param {string} cwd $COMMENT#JSDOC#PARAMS#CWD
- * @param {Set<string>} visited $COMMENT#JSDOC#PARAMS#VISITED
- * @param {number} depth $COMMENT#JSDOC#PARAMS#DEPTH
- * @param {number} maxDepth $COMMENT#JSDOC#PARAMS#MAXDEPTH
- * @returns $COMMENT#JSDOC#RETURNS#FINDALLIMPORTS
+ * Finds all import paths recursively related to a given file path.
+ * @param {string} filePath The absolute path of the file whose imports are being recursively found, such as that of a project's `comments.config.js` file.
+ * @param {string} cwd The current working directory, set as `process.cwd()` by default.
+ * @param {Set<string>} visited The set of strings tracking the import paths that have already been visited.
+ * @param {number} depth The current depth of the recursion, instantiated at `0` by default.
+ * @param {number} maxDepth The maximum depth allowed for the recursion, instantiated at `100` by default.
+ * @returns The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.
  */
 export const findAllImports = (
   filePath,
