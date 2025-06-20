@@ -14,6 +14,13 @@ import {
 import makeResolveRule from "../rules/resolve.js";
 import makeCompressRule from "../rules/compress.js";
 
+/**
+ *
+ * @param {typeof resolveRuleName | typeof compressRuleName} ruleName
+ * @param {string[]} ignores
+ * @param {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} makeCommentsRule
+ * @param {{[key: string]: string}} flattenedConfigData
+ */
 const coreCommentsFlow = async (
   ruleName,
   ignores,

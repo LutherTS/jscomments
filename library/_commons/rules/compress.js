@@ -4,13 +4,13 @@ import { escapeRegex } from "..//utilities/helpers.js";
 
 /**
  * The utility that creates the compress rule based on the reversed flattened config, used to transform actual comments into $COMMENT#* placeholders.
- * @param {{[key: string]: string}} reversedFlattenedConfig The reversed flattened config, with and actual comments as keys and $COMMENT#* placeholders as values.
+ * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config, with and actual comments as keys and $COMMENT#* placeholders as values.
  * @returns The compress rule based on the reversed flattened config.
  */
-const makeRule = (reversedFlattenedConfig) => {
+const makeRule = (reversedFlattenedConfigData) => {
   // Turns the whole reversedFlattenedConfig from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements.
-  const sortedReversedFlattenedConfig = Object.entries(
-    reversedFlattenedConfig
+  const sortedReversedFlattenedConfigData = Object.entries(
+    reversedFlattenedConfigData
   ).sort(([a], [b]) => b.length - a.length);
 
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
@@ -41,7 +41,7 @@ const makeRule = (reversedFlattenedConfig) => {
         for (const [
           resolvedValue,
           commentKey,
-        ] of sortedReversedFlattenedConfig) {
+        ] of sortedReversedFlattenedConfigData) {
           const pattern = new RegExp(
             `(?<=\\s|^)${escapeRegex(resolvedValue)}(?=\\s|$)`,
             "g"

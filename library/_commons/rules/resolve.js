@@ -5,10 +5,10 @@ import {
 
 /**
  * The utility that creates the resolve rule based on the flattened config, used to transform $COMMENT#* placeholders into actual comments.
- * @param {{[key: string]: string}} flattenedConfig The flattened config, with $COMMENT#* placeholders as keys and actual comments as values.
+ * @param {{[key: string]: string}} flattenedConfigData The flattened config, with $COMMENT#* placeholders as keys and actual comments as values.
  * @returns The resolve rule based on the flattened config.
  */
-const makeRule = (flattenedConfig) => {
+const makeRule = (flattenedConfigData) => {
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
   const rule = {
     meta: {
@@ -43,7 +43,7 @@ const makeRule = (flattenedConfig) => {
         for (const match of matches) {
           const fullMatch = match[0]; // e.g. $COMMENT#LEVELONE#LEVELTWO
           const key = match[1]; // e.g. LEVELONE#LEVELTWO
-          const replacement = flattenedConfig[key];
+          const replacement = flattenedConfigData[key];
 
           if (replacement) {
             fixedText = fixedText.replace(fullMatch, replacement);

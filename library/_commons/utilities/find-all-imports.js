@@ -8,7 +8,7 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
 
 /**
  * Helper to process and recursively resolve a single import path.
- * Returns false if resolution fails at any level.
+ * @returns `true` to skip unresolved paths, `false` if resolution fails at any level.
  */
 const processImport = (
   importPath,

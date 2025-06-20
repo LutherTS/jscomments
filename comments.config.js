@@ -30,9 +30,9 @@ const config = {
     },
     params: {
       string: "The string.",
-      flattenedConfig:
+      flattenedConfigData:
         "The flattened config, with $COMMENT#* placeholders as keys and actual comments as values.",
-      reversedFlattenedConfig:
+      reversedFlattenedConfigData:
         "The reversed flattened config, with and actual comments as keys and $COMMENT#* placeholders as values.",
     },
     returns: {
