@@ -14,7 +14,7 @@ import { ruleNames_makeRules } from "../constants/rules.js";
 
 /**
  *
- * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`)
+ * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`.)
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
  * @param {{[key: string]: string}} flattenedConfigData Either the flattened config data or the reversed flattened config data, since they share the same structure.
  */
@@ -83,9 +83,21 @@ const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
   );
 };
 
+/**
+ *
+ * @param {*} ignores
+ * @param {*} flattenedConfigData
+ * @returns
+ */
 export const resolveCommentsFlow = async (ignores, flattenedConfigData) =>
   coreCommentsFlow(resolveRuleName, ignores, flattenedConfigData);
 
+/**
+ *
+ * @param {*} ignores
+ * @param {*} reversedFlattenedConfigData
+ * @returns
+ */
 export const compressCommentsFlow = async (
   ignores,
   reversedFlattenedConfigData
