@@ -18,7 +18,7 @@ const config = {
     },
   },
   // for deving
-  jsDoc: {
+  jsDoc: Object.freeze({
     definitions: Object.freeze({
       exitDueToFailure:
         "Terminates the whole process with a 'failure' code (1).",
@@ -33,6 +33,8 @@ const config = {
         "The flow that resolves $COMMENT#* placeholders intro actual comments.",
       compressCommentsFlow:
         "The flow that compresses actual comments into $COMMENT#* placeholders.",
+      findAllImports:
+        "Finds all import paths recursively related to a given file path.",
     }),
     params: Object.freeze({
       string: "The string.",
@@ -46,6 +48,15 @@ const config = {
         "The array of paths and globs for the flow's ESLint instance to ignore.",
       eitherFlattenedConfigData:
         "Either the flattened config data or the reversed flattened config data, since they share the same structure.",
+      filePath:
+        "The absolute path of the file whose imports are being recursively found, such as that of a project's `comments.config.js` file.",
+      cwd: "The current working directory, set as `process.cwd()` by default.",
+      visited:
+        "The set of strings tracking the import paths that have already been visited.",
+      depth:
+        "The current depth of the recursion, instantiated at `0` by default.",
+      maxDepth:
+        "The maximum depth allowed for the recursion, instantiated at `100` by default.",
     }),
     returns: Object.freeze({
       exitDueToFailure: "Never.",
@@ -53,8 +64,10 @@ const config = {
       makeRuleResolve: "The resolve rule based on the flattened config data.",
       makeRuleCompress:
         "The compress rule based on the reversed flattened config data.",
+      findAllImports:
+        "The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.",
     }),
-  },
+  }),
 };
 
 // export default config;

@@ -7,7 +7,13 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
 /* findAllImports */
 
 /**
- * Helper to process and recursively resolve a single import path.
+ * Processes and recursively resolves a single import path.
+ * @param {string} importPath
+ * @param {string} currentDir
+ * @param {string} cwd
+ * @param {Set<string>} visited
+ * @param {number} depth
+ * @param {number} maxDepth
  * @returns `true` to skip unresolved paths, `false` if resolution fails at any level.
  */
 const processImport = (
@@ -19,7 +25,7 @@ const processImport = (
   maxDepth
 ) => {
   const resolvedPath = resolveImportingPath(currentDir, importPath, cwd);
-  if (!resolvedPath) return true; // Skips unresolved paths (not an error).
+  if (!resolvedPath) return true;
 
   const result = findAllImports(
     resolvedPath,
@@ -31,6 +37,15 @@ const processImport = (
   return result !== null; // Returns false if child failed.
 };
 
+/**
+ * Finds all import paths recursively related to a given file path.
+ * @param {string} filePath The absolute path of the file whose imports are being recursively found, such as that of a project's `comments.config.js` file.
+ * @param {string} cwd The current working directory, set as `process.cwd()` by default.
+ * @param {Set<string>} visited The set of strings tracking the import paths that have already been visited.
+ * @param {number} depth The current depth of the recursion, instantiated at `0` by default.
+ * @param {number} maxDepth The maximum depth allowed for the recursion, instantiated at `100` by default.
+ * @returns The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.
+ */
 export const findAllImports = (
   filePath,
   cwd = process.cwd(),
@@ -38,19 +53,22 @@ export const findAllImports = (
   depth = 0,
   maxDepth = 100
 ) => {
-  // Early failure checks (with logging).
+  // Fails early if max depth is recursively reached.
   if (depth > maxDepth) {
     console.error(`ERROR. Max depth ${maxDepth} reached at ${filePath}.`);
     return null;
   }
+  // Fails early if no file is found.
   if (!fs.existsSync(filePath)) {
     console.error(`ERROR. File not found at ${filePath}.`);
     return null;
   }
-  if (visited.has(filePath)) return visited;
 
-  // Parses AST.
+  // Updates the visited set.
+  if (visited.has(filePath)) return visited;
   visited.add(filePath);
+
+  // Parses the file's source code AST.
   const sourceCode = getSourceCodeFromFilePath(filePath);
   if (!sourceCode?.ast) {
     console.error(`ERROR. Failed to parse AST for ${filePath}.`);
