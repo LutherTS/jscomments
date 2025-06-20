@@ -27,6 +27,8 @@ const config = {
         "The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT#* placeholders into actual comments.",
       makeRuleCompress:
         "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into $COMMENT#* placeholders.",
+      coreCommentsFlow:
+        "The core flow at the heart of resolving and compressing comments.",
       resolveCommentsFlow:
         "The flow that resolves $COMMENT#* placeholders intro actual comments.",
       compressCommentsFlow:
