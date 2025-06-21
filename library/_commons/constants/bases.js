@@ -28,9 +28,9 @@ export const myIgnoresOnlyFlag = "--my-ignores-only";
 
 // ESLint ignores
 export const knownIgnores = [
+  "node_modules",
   ".next",
   ".react-router",
-  "node_modules",
   ".parcel-cache",
   ".react-router-parcel",
   "dist",
