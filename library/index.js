@@ -17,13 +17,12 @@ import {
 import { exitDueToFailure } from "./_commons/utilities/helpers.js";
 import { resolveConfig } from "./_commons/utilities/resolve-config.js";
 import { findAllImports } from "./_commons/utilities/find-all-imports.js";
-
 import {
   resolveCommentsFlow,
   compressCommentsFlow,
 } from "./_commons/utilities/flows.js";
 
-// ENSURES THE CLI TOOL ONLY RUN IN FOLDERS THAT POSSESS A package.json FILE AND A .git FOLDER.
+// ENSURES THE CLI TOOL ONLY RUNS IN FOLDERS THAT POSSESS A package.json FILE AND A .git FOLDER.
 
 if (!hasPackageJson) {
   console.error(
@@ -42,7 +41,7 @@ if (!hasGitFolder) {
 
 const commands = process.argv;
 
-// OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, AND CONFIG PATH.
+// OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, CONFIG PATH, AND PASSED IGNORES.
 
 // extracts the position of the --config flag
 const configFlagIndex = commands.indexOf(configFlag);
@@ -109,7 +108,6 @@ switch (coreCommand) {
   case "compress":
     await compressCommentsFlow(ignores, reversedFlattenedConfigData);
     break;
-  case undefined: // falls through the default
   default:
     if (coreCommand && !coreCommand.startsWith("--"))
       console.error(
