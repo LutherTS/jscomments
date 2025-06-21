@@ -8,7 +8,7 @@ import { ConfigDataSchema, ConfigIgnoresSchema } from "../schemas/config.js";
 /**
  * Verifies, validates and resolves the config path to retrieve the config's data and ignores.
  * @param {string} configPath The path of the config, either from `comments.config.js` or from a config passed via the `--config` flag.
- * @returns The flattened config data, the reverse flattened config data, the verified config path and the raw passed ignores.
+ * @returns The flattened config data, the reverse flattened config data, the verified config path, the raw passed ignores, and the original config.
  */
 export async function resolveConfig(configPath) {
   // Step 1: Checks if config file exists
@@ -58,7 +58,6 @@ export async function resolveConfig(configPath) {
   // - the reverse flattened config data,
   // - the verified config path
   // - and the raw passed ignores
-  console.log("Running with config:", config);
   return {
     ...flattenConfigData(configDataResult.data), // finalized
     configPath, // finalized

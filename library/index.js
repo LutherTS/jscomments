@@ -74,12 +74,12 @@ const {
   passedIgnores,
 } = results;
 
-!skipDetails && console.log("Running with config:", config);
-!skipDetails && console.log("Flattened config is:", flattenedConfigData);
-!skipDetails &&
+skipDetails || console.log("Running with config:", config);
+skipDetails || console.log("Flattened config is:", flattenedConfigData);
+skipDetails ||
   console.log("Reversed flattened config is:", reversedFlattenedConfigData);
-!skipDetails && console.log("Config path is:", configPath);
-!skipDetails && console.log("Passed ignores are:", passedIgnores);
+skipDetails || console.log("Config path is:", configPath);
+skipDetails || console.log("Passed ignores are:", passedIgnores);
 
 // ADDRESSES THE --lint-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
@@ -93,7 +93,7 @@ const configPathIgnores = rawConfigPathIgnores.map((e) =>
   path.relative(cwd, e)
 );
 
-!skipDetails &&
+skipDetails ||
   console.log(
     lintConfigImports ? "Config path ignore is:" : "Config path ignores are:",
     configPathIgnores
@@ -105,7 +105,7 @@ const myIgnoresOnly = commands.indexOf(myIgnoresOnlyFlag) >= 2;
 const rawIgnores = [...configPathIgnores, ...passedIgnores];
 const ignores = myIgnoresOnly ? rawIgnores : [...rawIgnores, ...knownIgnores];
 
-!skipDetails && console.log("Ignores are:", ignores);
+skipDetails || console.log("Ignores are:", ignores);
 
 // ADDRESSES THE CORE COMMANDS "resolve" AND "compress".
 

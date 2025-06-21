@@ -84,7 +84,7 @@ const data = {
       flattenConfigData:
         "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands.", // $COMMENT#JSDOC#RETURNS#FLATTENCONFIGDATA
       resolveConfig:
-        "The flattened config data, the reverse flattened config data, the verified config path and the raw passed ignores.", // $COMMENT#JSDOC#RETURNS#RESOLVECONFIG
+        "The flattened config data, the reverse flattened config data, the verified config path, the raw passed ignores, and the original config.", // $COMMENT#JSDOC#RETURNS#RESOLVECONFIG
     }),
   }),
 };
