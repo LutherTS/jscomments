@@ -64,7 +64,7 @@ const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
   ]);
   await ESLint.outputFixes(results);
 
-  console.log({ results });
+  console.log("Results are:", results);
 
   const resolvedOrCompressed =
     ruleName === resolveRuleName
