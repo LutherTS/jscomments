@@ -1,16 +1,16 @@
 import { existsSync } from "fs";
 import { pathToFileURL } from "url";
 
-import { flattenConfigData } from "../utilities/flatten-config-data.js";
+import { flattenConfigData } from "./flatten-config-data.js";
 
 import { ConfigDataSchema, ConfigIgnoresSchema } from "../schemas/config.js";
 
 /**
- *
- * @param {string} configPath The path of the config, either from comments.config.js or from a config passed via the --config flag.
- * @returns
+ * Verifies, validates and resolves the config path to retrieve the config's data and ignores.
+ * @param {string} configPath The path of the config, either from `comments.config.js` or from a config passed via the `--config` flag.
+ * @returns The flattened config data, the reverse flattened config data, the verified config path and the raw passed ignores.
  */
-export async function runWithConfig(configPath) {
+export async function resolveConfig(configPath) {
   // Step 1: Checks if config file exists
 
   if (!existsSync(configPath)) {

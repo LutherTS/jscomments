@@ -38,6 +38,8 @@ const config = {
       processImport: "Processes recursively and resolves a single import path.",
       flattenConfigData:
         "Flattens the config's data property into a one-dimensional object of $COMMENT-*-like keys and string values.",
+      resolveConfig:
+        "Verifies, validates and resolves the config path to retrieve the config's data and ignores.",
     }),
     params: Object.freeze({
       string: "The string.",
@@ -69,6 +71,8 @@ const config = {
         "The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.",
       parentKeys:
         "The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.",
+      configPath:
+        "The path of the config, either from `comments.config.js` or from a config passed via the `--config` flag.",
     }),
     returns: Object.freeze({
       exitDueToFailure:
@@ -83,6 +87,8 @@ const config = {
         "`true` to skip unresolved paths, `false` if resolution fails at any level.",
       flattenConfigData:
         "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands.",
+      resolveConfig:
+        "The flattened config data, the reverse flattened config data, the verified config path and the raw passed ignores.",
     }),
   }),
 };

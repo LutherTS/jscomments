@@ -15,7 +15,7 @@ import {
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure } from "./_commons/utilities/helpers.js";
-import { runWithConfig } from "./_commons/utilities/run-with-config.js";
+import { resolveConfig } from "./_commons/utilities/resolve-config.js";
 import { findAllImports } from "./_commons/utilities/find-all-imports.js";
 
 import {
@@ -56,7 +56,7 @@ const passedConfigPath =
 // defaults to comments.config.js if no --config flag is set
 const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
-const results = await runWithConfig(rawConfigPath);
+const results = await resolveConfig(rawConfigPath);
 if (!results) {
   exitDueToFailure();
 }
