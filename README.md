@@ -18,15 +18,15 @@ Interacts with your `comments.config.js` default exported object to print all th
 comment-variables compress
 ```
 
-Scans your line and block comments for values defined in your `comments.config.js` (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` tokens defined in your `comments.config.js`. (`"This is a comment."` => `$COMMENT#COMMENT`)
+Scans your line and block comments for string values defined in your `comments.config.js` (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` tokens defined in your `comments.config.js`. (`This is a comment.` => `$COMMENT#COMMENT`)
 
 ```
 comment-variables resolve
 ```
 
-Scans your line and block comments for `$COMMENT#*` tokens (like `$COMMENT#COMMENT`) to turn them into their corresponding values defined in your `comments.config.js`. (`$COMMENT#COMMENT` => `This is a comment.`)
+Scans your line and block comments for `$COMMENT#*` tokens (like `$COMMENT#COMMENT`) to turn them into their corresponding string values defined in your `comments.config.js`. (`$COMMENT#COMMENT` => `This is a comment.`)
 
-_The `compress` and `resolve` commands are entirely reversible._
+_The `compress` and `resolve` commands make each other entirely reversible._
 
 ## Flags
 
