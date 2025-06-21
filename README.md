@@ -50,7 +50,7 @@ comment-variables --my-ignores-only
 
 By default, `comment-variables` includes a preset list of ignored folders ("node_modules", ".next", ".react-router"...). This flag cancels this mechanism so that you can have full control over your ignored files and folders.
 
-All three flags can be composed together, and with any of the three commands:
+_All three flags can be composed together, and with any of the three commands:_
 
 ```
 comment-variables --config your-config.js
@@ -60,7 +60,7 @@ comment-variables resolve --config your-config.js --lint-config-imports --my-ign
 
 ## **`comments.config.js`**
 
-A `comments.config.js` looks like this. (This is the config file I'm using to manage my JavaScript comments in this library.)
+A `comments.config.js` file looks like this. (This is the config file I'm using to manage my JavaScript comments in this library.)
 
 ```js
 const data = {
