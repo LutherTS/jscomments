@@ -150,6 +150,6 @@ const config = {
 export default config;
 ```
 
-And yes, even comments in JavaScript and TypeScript blocks in Markdown files are addressed.
+And yes, even comments within JavaScript and TypeScript blocks in Markdown files are addressed.
 
 _Leverage the full power of JavaScript to programmatically design your JavaScript comments._
