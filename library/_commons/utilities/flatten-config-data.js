@@ -5,9 +5,9 @@ import { exitDueToFailure } from "../utilities/helpers.js";
 /**
  * Flattens the config's data property into a one-dimensional object of $COMMENT-*-like keys and string values.
  * @param {Record<string, any>} configData The config's data property. (Values are typed `any` given the limitations in typing recursive values in JSDoc.)
- * @param {Map<string, {value: string; source: string}>} configDataMap The map housing the flattened keys with their values and sources through recursion.
- * @param {string[]} parentKeys The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure.
- * @returns Both the flattened config data and it's reversed version to ensure the strict reversibility of the `resolve` and `compress` commands.
+ * @param {Map<string, {value: string; source: string}>} configDataMap The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.
+ * @param {string[]} parentKeys The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.
+ * @returns Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands.
  */
 export const flattenConfigData = (
   configData,

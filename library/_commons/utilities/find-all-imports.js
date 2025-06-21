@@ -11,7 +11,7 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
  * @param {string} importPath The import path currently being addressed.
  * @param {string} currentDir The directory containing the import path currently being addressed.
  * @param {string} cwd The current working directory, set as `process.cwd()` by default.
- * @param {Set<string>} visited The set of strings tracking the import paths that have already been visited.
+ * @param {Set<string>} visited The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.
  * @param {number} depth The current depth of the recursion, instantiated at `0` by default.
  * @param {number} maxDepth The maximum depth allowed for the recursion, instantiated at `100` by default.
  * @returns `true` to skip unresolved paths, `false` if resolution fails at any level.
@@ -41,7 +41,7 @@ const processImport = (
  * Finds all import paths recursively related to a given file path.
  * @param {string} filePath The absolute path of the file whose imports are being recursively found, such as that of a project's `comments.config.js` file.
  * @param {string} cwd The current working directory, set as `process.cwd()` by default.
- * @param {Set<string>} visited The set of strings tracking the import paths that have already been visited.
+ * @param {Set<string>} visitedSet The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.
  * @param {number} depth The current depth of the recursion, instantiated at `0` by default.
  * @param {number} maxDepth The maximum depth allowed for the recursion, instantiated at `100` by default.
  * @returns The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.
@@ -49,7 +49,7 @@ const processImport = (
 export const findAllImports = (
   filePath,
   cwd = process.cwd(),
-  visited = new Set(),
+  visitedSet = new Set(),
   depth = 0,
   maxDepth = 100
 ) => {
@@ -65,8 +65,8 @@ export const findAllImports = (
   }
 
   // Updates the visited set.
-  if (visited.has(filePath)) return visited;
-  visited.add(filePath);
+  if (visitedSet.has(filePath)) return visitedSet;
+  visitedSet.add(filePath);
 
   // Parses the file's source code AST.
   const sourceCode = getSourceCodeFromFilePath(filePath);
@@ -85,7 +85,7 @@ export const findAllImports = (
           node.source.value,
           currentDir,
           cwd,
-          visited,
+          visitedSet,
           depth,
           maxDepth
         )
@@ -106,7 +106,7 @@ export const findAllImports = (
           node.expression.arguments[0].value,
           currentDir,
           cwd,
-          visited,
+          visitedSet,
           depth,
           maxDepth
         )
@@ -116,5 +116,5 @@ export const findAllImports = (
     }
   }
 
-  return visited; // success
+  return visitedSet; // success
 };
