@@ -3,18 +3,13 @@ const data = {
   levelOne: {
     levelTwo: {
       levelThree: "Level three.",
-      // levelthree: "Also level three.", // errors
-      // alsoLevelThree: "Level three.", // errors
-      levelThreeBis: "Level three bis.",
-      levelThreeTer: "Level three ter.",
-      levelThreeAlso: "Also level three here.",
-      levelThreeToo: "This too is level three.",
-      // test: "LEVELONE#LEVELTWO#LEVELTHREE", // errors
-      // [`level$Three#First
-      //   whitespace`]: `This is level three
-      // with whitespaces. `, // fails
-      // testing: 2, // fails
-      // ".'e": "",
+      // levelthree: "Also level three.", // errors, duplicate normalized key
+      // stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key
+      // alsoLevelThree: "Level three.", // errors, duplicate value
+      // tooLevelThree: 2, // errors, value is invalid
+      // $levelThree: "Dollar sign", // errors, key as "$" character
+      // "#levelThree": "Hashtag", // errors, key as "#" character
+      // ".levelThree": "Punctuation", // errors, key is invalid
     },
   },
   // for deving
@@ -22,7 +17,8 @@ const data = {
     definitions: Object.freeze({
       exitDueToFailure:
         "Terminates the whole process with a 'failure' code (1).",
-      escapeRegex: `Escapes all regex characters with a \`"\\"\` in a string to prepare it for use in a regex.`,
+      escapeRegex:
+        'Escapes all regex characters with a `"\\"` in a string to prepare it for use in a regex.',
       makeRuleResolve:
         "The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT#* placeholders into actual comments.",
       makeRuleCompress:
