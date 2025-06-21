@@ -63,5 +63,6 @@ export async function resolveConfig(configPath) {
     ...flattenConfigData(configDataResult.data), // finalized
     configPath, // finalized
     passedIgnores: configIgnoresSchemaResult.data, // addressed with --lint-config-imports and --my-ignores-only to be finalized
+    config, // and the config itself too
   };
 }

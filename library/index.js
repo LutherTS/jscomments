@@ -12,6 +12,8 @@ import {
   lintConfigImportsFlag,
   myIgnoresOnlyFlag,
   knownIgnores,
+  resolveRuleName,
+  compressRuleName,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure } from "./_commons/utilities/helpers.js";
@@ -40,6 +42,10 @@ if (!hasGitFolder) {
 // GATHERS COMMANDS.
 
 const commands = process.argv;
+const coreCommand = commands[2];
+
+const skipDetails =
+  coreCommand === resolveRuleName || coreCommand === compressRuleName;
 
 // OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, CONFIG PATH, AND PASSED IGNORES.
 
@@ -61,16 +67,19 @@ if (!results) {
 }
 
 const {
+  config,
   flattenedConfigData,
   reversedFlattenedConfigData,
   configPath,
   passedIgnores,
 } = results;
 
-console.log("Flattened config is:", flattenedConfigData);
-console.log("Reversed flattened config is:", reversedFlattenedConfigData);
-console.log("Config path is:", configPath);
-console.log("Passed ignores are:", passedIgnores);
+!skipDetails && console.log("Running with config:", config);
+!skipDetails && console.log("Flattened config is:", flattenedConfigData);
+!skipDetails &&
+  console.log("Reversed flattened config is:", reversedFlattenedConfigData);
+!skipDetails && console.log("Config path is:", configPath);
+!skipDetails && console.log("Passed ignores are:", passedIgnores);
 
 // ADDRESSES THE --lint-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
@@ -84,10 +93,11 @@ const configPathIgnores = rawConfigPathIgnores.map((e) =>
   path.relative(cwd, e)
 );
 
-console.log(
-  lintConfigImports ? "Config path ignore is:" : "Config path ignores are:",
-  configPathIgnores
-);
+!skipDetails &&
+  console.log(
+    lintConfigImports ? "Config path ignore is:" : "Config path ignores are:",
+    configPathIgnores
+  );
 
 // ADDRESSES THE --my-ignores-only FLAG, GIVEN THAT KNOWN IGNORES ARE IGNORED BY DEFAULT
 
@@ -95,17 +105,17 @@ const myIgnoresOnly = commands.indexOf(myIgnoresOnlyFlag) >= 2;
 const rawIgnores = [...configPathIgnores, ...passedIgnores];
 const ignores = myIgnoresOnly ? rawIgnores : [...rawIgnores, ...knownIgnores];
 
-console.log("Ignores are:", ignores);
+!skipDetails && console.log("Ignores are:", ignores);
 
 // ADDRESSES THE CORE COMMANDS "resolve" AND "compress".
 
-const coreCommand = commands[2];
-
 switch (coreCommand) {
-  case "resolve":
+  case resolveRuleName:
+    console.log(`Running ${resolveRuleName}...`);
     await resolveCommentsFlow(ignores, flattenedConfigData);
     break;
-  case "compress":
+  case compressRuleName:
+    console.log(`Running ${compressRuleName}...`);
     await compressCommentsFlow(ignores, reversedFlattenedConfigData);
     break;
   default:
