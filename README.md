@@ -18,7 +18,7 @@ Interacts with your `comments.config.js` default exported object to print all th
 comment-variables compress
 ```
 
-Scans your line and block comments for values defined in your `comments.config.js` (like "This is a comment") to turn them into their corresponding `$COMMENT#*` tokens defined in your `comments.config.js`. ("This is a comment." => $COMMENT#COMMENT)
+Scans your line and block comments for values defined in your `comments.config.js` (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` tokens defined in your `comments.config.js`. (`"This is a comment."` => $COMMENT#COMMENT)
 
 ```
 comment-variables resolve
