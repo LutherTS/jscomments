@@ -2,6 +2,13 @@ import { flattenedConfigKeyRegex } from "../constants/bases.js";
 
 import { exitDueToFailure } from "../utilities/helpers.js";
 
+/**
+ *
+ * @param {Record<string, any>} configData (Explain the <string, any> here)
+ * @param {Map<string, {value: string; source: string}>} configDataMap
+ * @param {string[]} parentKeys
+ * @returns
+ */
 export const flattenConfigData = (
   configData,
   configDataMap = new Map(),
@@ -29,18 +36,18 @@ export const flattenConfigData = (
         value,
         source,
       });
-    } else if (
-      typeof value === "object" &&
-      value !== null &&
-      !Array.isArray(value)
-    ) {
-      flattenConfigData(value, configDataMap, newKeys);
+    } else if (typeof value === "object" && value && !Array.isArray(value)) {
+      /** @type {Record<string, any>} */
+      const typedValue = value;
+
+      flattenConfigData(typedValue, configDataMap, newKeys);
     }
   }
 
   // At this point we're out of the recursion, and we can start working with the complete data.
 
   // strips metadata
+  /**@type {Map<string, string>} */
   const map = new Map();
   configDataMap.forEach((value, key) => {
     map.set(key, value.value);
@@ -73,6 +80,7 @@ export const flattenConfigData = (
     }
   });
 
+  /** @type {Set<string>} */
   const set = new Set();
 
   flattenedConfigDataValuesArray.forEach((value) => {

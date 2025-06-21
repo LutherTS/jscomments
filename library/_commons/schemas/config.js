@@ -10,13 +10,13 @@ export const ConfigDataSchema = z
           return;
         }
 
-        if (typeof val === "object" && val !== null && !Array.isArray(val)) {
+        if (typeof val === "object" && val && !Array.isArray(val)) {
           const parsed = ConfigDataSchema.safeParse(val);
           if (!parsed.success) {
             for (const issue of parsed.error.issues) {
               ctx.addIssue({
                 ...issue,
-                path: [...ctx.path, ...issue.path], // proper path propagation
+                path: [...ctx.path, ...issue.path],
               });
             }
           }

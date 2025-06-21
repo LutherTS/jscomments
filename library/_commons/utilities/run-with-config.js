@@ -60,8 +60,8 @@ export async function runWithConfig(configPath) {
   // - and the raw passed ignores
   console.log("Running with config:", config);
   return {
-    ...flattenConfigData(config.data), // finalized
+    ...flattenConfigData(configDataResult.data), // finalized
     configPath, // finalized
-    passedIgnores: config.ignores, // addressed with --lint-config-imports and --my-ignores-only
+    passedIgnores: configIgnoresSchemaResult.data, // addressed with --lint-config-imports and --my-ignores-only to be finalized
   };
 }

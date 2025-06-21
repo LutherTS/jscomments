@@ -12,7 +12,6 @@ import {
   lintConfigImportsFlag,
   myIgnoresOnlyFlag,
   knownIgnores,
-  flattenedConfigKeyRegex,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure } from "./_commons/utilities/helpers.js";
@@ -58,7 +57,9 @@ const passedConfigPath =
 const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
 const results = await runWithConfig(rawConfigPath);
-if (!results) exitDueToFailure();
+if (!results) {
+  exitDueToFailure();
+}
 
 const {
   flattenedConfigData,
