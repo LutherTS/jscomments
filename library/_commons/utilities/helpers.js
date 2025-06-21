@@ -6,6 +6,8 @@
  */
 export const exitDueToFailure = () => process.exit(1);
 
+/* escapeRegex */
+
 /**
  * Escapes all regex characters with a `"\"` in a string to prepare it for use in a regex.
  * @param {string} string The string.

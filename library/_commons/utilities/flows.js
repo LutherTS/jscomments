@@ -12,6 +12,8 @@ import {
 } from "../constants/bases.js";
 import { ruleNames_makeRules } from "../constants/rules.js";
 
+/* coreCommentsFlow */
+
 /**
  * The core flow at the heart of resolving and compressing comments.
  * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`.)
@@ -83,19 +85,23 @@ const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
   );
 };
 
+/* resolveCommentsFlow */
+
 /**
  * The flow that resolves $COMMENT#* placeholders intro actual comments.
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
- * @param {*} flattenedConfigData The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.
+ * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.
  * @returns
  */
 export const resolveCommentsFlow = async (ignores, flattenedConfigData) =>
   coreCommentsFlow(resolveRuleName, ignores, flattenedConfigData);
 
+/* compressCommentsFlow */
+
 /**
  * The flow that compresses actual comments into $COMMENT#* placeholders.
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
- * @param {*} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and $COMMENT#* placeholders as values.
+ * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and $COMMENT#* placeholders as values.
  * @returns
  */
 export const compressCommentsFlow = async (

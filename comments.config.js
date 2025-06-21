@@ -1,4 +1,4 @@
-const config = {
+const data = {
   // for testing
   levelOne: {
     levelTwo: {
@@ -93,11 +93,11 @@ const config = {
   }),
 };
 
-// export default config;
+const ignores = ["chocolat.js"];
 
-const trueConfig = {
-  data: config,
-  ignores: ["chocolat.js"],
+const config = {
+  data,
+  ignores,
 };
 
-export default trueConfig;
+export default config;

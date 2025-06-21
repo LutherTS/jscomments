@@ -28,7 +28,7 @@ const makeRule = (reversedFlattenedConfigData) => {
       fixable: "code",
       schema: [],
     },
-    create(context) {
+    create: (context) => {
       const sourceCode = context.sourceCode;
       const comments = sourceCode
         .getAllComments()

@@ -11,7 +11,7 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
  * @param {string} importPath The import path currently being addressed.
  * @param {string} currentDir The directory containing the import path currently being addressed.
  * @param {string} cwd The current working directory, set as `process.cwd()` by default.
- * @param {Set<string>} visited The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.
+ * @param {Set<string>} visitedSet The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.
  * @param {number} depth The current depth of the recursion, instantiated at `0` by default.
  * @param {number} maxDepth The maximum depth allowed for the recursion, instantiated at `100` by default.
  * @returns `true` to skip unresolved paths, `false` if resolution fails at any level.
@@ -20,7 +20,7 @@ const processImport = (
   importPath,
   currentDir,
   cwd,
-  visited,
+  visitedSet,
   depth,
   maxDepth
 ) => {
@@ -30,7 +30,7 @@ const processImport = (
   const result = findAllImports(
     resolvedPath,
     cwd,
-    visited,
+    visitedSet,
     depth + 1,
     maxDepth
   );
