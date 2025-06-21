@@ -63,7 +63,8 @@ const config = {
         "The directory containing the import path currently being addressed.",
     }),
     returns: Object.freeze({
-      exitDueToFailure: "Never.",
+      exitDueToFailure:
+        "Never. (Somehow typing needs to be explicit for unreachable code inference.)",
       escapeRegex: `The string with regex characters escaped.`,
       makeRuleResolve: "The resolve rule based on the flattened config data.",
       makeRuleCompress:

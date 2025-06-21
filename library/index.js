@@ -78,7 +78,7 @@ console.log("Passed ignores are:", passedIgnores);
 const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
 const rawConfigPathIgnores = lintConfigImports
   ? [configPath]
-  : [...findAllImports(configPath)];
+  : [...(findAllImports(configPath) ?? [])];
 
 // the ignore paths must be relative
 const configPathIgnores = rawConfigPathIgnores.map((e) =>
@@ -125,8 +125,3 @@ switch (coreCommand) {
       );
     break;
 }
-
-/* Notes
-I'm going to have to redo this, but for now I just want to vibe code it in order to see how it is possible to make this. 
-Edit: Code vibing, not vibe coding. That's what I did here.
-*/

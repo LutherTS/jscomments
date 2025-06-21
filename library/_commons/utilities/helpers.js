@@ -2,7 +2,7 @@
 
 /**
  * Terminates the whole process with a 'failure' code (1).
- * @returns {never} Never.
+ * @returns {never} Never. (Somehow typing needs to be explicit for unreachable code inference.)
  */
 export const exitDueToFailure = () => process.exit(1);
 

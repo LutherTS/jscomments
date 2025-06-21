@@ -36,7 +36,7 @@ const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
           },
         },
         rules: {
-          [`${commentVariablesPluginName}/${ruleName}`]: "warn", // doesn't block builds, just applies fix
+          [`${commentVariablesPluginName}/${ruleName}`]: "warn",
         },
       },
       {
