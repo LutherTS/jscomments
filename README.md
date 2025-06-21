@@ -48,7 +48,7 @@ By default, `comment-variables` excludes your config file and all the (JavaScrip
 comment-variables --my-ignores-only
 ```
 
-By default, `comment-variables` includes a preset list of ignored folders ("node_modules", ".next", ".react-router"...). This flag cancels this mechanism so that you can have full control over your ignored files and folders.
+By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). This flag cancels this mechanism so that you can have full control over your ignored files and folders.
 
 _All three flags can be composed together, and with any of the three commands:_
 
