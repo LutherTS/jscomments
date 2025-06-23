@@ -1,13 +1,26 @@
 import { successFalse, successTrue } from "../constants/bases.js";
 import { flattenedConfigKeyRegex } from "../constants/regexes.js";
 
-// import { exitDueToFailure } from "../utilities/helpers.js";
+/**
+ * @typedef {Record<string, unknown>} ConfigDataParamType
+ * @typedef {Map<string, {value: string; source: string}>} ConfigDataMapParamType
+ * @typedef {string[]} ParentKeysParamType
+ *
+ * @typedef {{
+ *   success: false;
+ *   errors: Array<{ type: string; message: string }>;
+ * } | {
+ *   success: true;
+ *   flattenedConfigData: Record<string, string>;
+ *   reversedFlattenedConfigData: Record<string, string>;
+ * }} FlattenConfigDataReturnType
+ */
 
 /**
  * Flattens the config's data property into a one-dimensional object of $COMMENT-*-like keys and string values.
- * @param {Record<string, any>} configData The config's data property. (Values are typed `any` given the limitations in typing recursive values in JSDoc.)
- * @param {Map<string, {value: string; source: string}>} configDataMap The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.
- * @param {string[]} parentKeys The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.
+ * @param {ConfigDataParamType} configData The config's data property. (Values are typed `any` given the limitations in typing recursive values in JSDoc.) // unknown instead of any now.
+ * @param {ConfigDataMapParamType} configDataMap The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.
+ * @param {ParentKeysParamType} parentKeys The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.
  * @returns Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands. // And now, or an error message to can be reused differently on the CLI and the VS Code Extension.
  */
 export const flattenConfigData = (
@@ -25,12 +38,8 @@ export const flattenConfigData = (
 
     if (typeof value === "string") {
       if (configDataMap.has(normalizedKey)) {
-        // console.error(
-        //   `ERROR. The normalized key "${normalizedKey}" has already been assigned. Check between the two following key paths: \n"${
-        //     configDataMap.get(normalizedKey).source
-        //   }" \n"${source}"`
-        // );
-        // exitDueToFailure();
+        // console.log("errors, duplicate normalized key");
+        // checks the uniqueness of each normalized key
         return {
           ...successFalse,
           errors: [
@@ -49,10 +58,13 @@ export const flattenConfigData = (
         source,
       });
     } else if (typeof value === "object" && value && !Array.isArray(value)) {
-      /** @type {Record<string, any>} */
-      const typedValue = value;
+      const typedValue = /** @type {ConfigDataParamType} */ (value);
 
-      flattenConfigData(typedValue, configDataMap, newKeys);
+      const flattenConfigDataResults =
+        /** @type {FlattenConfigDataReturnType} */ (
+          flattenConfigData(typedValue, configDataMap, newKeys)
+        );
+      if (!flattenConfigDataResults.success) return flattenConfigDataResults;
     }
   }
 
@@ -75,13 +87,10 @@ export const flattenConfigData = (
   const flattenedConfigDataValuesArray = Object.values(flattenedConfigData);
   const flattenedConfigDataValuesSet = new Set(flattenedConfigDataValuesArray);
 
-  flattenedConfigDataKeysSet.forEach((key) => {
+  for (const key of flattenedConfigDataKeysSet) {
     if (flattenedConfigDataValuesSet.has(key)) {
+      // console.log("errors, value is also a normalized key");
       // checks the reversability of flattenedConfigData
-      // console.error(
-      //   `ERROR. The key "${key}" is and shouldn't be among the values of flattenedConfigData.`
-      // );
-      // exitDueToFailure();
       return {
         ...successFalse,
         errors: [
@@ -93,11 +102,8 @@ export const flattenConfigData = (
       };
     }
     if (!flattenedConfigKeyRegex.test(key)) {
+      // console.log("errors, invalid format");
       // checks if each key for flattenedConfigData passes the flattenedConfigKeyRegex test
-      // console.error(
-      //   `ERROR. Somehow the key "${key}" is not properly formatted. (This is mostly an internal mistake.)`
-      // );
-      // exitDueToFailure();
       return {
         ...successFalse,
         errors: [
@@ -108,18 +114,15 @@ export const flattenConfigData = (
         ],
       };
     }
-  });
+  }
 
   /** @type {Set<string>} */
   const set = new Set();
 
-  flattenedConfigDataValuesArray.forEach((value) => {
+  for (const value of flattenedConfigDataValuesArray) {
     if (set.has(value)) {
+      console.log("errors, duplicate value");
       // checks that no two values are duplicate
-      // console.error(
-      //   `ERROR. The value "${value}" is already assigned to an existing key.`
-      // );
-      // exitDueToFailure();
       return {
         ...successFalse,
         errors: [
@@ -131,7 +134,7 @@ export const flattenConfigData = (
       };
     }
     set.add(value);
-  });
+  }
 
   // Also including the reversed flattened config data.
 

@@ -16,8 +16,6 @@ export async function resolveConfig(configPath) {
   // Step 1: Checks if config file exists
 
   if (!existsSync(configPath)) {
-    // console.warn("No config file found. Exiting gracefully.");
-    // return null;
     return {
       ...successFalse,
       errors: [
@@ -38,10 +36,6 @@ export async function resolveConfig(configPath) {
 
   // validates config
   if (!config || typeof config !== "object" || Array.isArray(config)) {
-    // console.warn(
-    //   "Invalid config format. The config should be an object. Exiting."
-    // );
-    // return null;
     return {
       ...successFalse,
       errors: [
@@ -58,9 +52,6 @@ export async function resolveConfig(configPath) {
   const configDataResult = ConfigDataSchema.safeParse(config.data);
 
   if (!configDataResult.success) {
-    // console.warn("Config data could not pass validation from zod.");
-    // configDataResult.error.errors.map((e) => console.log(e.message));
-    // return null;
     return {
       ...successFalse,
       errors: [
@@ -82,9 +73,6 @@ export async function resolveConfig(configPath) {
   );
 
   if (!configIgnoresSchemaResult.success) {
-    // console.warn("Config ignores could not pass validation from zod.");
-    // configIgnoresSchemaResult.error.errors.map((e) => console.log(e.message));
-    // return null;
     return {
       ...successFalse,
       errors: [
@@ -103,7 +91,6 @@ export async function resolveConfig(configPath) {
   const flattenedConfigDataResults = flattenConfigData(configDataResult.data);
 
   if (!flattenedConfigDataResults.success) {
-    // return null;
     return flattenedConfigDataResults;
   }
 
