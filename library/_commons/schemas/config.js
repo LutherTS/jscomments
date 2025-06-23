@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-import { configKeyRegex } from "../constants/bases.js";
+// import { configKeyRegex } from "../constants/bases.js";
+import { configKeyRegex } from "../constants/regexes.js";
 
 export const ConfigDataSchema = z
   .lazy(() =>

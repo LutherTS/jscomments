@@ -1,4 +1,5 @@
-import { flattenedConfigKeyRegex } from "../constants/bases.js";
+// import { flattenedConfigKeyRegex } from "../constants/bases.js";
+import { flattenedConfigKeyRegex } from "../constants/regexes.js";
 
 import { exitDueToFailure } from "../utilities/helpers.js";
 

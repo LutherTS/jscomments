@@ -1,4 +1,4 @@
-import { placeholderMessageId } from "../constants/bases.js";
+import { placeholderMessageId, $COMMENT } from "../constants/bases.js";
 
 import { escapeRegex } from "..//utilities/helpers.js";
 
@@ -49,7 +49,7 @@ const makeRule = (reversedFlattenedConfigData) => {
 
           fixedText = fixedText.replace(pattern, () => {
             modified = true;
-            return `$COMMENT#${commentKey}`;
+            return `${$COMMENT}#${commentKey}`;
           });
         }
 

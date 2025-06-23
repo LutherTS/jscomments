@@ -7,18 +7,18 @@ import {
   cwd,
   hasPackageJson,
   hasGitFolder,
-  defaultConfigFileName,
-  configFlag,
-  lintConfigImportsFlag,
-  myIgnoresOnlyFlag,
-  knownIgnores,
+  defaultConfigFileName, // shared
+  configFlag, // shared
+  lintConfigImportsFlag, // shared
+  myIgnoresOnlyFlag, // shared
+  knownIgnores, // shared
   resolveRuleName,
   compressRuleName,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure } from "./_commons/utilities/helpers.js";
-import { resolveConfig } from "./_commons/utilities/resolve-config.js";
-import { findAllImports } from "./_commons/utilities/find-all-imports.js";
+import { resolveConfig } from "./_commons/utilities/resolve-config.js"; // shared
+import { findAllImports } from "./_commons/utilities/find-all-imports.js"; // own package
 import {
   resolveCommentsFlow,
   compressCommentsFlow,
@@ -62,9 +62,7 @@ const passedConfigPath =
 const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
 const results = await resolveConfig(rawConfigPath);
-if (!results) {
-  exitDueToFailure();
-}
+if (!results) exitDueToFailure();
 
 const {
   config,
@@ -75,9 +73,12 @@ const {
 } = results;
 
 skipDetails || console.log("Running with config:", config);
-skipDetails || console.log("Flattened config is:", flattenedConfigData);
+skipDetails || console.log("Flattened config data is:", flattenedConfigData);
 skipDetails ||
-  console.log("Reversed flattened config is:", reversedFlattenedConfigData);
+  console.log(
+    "Reversed flattened config data is:",
+    reversedFlattenedConfigData
+  );
 skipDetails || console.log("Config path is:", configPath);
 skipDetails || console.log("Passed ignores are:", passedIgnores);
 
