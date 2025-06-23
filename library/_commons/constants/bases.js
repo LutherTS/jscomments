@@ -73,3 +73,11 @@ export const placeholderMessageId = "placeholderMessageId";
 
 // placeholder prefix
 export const $COMMENT = "$COMMENT";
+
+// success objects
+export const successFalse = Object.freeze({
+  success: false,
+});
+export const successTrue = Object.freeze({
+  success: true,
+});

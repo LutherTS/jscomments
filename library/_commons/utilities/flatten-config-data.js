@@ -1,14 +1,14 @@
-// import { flattenedConfigKeyRegex } from "../constants/bases.js";
+import { successFalse, successTrue } from "../constants/bases.js";
 import { flattenedConfigKeyRegex } from "../constants/regexes.js";
 
-import { exitDueToFailure } from "../utilities/helpers.js";
+// import { exitDueToFailure } from "../utilities/helpers.js";
 
 /**
  * Flattens the config's data property into a one-dimensional object of $COMMENT-*-like keys and string values.
  * @param {Record<string, any>} configData The config's data property. (Values are typed `any` given the limitations in typing recursive values in JSDoc.)
  * @param {Map<string, {value: string; source: string}>} configDataMap The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.
  * @param {string[]} parentKeys The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.
- * @returns Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands.
+ * @returns Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands. // And now, or an error message to can be reused differently on the CLI and the VS Code Extension.
  */
 export const flattenConfigData = (
   configData,
@@ -25,12 +25,23 @@ export const flattenConfigData = (
 
     if (typeof value === "string") {
       if (configDataMap.has(normalizedKey)) {
-        console.error(
-          `ERROR. The normalized key "${normalizedKey}" has already been assigned. Check between the two following key paths: \n"${
-            configDataMap.get(normalizedKey).source
-          }" \n"${source}"`
-        );
-        exitDueToFailure();
+        // console.error(
+        //   `ERROR. The normalized key "${normalizedKey}" has already been assigned. Check between the two following key paths: \n"${
+        //     configDataMap.get(normalizedKey).source
+        //   }" \n"${source}"`
+        // );
+        // exitDueToFailure();
+        return {
+          ...successFalse,
+          errors: [
+            {
+              type: "error",
+              message: `ERROR. The normalized key "${normalizedKey}" has already been assigned. Check between the two following key paths: \n"${
+                configDataMap.get(normalizedKey).source
+              }" \n"${source}"`,
+            },
+          ],
+        };
       }
 
       configDataMap.set(normalizedKey, {
@@ -65,19 +76,37 @@ export const flattenConfigData = (
   const flattenedConfigDataValuesSet = new Set(flattenedConfigDataValuesArray);
 
   flattenedConfigDataKeysSet.forEach((key) => {
-    // checks the reversability of flattenedConfigData
     if (flattenedConfigDataValuesSet.has(key)) {
-      console.error(
-        `ERROR. The key "${key}" is and shouldn't be among the values of flattenedConfigData.`
-      );
-      exitDueToFailure();
+      // checks the reversability of flattenedConfigData
+      // console.error(
+      //   `ERROR. The key "${key}" is and shouldn't be among the values of flattenedConfigData.`
+      // );
+      // exitDueToFailure();
+      return {
+        ...successFalse,
+        errors: [
+          {
+            type: "error",
+            message: `ERROR. The key "${key}" is and shouldn't be among the values of flattenedConfigData.`,
+          },
+        ],
+      };
     }
     if (!flattenedConfigKeyRegex.test(key)) {
       // checks if each key for flattenedConfigData passes the flattenedConfigKeyRegex test
-      console.error(
-        `ERROR. Somehow the key "${key}" is not properly formatted. (This is mostly an internal mistake.)`
-      );
-      exitDueToFailure();
+      // console.error(
+      //   `ERROR. Somehow the key "${key}" is not properly formatted. (This is mostly an internal mistake.)`
+      // );
+      // exitDueToFailure();
+      return {
+        ...successFalse,
+        errors: [
+          {
+            type: "error",
+            message: `ERROR. Somehow the key "${key}" is not properly formatted. (This is mostly an internal mistake.)`,
+          },
+        ],
+      };
     }
   });
 
@@ -87,10 +116,19 @@ export const flattenConfigData = (
   flattenedConfigDataValuesArray.forEach((value) => {
     if (set.has(value)) {
       // checks that no two values are duplicate
-      console.error(
-        `ERROR. The value "${value}" is already assigned to an existing key.`
-      );
-      exitDueToFailure();
+      // console.error(
+      //   `ERROR. The value "${value}" is already assigned to an existing key.`
+      // );
+      // exitDueToFailure();
+      return {
+        ...successFalse,
+        errors: [
+          {
+            type: "error",
+            message: `ERROR. The value "${value}" is already assigned to an existing key.`,
+          },
+        ],
+      };
     }
     set.add(value);
   });
@@ -102,6 +140,7 @@ export const flattenConfigData = (
   );
 
   return {
+    ...successTrue,
     flattenedConfigData,
     reversedFlattenedConfigData,
   };

@@ -61,8 +61,14 @@ const passedConfigPath =
 // defaults to comments.config.js if no --config flag is set
 const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
-const results = await resolveConfig(rawConfigPath);
-if (!results) exitDueToFailure();
+const resolveConfigResults = await resolveConfig(rawConfigPath);
+if (!resolveConfigResults.success) {
+  resolveConfigResults.errors.forEach((e) => {
+    if (e.type === "error") console.error(e.message);
+    if (e.type === "warning") console.warn(e.message);
+  });
+  exitDueToFailure();
+}
 
 const {
   config,
@@ -70,7 +76,7 @@ const {
   reversedFlattenedConfigData,
   configPath,
   passedIgnores,
-} = results;
+} = resolveConfigResults;
 
 skipDetails || console.log("Running with config:", config);
 skipDetails || console.log("Flattened config data is:", flattenedConfigData);
