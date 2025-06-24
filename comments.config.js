@@ -75,7 +75,7 @@ const data = {
       configDataMapOption:
         "The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.", // $COMMENT#JSDOC#PARAMS#CONFIGDATAMAPOPTION
       parentKeysOption:
-        "The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings. (`[]`)", // $COMMENT#JSDOC#PARAMS#PARENTKEYSOPTION
+        "The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings (`[]`).", // $COMMENT#JSDOC#PARAMS#PARENTKEYSOPTION
       configPath:
         'The path of the config from `comments.config.js`, or from a config passed via the `--config` flag in the CLI, or from one passed via `"commentVariables.config": true` in `.vscode/settings.json` for the VS Code Extension.', // $COMMENT#JSDOC#PARAMS#CONFIGPATH
       options: "The additional options as follows:", // $COMMENT#JSDOC#PARAMS#OPTIONS
@@ -90,11 +90,11 @@ const data = {
       makeRuleCompress:
         "The compress rule based on the reversed flattened config data.", // $COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS
       findAllImports:
-        "The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.", // $COMMENT#JSDOC#RETURNS#FINDALLIMPORTS
+        "The complete set of strings of import paths recursively related to the given file path in a success object (`success: true`). Errors are bubbled up during failures in a failure object (`success: false`).", // $COMMENT#JSDOC#RETURNS#FINDALLIMPORTS
       processImport:
         "`true` to continue to the next operation, `false` to stop the whole `findAllImports` process.", // $COMMENT#JSDOC#RETURNS#PROCESSIMPORT
       flattenConfigData:
-        "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands. Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension.", // $COMMENT#JSDOC#RETURNS#FLATTENCONFIGDATA
+        "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands in a success object (`success: true`). Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension in a failure object (`success: false`).", // $COMMENT#JSDOC#RETURNS#FLATTENCONFIGDATA
       resolveConfig:
         "The flattened config data, the reverse flattened config data, the verified config path, the raw passed ignores, and the original config. Errors are returned during failures so they can be reused differently on the CLI and the VS Code Extension.", // $COMMENT#JSDOC#RETURNS#RESOLVECONFIG
     }),

@@ -88,9 +88,21 @@ skipDetails || console.log("Passed ignores are:", passedIgnores);
 // ADDRESSES THE --lint-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
 const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
-const rawConfigPathIgnores = lintConfigImports
-  ? [configPath]
-  : [...(findAllImports(configPath) ?? [configPath])];
+let rawConfigPathIgnores = [configPath];
+
+if (!lintConfigImports) {
+  const findAllImportsResults = findAllImports(configPath);
+  if (!findAllImportsResults.success) {
+    findAllImportsResults.errors.forEach((e) => logError(e));
+    console.warn(
+      "Defaulting to --lint-config-imports flag behavior, not ignoring config path imports, only the config path itself."
+    );
+  } else {
+    rawConfigPathIgnores = [...findAllImportsResults.visitedSet] ?? [
+      configPath,
+    ];
+  }
+}
 
 // the ignore paths must be relative
 const configPathIgnores = rawConfigPathIgnores.map((e) =>

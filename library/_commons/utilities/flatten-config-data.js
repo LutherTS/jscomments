@@ -2,9 +2,7 @@ import { successFalse, successTrue, typeError } from "../constants/bases.js";
 import { flattenedConfigKeyRegex } from "../constants/regexes.js";
 
 /**
- * @typedef {Record<string, unknown>} ConfigDataParamType
- * @typedef {Map<string, {value: string; source: string}>} ConfigDataMapParamType
- * @typedef {string[]} ParentKeysParamType
+ * @typedef {Record<string, unknown>} ConfigData
  *
  * @typedef {{
  *   success: false;
@@ -13,26 +11,21 @@ import { flattenedConfigKeyRegex } from "../constants/regexes.js";
  *   success: true;
  *   flattenedConfigData: Record<string, string>;
  *   reversedFlattenedConfigData: Record<string, string>;
- * }} FlattenConfigDataReturnType
+ * }} FlattenConfigDataResults
  */
 
 /**
  * Flattens the config's data property into a one-dimensional object of $COMMENT-*-like keys and string values.
- * @param {ConfigDataParamType} configData The config's data property. (Values are typed `unknown` given the limitations in typing recursive values in JSDoc.)
- * @param {{configDataMap: ConfigDataMapParamType; parentKeys: ParentKeysParamType}} options The additional options as follows:
- * - `configDataMap`: The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.
- * - `parentKeys`: The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings. (`[]`)
- * @returns Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands. Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension.
+ * @param {ConfigData} configData The config's data property. (Values are typed `unknown` given the limitations in typing recursive values in JSDoc.)
+ * @param {Object} [options] The additional options as follows:
+ * @param {Map<string, {value: string; source: string}>} [options.configDataMap] The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.
+ * @param {string[]} [options.parentKeys] The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings (`[]`).
+ * @returns Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands in a success object (`success: true`). Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension in a failure object (`success: false`).
  */
 export const flattenConfigData = (
   configData,
-  options = {
-    configDataMap: new Map(),
-    parentKeys: [],
-  }
+  { configDataMap = new Map(), parentKeys = [] } = {}
 ) => {
-  const { configDataMap, parentKeys } = options;
-
   for (const [key, value] of Object.entries(configData)) {
     const newKeys = [...parentKeys, key];
     const normalizedKey = newKeys
@@ -43,7 +36,6 @@ export const flattenConfigData = (
 
     if (typeof value === "string") {
       if (configDataMap.has(normalizedKey)) {
-        // console.log("errors, duplicate normalized key");
         // checks the uniqueness of each normalized key
         return {
           ...successFalse,
@@ -63,13 +55,12 @@ export const flattenConfigData = (
         source,
       });
     } else if (typeof value === "object" && value && !Array.isArray(value)) {
-      const subConfigData = /** @type {ConfigDataParamType} */ (value);
-      const flattenConfigDataOptions = { ...options, parentKeys: newKeys };
+      const subConfigData = /** @type {ConfigData} */ (value);
+      const flattenConfigDataOptions = { configDataMap, parentKeys: newKeys };
 
-      const flattenConfigDataResults =
-        /** @type {FlattenConfigDataReturnType} */ (
-          flattenConfigData(subConfigData, flattenConfigDataOptions)
-        );
+      const flattenConfigDataResults = /** @type {FlattenConfigDataResults} */ (
+        flattenConfigData(subConfigData, flattenConfigDataOptions)
+      );
       if (!flattenConfigDataResults.success) return flattenConfigDataResults;
     }
   }
@@ -95,7 +86,6 @@ export const flattenConfigData = (
 
   for (const key of flattenedConfigDataKeysSet) {
     if (flattenedConfigDataValuesSet.has(key)) {
-      // console.log("errors, value is also a normalized key");
       // checks the reversability of flattenedConfigData
       return {
         ...successFalse,
@@ -108,7 +98,6 @@ export const flattenConfigData = (
       };
     }
     if (!flattenedConfigKeyRegex.test(key)) {
-      // console.log("errors, invalid format");
       // checks if each key for flattenedConfigData passes the flattenedConfigKeyRegex test
       return {
         ...successFalse,

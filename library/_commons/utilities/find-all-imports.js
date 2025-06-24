@@ -4,9 +4,19 @@ import path from "path";
 import { resolveImportingPath } from "resolve-importing-path";
 import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
 
-/* findAllImports */
-// IMPORTANT. findAllImports needs to be able to take a callback function that it can play at every recursion to find the corresponding value for go-to-definitions. But that's on the roadmap, not in the first release. The first implementation of this pinpoint go-to-definition mechanism will be made but analyzing each path obtained rather than by doing so as the paths are being obtained.
-// At that time, findAllImports will still take importPath as its first argument, but everything else that is currently optional will need to be inside an object...? Or what if I were to just do this now? And to do the same with all of my recursive, pre-parameterized arguments?
+import { successFalse, successTrue, typeWarning } from "../constants/bases.js";
+
+/**
+ * @typedef {{
+ *   success: false;
+ *   errors: Array<{ message: string; type: "warning";}>;
+ * } | {
+ *   success: true;
+ *   visitedSet: Set<string>;
+ * }} FindAllImportsResults
+ */
+
+// IMPORTANT. findAllImports needs to be able to take a callback function that it can play at every recursion to find the corresponding value for go-to-definitions. But that's on the roadmap, not in the first release. The first implementation of this pinpoint go-to-definition mechanism will be made by analyzing each path obtained rather than by doing so as the paths are being obtained.
 
 /**
  * Processes recursively and resolves a single import path. (Unlike `findAllImports`, here `currentDir`, `cwd`, `visitedSet`, `depth`, and `maxDepth` aren't options because they are mandatory and not pre-parameterized.)
@@ -14,10 +24,10 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
  * @param {Object} settings The required settings as follows:
  * @param {string} settings.currentDir The directory containing the import path currently being addressed.
  * @param {string} settings.cwd The current working directory.
- * @param {string} settings.visitedSet The set of strings tracking the import paths that have already been visited.
- * @param {string} settings.depth The current depth of the recursion.
- * @param {string} settings.maxDepth The maximum depth allowed for the recursion.
- * @returns `true` to continue to the next operation, `false` to stop the whole `findAllImports` process.
+ * @param {Set<string>} settings.visitedSet The set of strings tracking the import paths that have already been visited.
+ * @param {number} settings.depth The current depth of the recursion.
+ * @param {number} settings.maxDepth The maximum depth allowed for the recursion.
+ * @returns `true` to continue to the next operation, `false` to stop the whole `findAllImports` process. //
  */
 const processImport = (
   importPath,
@@ -26,7 +36,7 @@ const processImport = (
   // Resolves the provided import path.
   const resolvedPath = resolveImportingPath(currentDir, importPath, cwd);
   // Returns true early to skip processing on unresolved paths.
-  if (!resolvedPath) return true;
+  if (!resolvedPath) return { ...successTrue, visitedSet };
 
   // Establishes the options for the next round of findAllImports.
   const findAllImportsOptions = {
@@ -37,12 +47,11 @@ const processImport = (
   };
 
   // Runs findAllImports on the imported path resolved, thus recursively.
-  const findAllImportsResults = findAllImports(
-    resolvedPath,
-    findAllImportsOptions
+  const findAllImportsResults = /** @type {FindAllImportsResults} */ (
+    findAllImports(resolvedPath, findAllImportsOptions)
   );
   // Returns true if the round of findAllImports succeeded, false if it failed.
-  return findAllImportsResults !== null;
+  return findAllImportsResults;
 };
 
 /**
@@ -53,9 +62,8 @@ const processImport = (
  * @param {Set<string>} [options.visitedSet] The current working directory, set as `process.cwd()` by default.
  * @param {number} [options.depth] The current depth of the recursion, instantiated at `0` by default.
  * @param {number} [options.maxDepth] The maximum depth allowed for the recursion, instantiated at `100` by default.
- * @returns The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.
+ * @returns The complete set of strings of import paths recursively related to the given file path in a success object (`success: true`). Errors are bubbled up during failures in a failure object (`success: false`).
  */
-
 export const findAllImports = (
   filePath,
   {
@@ -67,24 +75,49 @@ export const findAllImports = (
 ) => {
   // Fails early if max depth is recursively reached.
   if (depth > maxDepth) {
-    console.warn(`WARNING. Max depth ${maxDepth} reached at ${filePath}.`);
-    return null;
+    return {
+      ...successFalse,
+      errors: [
+        {
+          ...typeWarning,
+          message: `WARNING. Max depth ${maxDepth} reached at ${filePath}.`,
+        },
+      ],
+    };
   }
   // Fails early if no file is found.
   if (!fs.existsSync(filePath)) {
-    console.warn(`WARNING. File not found at ${filePath}.`);
-    return null;
+    return {
+      ...successFalse,
+      errors: [
+        {
+          ...typeWarning,
+          message: `WARNING. File not found at ${filePath}.`,
+        },
+      ],
+    };
+  }
+  // Returns the existing set directly if a path has already been visited.
+  if (visitedSet.has(filePath)) {
+    return { ...successTrue, visitedSet };
   }
 
   // Updates the visited set.
-  if (visitedSet.has(filePath)) return visitedSet;
   visitedSet.add(filePath);
 
   // Parses the file's source code AST.
   const sourceCode = getSourceCodeFromFilePath(filePath);
+  // Fails early there is no AST.
   if (!sourceCode?.ast) {
-    console.warn(`WARNING. Failed to parse AST for ${filePath}.`);
-    return null;
+    return {
+      ...successFalse,
+      errors: [
+        {
+          ...typeWarning,
+          message: `WARNING. Failed to parse AST for ${filePath}.`,
+        },
+      ],
+    };
   }
 
   // Makes the joint settings for the conditional calls of processImport.
@@ -100,8 +133,12 @@ export const findAllImports = (
   for (const node of sourceCode.ast.body) {
     // ES Modules (import x from 'y')
     if (node.type === "ImportDeclaration") {
-      if (!processImport(node.source.value, processImportSettings)) {
-        return null;
+      const processImportResults = processImport(
+        node.source.value,
+        processImportSettings
+      );
+      if (!processImportResults) {
+        return processImportResults;
       }
     }
 
@@ -112,16 +149,15 @@ export const findAllImports = (
       node.expression.callee.name === "require" &&
       node.expression.arguments[0]?.type === "Literal"
     ) {
-      if (
-        !processImport(
-          node.expression.arguments[0].value,
-          processImportSettings
-        )
-      ) {
-        return null;
+      const processImportResults = processImport(
+        node.expression.arguments[0].value,
+        processImportSettings
+      );
+      if (!processImportResults) {
+        return processImportResults;
       }
     }
   }
 
-  return visitedSet; // success
+  return { ...successTrue, visitedSet };
 };
