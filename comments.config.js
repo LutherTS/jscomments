@@ -72,10 +72,10 @@ const data = {
       maxDepthSetting: "The maximum depth allowed for the recursion.", // $COMMENT#JSDOC#PARAMS#MAXDEPTHSETTING
       configData:
         "The config's data property. (Values are typed `unknown` given the limitations in typing recursive values in JSDoc.)", // $COMMENT#JSDOC#PARAMS#CONFIGDATA
-      configDataMap:
-        "The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.", // $COMMENT#JSDOC#PARAMS#CONFIGDATAMAP
-      parentKeys:
-        "The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.", // $COMMENT#JSDOC#PARAMS#PARENTKEYS
+      configDataMapOption:
+        "The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.", // $COMMENT#JSDOC#PARAMS#CONFIGDATAMAPOPTION
+      parentKeysOption:
+        "The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings. (`[]`)", // $COMMENT#JSDOC#PARAMS#PARENTKEYSOPTION
       configPath:
         'The path of the config from `comments.config.js`, or from a config passed via the `--config` flag in the CLI, or from one passed via `"commentVariables.config": true` in `.vscode/settings.json` for the VS Code Extension.', // $COMMENT#JSDOC#PARAMS#CONFIGPATH
       options: "The additional options as follows:", // $COMMENT#JSDOC#PARAMS#OPTIONS
