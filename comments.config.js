@@ -52,16 +52,22 @@ const data = {
         "Either the flattened config data or the reversed flattened config data, since they share the same structure.", // $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA
       filePath:
         "The absolute path of the file whose imports are being recursively found, such as that of a project's `comments.config.js` file.", // $COMMENT#JSDOC#PARAMS#FILEPATH
-      cwd: "The current working directory, set as `process.cwd()` by default.", // $COMMENT#JSDOC#PARAMS#CWD
-      visitedSet:
-        "The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.", // $COMMENT#JSDOC#PARAMS#VISITEDSET
-      depth:
-        "The current depth of the recursion, instantiated at `0` by default.", // $COMMENT#JSDOC#PARAMS#DEPTH
-      maxDepth:
-        "The maximum depth allowed for the recursion, instantiated at `100` by default.", // $COMMENT#JSDOC#PARAMS#MAXDEPTH
+      cwdOption:
+        "The current working directory, set as `process.cwd()` by default.", // $COMMENT#JSDOC#PARAMS#CWDOPTION
+      visitedSetOption:
+        "The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.", // $COMMENT#JSDOC#PARAMS#VISITEDSETOPTION
+      depthOption:
+        "The current depth of the recursion, instantiated at `0` by default.", // $COMMENT#JSDOC#PARAMS#DEPTHOPTION
+      maxDepthOption:
+        "The maximum depth allowed for the recursion, instantiated at `100` by default.", // $COMMENT#JSDOC#PARAMS#MAXDEPTHOPTION
       importPath: "The import path currently being addressed.", // $COMMENT#JSDOC#PARAMS#IMPORTPATH
-      currentDir:
-        "The directory containing the import path currently being addressed.", // $COMMENT#JSDOC#PARAMS#CURRENTDIR
+      currentDirSetting:
+        "The directory containing the import path currently being addressed.", // $COMMENT#JSDOC#PARAMS#CURRENTDIRSETTING
+      cwdSetting: "The current working directory.", // $COMMENT#JSDOC#PARAMS#CWDSETTING
+      visitedSetSetting:
+        "The set of strings tracking the import paths that have already been visited.", // $COMMENT#JSDOC#PARAMS#VISITEDSETSETTING
+      depthSetting: "The current depth of the recursion.", // $COMMENT#JSDOC#PARAMS#DEPTHSETTING
+      maxDepthSetting: "The maximum depth allowed for the recursion.", // $COMMENT#JSDOC#PARAMS#MAXDEPTHSETTING
       configData:
         "The config's data property. (Values are typed `unknown` given the limitations in typing recursive values in JSDoc.)", // $COMMENT#JSDOC#PARAMS#CONFIGDATA
       configDataMap:
@@ -70,6 +76,8 @@ const data = {
         "The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.", // $COMMENT#JSDOC#PARAMS#PARENTKEYS
       configPath:
         'The path of the config from `comments.config.js`, or from a config passed via the `--config` flag in the CLI, or from one passed via `"commentVariables.config": true` in `.vscode/settings.json` for the VS Code Extension.', // $COMMENT#JSDOC#PARAMS#CONFIGPATH
+      options: "The additional options as follows:", // $COMMENT#JSDOC#PARAMS#OPTIONS
+      settings: "The required settings as follows:", // $COMMENT#JSDOC#PARAMS#SETTINGS
     }),
     returns: Object.freeze({
       exitDueToFailure:
