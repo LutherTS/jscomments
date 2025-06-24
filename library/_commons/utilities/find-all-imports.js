@@ -11,42 +11,48 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
 /**
  * Processes recursively and resolves a single import path. (Unlike `findAllImports`, here `currentDir`, `cwd`, `visitedSet`, `depth`, and `maxDepth` aren't options because they are mandatory and not pre-parameterized.)
  * @param {string} importPath The import path currently being addressed.
- * @param {string} currentDir The directory containing the import path currently being addressed.
- * @param {string} cwd The current working directory, set as `process.cwd()` by default.
- * @param {Set<string>} visitedSet The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.
- * @param {number} depth The current depth of the recursion, instantiated at `0` by default.
- * @param {number} maxDepth The maximum depth allowed for the recursion, instantiated at `100` by default.
+ * @param {{currentDir: string; cwd: string; visitedSet: Set<string>; depth: number; maxDepth: number}} settings The required settings as follows:
+ * - `currentDir`: The directory containing the import path currently being addressed.
+ * - `cwd`: The current working directory.
+ * - `visitedSet`: The set of strings tracking the import paths that have already been visited.
+ * - `depth`: The current depth of the recursion.
+ * - `maxDepth`: The maximum depth allowed for the recursion.
  * @returns `true` to skip unresolved paths, `false` if resolution fails at any level.
  */
-const processImport = (
-  importPath,
-  currentDir,
-  cwd,
-  visitedSet,
-  depth,
-  maxDepth
-) => {
+const processImport = (importPath, settings) => {
+  // Isolates currentDir from the rest of the settings.
+  const { currentDir, ...settingsRest } = settings;
+  // Obtains passed arguments from the rest of the settings.
+  const { cwd, depth } = settingsRest;
+
+  // Resolves the provides import path.
   const resolvedPath = resolveImportingPath(currentDir, importPath, cwd);
+  // Returns true to skip processing on unresolved paths.
   if (!resolvedPath) return true;
 
-  const result = findAllImports(
+  // Establishes the options for the next round of findAllImports.
+  const findAllImportsOptions = {
+    ...settingsRest,
+    depth: depth + 1,
+  };
+
+  // Runs findAllImports on the imported path resolved, thus recursively.
+  const findAllImportsResults = findAllImports(
     resolvedPath,
-    cwd,
-    visitedSet,
-    depth + 1,
-    maxDepth
+    findAllImportsOptions
   );
-  return result !== null; // Returns false if child failed.
+  // Returns false if child processing failed.
+  return findAllImportsResults !== null;
 };
 
 /**
  * Finds all import paths recursively related to a given file path.
  * @param {string} filePath The absolute path of the file whose imports are being recursively found, such as that of a project's `comments.config.js` file.
- * @param {string} cwd The current working directory, set as `process.cwd()` by default.
- * @param {Set<string>} visitedSet The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.
- * @param {number} depth The current depth of the recursion, instantiated at `0` by default.
- * @param {number} maxDepth The maximum depth allowed for the recursion, instantiated at `100` by default.
- * @param {{cwd: string; visitedSet: Set<string>; depth: number; maxDepth: number}} options
+ * @param {{cwd: string; visitedSet: Set<string>; depth: number; maxDepth: number}} options The additional options as follows:
+ * - `cwd`: The current working directory, set as `process.cwd()` by default.
+ * - `visitedSet`: The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.
+ * - `depth`: The current depth of the recursion, instantiated at `0` by default.
+ * - `maxDepth`: The maximum depth allowed for the recursion, instantiated at `100` by default.
  * @returns The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.
  */
 export const findAllImports = (
@@ -58,8 +64,8 @@ export const findAllImports = (
     maxDepth: 100,
   }
 ) => {
-  // Obtained the pre-paramaterized arguments from the options.
-  const { cwd, visitedSet, depth, maxDepth } = options;
+  // Obtains the pre-paramaterized arguments from the options.
+  const { visitedSet, depth, maxDepth } = options;
 
   // Fails early if max depth is recursively reached.
   if (depth > maxDepth) {
@@ -83,21 +89,17 @@ export const findAllImports = (
     return null;
   }
 
+  // Makes the joint settings for the conditional calls of processImport.
+  const processImportSettings = {
+    ...options,
+    currentDir: path.dirname(filePath),
+  };
+
   // Processes all imports.
-  const currentDir = path.dirname(filePath);
   for (const node of sourceCode.ast.body) {
     // ES Modules (import x from 'y')
     if (node.type === "ImportDeclaration") {
-      if (
-        !processImport(
-          node.source.value,
-          currentDir,
-          cwd,
-          visitedSet,
-          depth,
-          maxDepth
-        )
-      ) {
+      if (!processImport(node.source.value, processImportSettings)) {
         return null;
       }
     }
@@ -112,11 +114,7 @@ export const findAllImports = (
       if (
         !processImport(
           node.expression.arguments[0].value,
-          currentDir,
-          cwd,
-          visitedSet,
-          depth,
-          maxDepth
+          processImportSettings
         )
       ) {
         return null;
