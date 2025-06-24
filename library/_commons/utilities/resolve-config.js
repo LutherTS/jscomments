@@ -1,7 +1,7 @@
-import { existsSync } from "fs";
-import { pathToFileURL } from "url";
+import fs from "fs";
+import url from "url";
 
-import { successFalse } from "../constants/bases.js";
+import { successFalse, typeError } from "../constants/bases.js";
 
 import { flattenConfigData } from "./flatten-config-data.js";
 
@@ -15,12 +15,12 @@ import { ConfigDataSchema, ConfigIgnoresSchema } from "../schemas/config.js";
 export async function resolveConfig(configPath) {
   // Step 1: Checks if config file exists
 
-  if (!existsSync(configPath)) {
+  if (!fs.existsSync(configPath)) {
     return {
       ...successFalse,
       errors: [
         {
-          type: "error",
+          ...typeError,
           message: "ERROR. No config file found.",
         },
       ],
@@ -29,8 +29,10 @@ export async function resolveConfig(configPath) {
 
   // Step 2: Imports the config dynamically
 
-  const configModule = await import(pathToFileURL(configPath));
-  const config = configModule.default;
+  const configModule = /** @type {unknown} */ (
+    await import(url.pathToFileURL(configPath))
+  );
+  const config = /** @type {unknown} */ (configModule.default);
 
   // Step 3: Validates config object
 
@@ -40,7 +42,7 @@ export async function resolveConfig(configPath) {
       ...successFalse,
       errors: [
         {
-          type: "error",
+          ...typeError,
           message:
             "ERROR. Invalid config format. The config should be an object.",
         },
@@ -56,11 +58,11 @@ export async function resolveConfig(configPath) {
       ...successFalse,
       errors: [
         {
-          type: "error",
+          ...typeError,
           message: "ERROR. Config data could not pass validation from zod.",
         },
         ...configDataResult.error.errors.map((e) => ({
-          type: "error",
+          ...typeError,
           message: e.message,
         })),
       ],
@@ -77,11 +79,11 @@ export async function resolveConfig(configPath) {
       ...successFalse,
       errors: [
         {
-          type: "error",
+          ...typeError,
           message: "ERROR. Config ignores could not pass validation from zod.",
         },
         ...configIgnoresSchemaResult.error.errors.map((e) => ({
-          type: "error",
+          ...typeError,
           message: e.message,
         })),
       ],

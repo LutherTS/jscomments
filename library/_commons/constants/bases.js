@@ -81,3 +81,11 @@ export const successFalse = Object.freeze({
 export const successTrue = Object.freeze({
   success: true,
 });
+
+// error objects // comment-variables-resolve-config
+export const typeError = Object.freeze({
+  type: "error",
+});
+export const typeWarning = Object.freeze({
+  type: "warning",
+});

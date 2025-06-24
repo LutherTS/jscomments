@@ -1,4 +1,4 @@
-import { successFalse, successTrue } from "../constants/bases.js";
+import { successFalse, successTrue, typeError } from "../constants/bases.js";
 import { flattenedConfigKeyRegex } from "../constants/regexes.js";
 
 /**
@@ -8,7 +8,7 @@ import { flattenedConfigKeyRegex } from "../constants/regexes.js";
  *
  * @typedef {{
  *   success: false;
- *   errors: Array<{ type: string; message: string }>;
+ *   errors: Array<{ type: "error" | "warning"; message: string }>;
  * } | {
  *   success: true;
  *   flattenedConfigData: Record<string, string>;
@@ -44,7 +44,7 @@ export const flattenConfigData = (
           ...successFalse,
           errors: [
             {
-              type: "error",
+              ...typeError,
               message: `ERROR. The normalized key "${normalizedKey}" has already been assigned. Check between the two following key paths: \n"${
                 configDataMap.get(normalizedKey).source
               }" \n"${source}"`,
@@ -95,7 +95,7 @@ export const flattenConfigData = (
         ...successFalse,
         errors: [
           {
-            type: "error",
+            ...typeError,
             message: `ERROR. The key "${key}" is and shouldn't be among the values of flattenedConfigData.`,
           },
         ],
@@ -108,7 +108,7 @@ export const flattenConfigData = (
         ...successFalse,
         errors: [
           {
-            type: "error",
+            ...typeError,
             message: `ERROR. Somehow the key "${key}" is not properly formatted. (This is mostly an internal mistake.)`,
           },
         ],
@@ -127,7 +127,7 @@ export const flattenConfigData = (
         ...successFalse,
         errors: [
           {
-            type: "error",
+            ...typeError,
             message: `ERROR. The value "${value}" is already assigned to an existing key.`,
           },
         ],

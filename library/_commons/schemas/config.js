@@ -5,7 +5,7 @@ import { configKeyRegex } from "../constants/regexes.js";
 export const ConfigDataSchema = z
   .lazy(() =>
     z.record(
-      z.any().superRefine((val, ctx) => {
+      z.unknown().superRefine((val, ctx) => {
         if (typeof val === "string") {
           return;
         }
