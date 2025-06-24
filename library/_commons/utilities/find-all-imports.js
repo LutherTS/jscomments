@@ -17,7 +17,7 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
  * - `visitedSet`: The set of strings tracking the import paths that have already been visited.
  * - `depth`: The current depth of the recursion.
  * - `maxDepth`: The maximum depth allowed for the recursion.
- * @returns `true` to skip unresolved paths, `false` if resolution fails at any level.
+ * @returns `true` to continue to the next operation, `false` to stop the whole `findAllImports` process.
  */
 const processImport = (importPath, settings) => {
   // Isolates currentDir from the rest of the settings.
@@ -25,9 +25,9 @@ const processImport = (importPath, settings) => {
   // Obtains passed arguments from the rest of the settings.
   const { cwd, depth } = settingsRest;
 
-  // Resolves the provides import path.
+  // Resolves the provided import path.
   const resolvedPath = resolveImportingPath(currentDir, importPath, cwd);
-  // Returns true to skip processing on unresolved paths.
+  // Returns true early to skip processing on unresolved paths.
   if (!resolvedPath) return true;
 
   // Establishes the options for the next round of findAllImports.
@@ -41,7 +41,7 @@ const processImport = (importPath, settings) => {
     resolvedPath,
     findAllImportsOptions
   );
-  // Returns false if child processing failed.
+  // Returns true if the round of findAllImports succeeded, false if it failed.
   return findAllImportsResults !== null;
 };
 
@@ -69,12 +69,12 @@ export const findAllImports = (
 
   // Fails early if max depth is recursively reached.
   if (depth > maxDepth) {
-    console.error(`ERROR. Max depth ${maxDepth} reached at ${filePath}.`);
+    console.warn(`WARNING. Max depth ${maxDepth} reached at ${filePath}.`);
     return null;
   }
   // Fails early if no file is found.
   if (!fs.existsSync(filePath)) {
-    console.error(`ERROR. File not found at ${filePath}.`);
+    console.warn(`WARNING. File not found at ${filePath}.`);
     return null;
   }
 
@@ -85,7 +85,7 @@ export const findAllImports = (
   // Parses the file's source code AST.
   const sourceCode = getSourceCodeFromFilePath(filePath);
   if (!sourceCode?.ast) {
-    console.error(`ERROR. Failed to parse AST for ${filePath}.`);
+    console.warn(`WARNING. Failed to parse AST for ${filePath}.`);
     return null;
   }
 

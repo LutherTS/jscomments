@@ -3,7 +3,7 @@ const data = {
   levelOne: {
     levelTwo: {
       levelThree: "Level three.",
-      // levelthree: "Also level three.", // errors, duplicate normalized key
+      levelthree: "Also level three.", // errors, duplicate normalized key
       // stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key
       // alsoLevelThree: "Level three.", // errors, duplicate value
       // tooLevelThree: 2, // errors, value is invalid
@@ -37,6 +37,8 @@ const data = {
         "Flattens the config's data property into a one-dimensional object of $COMMENT-*-like keys and string values.", // $COMMENT#JSDOC#DEFINITIONS#FLATTENCONFIGDATA
       resolveConfig:
         "Verifies, validates and resolves the config path to retrieve the config's data and ignores.", // $COMMENT#JSDOC#DEFINITIONS#RESOLVECONFIG
+      logError:
+        'Logs an error to the console depending on its type. (`"error"` or `"warning"`.)', // $COMMENT#JSDOC#DEFINITIONS#LOGERROR
     }),
     params: Object.freeze({
       string: "The string.", // $COMMENT#JSDOC#PARAMS#STRING
@@ -78,6 +80,7 @@ const data = {
         'The path of the config from `comments.config.js`, or from a config passed via the `--config` flag in the CLI, or from one passed via `"commentVariables.config": true` in `.vscode/settings.json` for the VS Code Extension.', // $COMMENT#JSDOC#PARAMS#CONFIGPATH
       options: "The additional options as follows:", // $COMMENT#JSDOC#PARAMS#OPTIONS
       settings: "The required settings as follows:", // $COMMENT#JSDOC#PARAMS#SETTINGS
+      error: "The error object being handle for the logging.", // $COMMENT#JSDOC#PARAMS#ERROR
     }),
     returns: Object.freeze({
       exitDueToFailure:
@@ -89,7 +92,7 @@ const data = {
       findAllImports:
         "The complete set of strings of import paths recursively related to the given file path, or `null` if an issue has arisen.", // $COMMENT#JSDOC#RETURNS#FINDALLIMPORTS
       processImport:
-        "`true` to skip unresolved paths, `false` if resolution fails at any level.", // $COMMENT#JSDOC#RETURNS#PROCESSIMPORT
+        "`true` to continue to the next operation, `false` to stop the whole `findAllImports` process.", // $COMMENT#JSDOC#RETURNS#PROCESSIMPORT
       flattenConfigData:
         "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands. Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension.", // $COMMENT#JSDOC#RETURNS#FLATTENCONFIGDATA
       resolveConfig:

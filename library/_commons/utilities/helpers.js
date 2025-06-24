@@ -6,6 +6,24 @@
  */
 export const exitDueToFailure = () => process.exit(1);
 
+/**
+ * Logs an error to the console depending on its type. (`"error"` or `"warning"`.)
+ * @param {{type: "error" | "warning"; message: string}} error The error object being handle for the logging.
+ */
+export const logError = (error) => {
+  switch (error.type) {
+    case "error":
+      console.error(error.message);
+      break;
+    case "warning":
+      console.warn(error.message);
+      break;
+    default:
+      console.error("ERROR. Error type unrecognized.");
+      break;
+  }
+};
+
 /* escapeRegex */ // comment-variables-resolve-config
 
 /**

@@ -16,7 +16,7 @@ import {
   compressRuleName,
 } from "./_commons/constants/bases.js";
 
-import { exitDueToFailure } from "./_commons/utilities/helpers.js";
+import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
 import { resolveConfig } from "./_commons/utilities/resolve-config.js"; // shared
 import { findAllImports } from "./_commons/utilities/find-all-imports.js"; // own package
 import {
@@ -63,10 +63,7 @@ const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
 const resolveConfigResults = await resolveConfig(rawConfigPath);
 if (!resolveConfigResults.success) {
-  resolveConfigResults.errors.forEach((e) => {
-    if (e.type === "error") console.error(e.message);
-    if (e.type === "warning") console.warn(e.message);
-  });
+  resolveConfigResults.errors.forEach((e) => logError(e));
   exitDueToFailure();
 }
 
@@ -93,7 +90,7 @@ skipDetails || console.log("Passed ignores are:", passedIgnores);
 const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
 const rawConfigPathIgnores = lintConfigImports
   ? [configPath]
-  : [...(findAllImports(configPath) ?? [])];
+  : [...(findAllImports(configPath) ?? [configPath])];
 
 // the ignore paths must be relative
 const configPathIgnores = rawConfigPathIgnores.map((e) =>
