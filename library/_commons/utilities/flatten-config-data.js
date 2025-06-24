@@ -21,13 +21,18 @@ import { flattenedConfigKeyRegex } from "../constants/regexes.js";
  * @param {ConfigDataParamType} configData The config's data property. (Values are typed `unknown` given the limitations in typing recursive values in JSDoc.)
  * @param {ConfigDataMapParamType} configDataMap The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.
  * @param {ParentKeysParamType} parentKeys The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.
+ * @param {{configDataMap: ConfigDataMapParamType; parentKeys: ParentKeysParamType}} options
  * @returns Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands. Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension.
  */
 export const flattenConfigData = (
   configData,
-  configDataMap = new Map(),
-  parentKeys = []
+  options = {
+    configDataMap: new Map(),
+    parentKeys: [],
+  }
 ) => {
+  const { configDataMap, parentKeys } = options;
+
   for (const [key, value] of Object.entries(configData)) {
     const newKeys = [...parentKeys, key];
     const normalizedKey = newKeys
@@ -58,11 +63,12 @@ export const flattenConfigData = (
         source,
       });
     } else if (typeof value === "object" && value && !Array.isArray(value)) {
-      const typedValue = /** @type {ConfigDataParamType} */ (value);
+      const subConfigData = /** @type {ConfigDataParamType} */ (value);
+      const flattenConfigDataOptions = { ...options, parentKeys: newKeys };
 
       const flattenConfigDataResults =
         /** @type {FlattenConfigDataReturnType} */ (
-          flattenConfigData(typedValue, configDataMap, newKeys)
+          flattenConfigData(subConfigData, flattenConfigDataOptions)
         );
       if (!flattenConfigDataResults.success) return flattenConfigDataResults;
     }

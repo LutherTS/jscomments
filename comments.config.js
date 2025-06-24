@@ -3,7 +3,7 @@ const data = {
   levelOne: {
     levelTwo: {
       levelThree: "Level three.",
-      levelthree: "Also level three.", // errors, duplicate normalized key
+      // levelthree: "Also level three.", // errors, duplicate normalized key
       // stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key
       // alsoLevelThree: "Level three.", // errors, duplicate value
       // tooLevelThree: 2, // errors, value is invalid
