@@ -31,7 +31,8 @@ const data = {
         "The flow that compresses actual comments into $COMMENT#* placeholders.", // $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW
       findAllImports:
         "Finds all import paths recursively related to a given file path.", // $COMMENT#JSDOC#DEFINITIONS#FINDALLIMPORTS
-      processImport: "Processes recursively and resolves a single import path.", // $COMMENT#JSDOC#DEFINITIONS#PROCESSIMPORT
+      processImport:
+        "Processes recursively and resolves a single import path. (Unlike `findAllImports`, here `currentDir`, `cwd`, `visitedSet`, `depth`, and `maxDepth` aren't options because they are mandatory and not pre-parameterized.)", // $COMMENT#JSDOC#DEFINITIONS#PROCESSIMPORT
       flattenConfigData:
         "Flattens the config's data property into a one-dimensional object of $COMMENT-*-like keys and string values.", // $COMMENT#JSDOC#DEFINITIONS#FLATTENCONFIGDATA
       resolveConfig:

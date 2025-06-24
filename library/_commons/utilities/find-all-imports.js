@@ -9,7 +9,7 @@ import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
 // At that time, findAllImports will still take importPath as its first argument, but everything else that is currently optional will need to be inside an object...? Or what if I were to just do this now? And to do the same with all of my recursive, pre-parameterized arguments?
 
 /**
- * Processes recursively and resolves a single import path. // (Unlike findAllImports, here `currentDir`, `cwd`, `visitedSet`, `depth`, and `maxDepth` aren't options because they are mandatory and not pre-parameterized.)
+ * Processes recursively and resolves a single import path. (Unlike `findAllImports`, here `currentDir`, `cwd`, `visitedSet`, `depth`, and `maxDepth` aren't options because they are mandatory and not pre-parameterized.)
  * @param {string} importPath The import path currently being addressed.
  * @param {string} currentDir The directory containing the import path currently being addressed.
  * @param {string} cwd The current working directory, set as `process.cwd()` by default.
