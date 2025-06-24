@@ -5,6 +5,8 @@ import { resolveImportingPath } from "resolve-importing-path";
 import { getSourceCodeFromFilePath } from "get-sourcecode-from-file-path";
 
 /* findAllImports */
+// IMPORTANT. findAllImports needs to be able to take a callback function that it can play at every recursion to find the corresponding value for go-to-definitions. But that's on the roadmap, not in the first release. The first implementation of this pinpoint go-to-definition mechanism will be made but analyzing each path obtained rather than by doing so as the paths are being obtained.
+// At that time, findAllImports will still take importPath as its first argument, but everything else that is currently optional will need to be inside an object...? Or what if I were to just do this now? And to do the same with all of my recursive, pre-parameterized arguments?
 
 /**
  * Processes recursively and resolves a single import path.

@@ -62,13 +62,13 @@ const data = {
       currentDir:
         "The directory containing the import path currently being addressed.", // $COMMENT#JSDOC#PARAMS#CURRENTDIR
       configData:
-        "The config's data property. (Values are typed `any` given the limitations in typing recursive values in JSDoc.)", // $COMMENT#JSDOC#PARAMS#CONFIGDATA
+        "The config's data property. (Values are typed `unknown` given the limitations in typing recursive values in JSDoc.)", // $COMMENT#JSDOC#PARAMS#CONFIGDATA
       configDataMap:
         "The map housing the flattened keys with their values and sources through recursion, instantiated as a `new Map()`.", // $COMMENT#JSDOC#PARAMS#CONFIGDATAMAP
       parentKeys:
         "The list of keys that are parent to the key at hand given the recursive nature of the config's data's data structure, instantiated as an empty array of strings.", // $COMMENT#JSDOC#PARAMS#PARENTKEYS
       configPath:
-        "The path of the config, either from `comments.config.js` or from a config passed via the `--config` flag.", // $COMMENT#JSDOC#PARAMS#CONFIGPATH
+        'The path of the config from `comments.config.js`, or from a config passed via the `--config` flag in the CLI, or from one passed via `"commentVariables.config": true` in `.vscode/settings.json` for the VS Code Extension.', // $COMMENT#JSDOC#PARAMS#CONFIGPATH
     }),
     returns: Object.freeze({
       exitDueToFailure:
@@ -82,9 +82,9 @@ const data = {
       processImport:
         "`true` to skip unresolved paths, `false` if resolution fails at any level.", // $COMMENT#JSDOC#RETURNS#PROCESSIMPORT
       flattenConfigData:
-        "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands.", // $COMMENT#JSDOC#RETURNS#FLATTENCONFIGDATA
+        "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands. Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension.", // $COMMENT#JSDOC#RETURNS#FLATTENCONFIGDATA
       resolveConfig:
-        "The flattened config data, the reverse flattened config data, the verified config path, the raw passed ignores, and the original config.", // $COMMENT#JSDOC#RETURNS#RESOLVECONFIG
+        "The flattened config data, the reverse flattened config data, the verified config path, the raw passed ignores, and the original config. Errors are returned during failures so they can be reused differently on the CLI and the VS Code Extension.", // $COMMENT#JSDOC#RETURNS#RESOLVECONFIG
     }),
   }),
 };
