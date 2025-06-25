@@ -29,10 +29,6 @@ const data = {
         "The flow that resolves $COMMENT#* placeholders intro actual comments.", // $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
       compressCommentsFlow:
         "The flow that compresses actual comments into $COMMENT#* placeholders.", // $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW
-      findAllImports:
-        "Finds all import paths recursively related to a given file path.", // $COMMENT#JSDOC#DEFINITIONS#FINDALLIMPORTS
-      processImport:
-        "Processes recursively and resolves a single import path. (Unlike `findAllImports`, here `currentDir`, `cwd`, `visitedSet`, `depth`, and `maxDepth` aren't options because they are mandatory and not pre-parameterized.)", // $COMMENT#JSDOC#DEFINITIONS#PROCESSIMPORT
       flattenConfigData:
         "Flattens the config's data property into a one-dimensional object of $COMMENT-*-like keys and string values.", // $COMMENT#JSDOC#DEFINITIONS#FLATTENCONFIGDATA
       resolveConfig:
@@ -52,24 +48,6 @@ const data = {
         "The array of paths and globs for the flow's ESLint instance to ignore.", // $COMMENT#JSDOC#PARAMS#IGNORES
       eitherFlattenedConfigData:
         "Either the flattened config data or the reversed flattened config data, since they share the same structure.", // $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA
-      filePath:
-        "The absolute path of the file whose imports are being recursively found, such as that of a project's `comments.config.js` file.", // $COMMENT#JSDOC#PARAMS#FILEPATH
-      cwdOption:
-        "The current working directory, set as `process.cwd()` by default.", // $COMMENT#JSDOC#PARAMS#CWDOPTION
-      visitedSetOption:
-        "The set of strings tracking the import paths that have already been visited, instantiated as a `new Set()` by default.", // $COMMENT#JSDOC#PARAMS#VISITEDSETOPTION
-      depthOption:
-        "The current depth of the recursion, instantiated at `0` by default.", // $COMMENT#JSDOC#PARAMS#DEPTHOPTION
-      maxDepthOption:
-        "The maximum depth allowed for the recursion, instantiated at `100` by default.", // $COMMENT#JSDOC#PARAMS#MAXDEPTHOPTION
-      importPath: "The import path currently being addressed.", // $COMMENT#JSDOC#PARAMS#IMPORTPATH
-      currentDirSetting:
-        "The directory containing the import path currently being addressed.", // $COMMENT#JSDOC#PARAMS#CURRENTDIRSETTING
-      cwdSetting: "The current working directory.", // $COMMENT#JSDOC#PARAMS#CWDSETTING
-      visitedSetSetting:
-        "The set of strings tracking the import paths that have already been visited.", // $COMMENT#JSDOC#PARAMS#VISITEDSETSETTING
-      depthSetting: "The current depth of the recursion.", // $COMMENT#JSDOC#PARAMS#DEPTHSETTING
-      maxDepthSetting: "The maximum depth allowed for the recursion.", // $COMMENT#JSDOC#PARAMS#MAXDEPTHSETTING
       configData:
         "The config's data property. (Values are typed `unknown` given the limitations in typing recursive values in JSDoc.)", // $COMMENT#JSDOC#PARAMS#CONFIGDATA
       configDataMapOption:
@@ -89,10 +67,6 @@ const data = {
       makeRuleResolve: "The resolve rule based on the flattened config data.", // $COMMENT#JSDOC#RETURNS#MAKERULERESOLVE
       makeRuleCompress:
         "The compress rule based on the reversed flattened config data.", // $COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS
-      findAllImports:
-        "The complete set of strings of import paths recursively related to the given file path in a success object (`success: true`). Errors are bubbled up during failures in a failure object (`success: false`).", // $COMMENT#JSDOC#RETURNS#FINDALLIMPORTS
-      processImport:
-        "The results of the embedded round of `findAllImports`, since `findAllImports`'s recursion happens within `processImport`.", // $COMMENT#JSDOC#RETURNS#PROCESSIMPORT
       flattenConfigData:
         "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands in a success object (`success: true`). Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension in a failure object (`success: false`).", // $COMMENT#JSDOC#RETURNS#FLATTENCONFIGDATA
       resolveConfig:
