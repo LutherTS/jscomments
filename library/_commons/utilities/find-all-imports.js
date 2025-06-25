@@ -27,7 +27,7 @@ import { successFalse, successTrue, typeWarning } from "../constants/bases.js";
  * @param {Set<string>} settings.visitedSet The set of strings tracking the import paths that have already been visited.
  * @param {number} settings.depth The current depth of the recursion.
  * @param {number} settings.maxDepth The maximum depth allowed for the recursion.
- * @returns `true` to continue to the next operation, `false` to stop the whole `findAllImports` process. // The results of the embedded round of `findAllImports`, since `findAllImports`'s recursion happens within `processImport`.
+ * @returns The results of the embedded round of `findAllImports`, since `findAllImports`'s recursion happens within `processImport`.
  */
 const processImport = (
   importPath,

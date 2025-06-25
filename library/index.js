@@ -18,7 +18,7 @@ import {
 
 import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
 import { resolveConfig } from "./_commons/utilities/resolve-config.js"; // shared
-import { findAllImports } from "./_commons/utilities/find-all-imports.js"; // own package
+import { findAllImports } from "find-all-js-imports"; // own package
 import {
   resolveCommentsFlow,
   compressCommentsFlow,

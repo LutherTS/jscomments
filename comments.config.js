@@ -92,7 +92,7 @@ const data = {
       findAllImports:
         "The complete set of strings of import paths recursively related to the given file path in a success object (`success: true`). Errors are bubbled up during failures in a failure object (`success: false`).", // $COMMENT#JSDOC#RETURNS#FINDALLIMPORTS
       processImport:
-        "`true` to continue to the next operation, `false` to stop the whole `findAllImports` process.", // $COMMENT#JSDOC#RETURNS#PROCESSIMPORT
+        "The results of the embedded round of `findAllImports`, since `findAllImports`'s recursion happens within `processImport`.", // $COMMENT#JSDOC#RETURNS#PROCESSIMPORT
       flattenConfigData:
         "Both the flattened config data and its reversed version to ensure the strict reversibility of the `resolve` and `compress` commands in a success object (`success: true`). Errors are bubbled up during failures so they can be reused differently on the CLI and the VS Code Extension in a failure object (`success: false`).", // $COMMENT#JSDOC#RETURNS#FLATTENCONFIGDATA
       resolveConfig:
