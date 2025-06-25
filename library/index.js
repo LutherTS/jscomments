@@ -3,22 +3,24 @@
 
 import path from "path";
 
+import resolveConfig, {
+  defaultConfigFileName,
+  configFlag,
+  lintConfigImportsFlag,
+  myIgnoresOnlyFlag,
+  knownIgnores,
+} from "comment-variables-resolve-config";
+import { findAllImports } from "find-all-js-imports";
+
 import {
   cwd,
   hasPackageJson,
   hasGitFolder,
-  defaultConfigFileName, // shared
-  configFlag, // shared
-  lintConfigImportsFlag, // shared
-  myIgnoresOnlyFlag, // shared
-  knownIgnores, // shared
   resolveRuleName,
   compressRuleName,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
-import { resolveConfig } from "./_commons/utilities/resolve-config.js"; // shared
-import { findAllImports } from "find-all-js-imports"; // own package
 import {
   resolveCommentsFlow,
   compressCommentsFlow,

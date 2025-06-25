@@ -6,6 +6,8 @@
  */
 export const exitDueToFailure = () => process.exit(1);
 
+/* logError */
+
 /**
  * Logs an error to the console depending on its type. (`"error"` or `"warning"`.)
  * @param {{type: "error" | "warning"; message: string}} error The error object being handle for the logging.

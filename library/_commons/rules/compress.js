@@ -1,6 +1,6 @@
-import { placeholderMessageId, $COMMENT } from "../constants/bases.js";
+import { $COMMENT, escapeRegex } from "comment-variables-resolve-config";
 
-import { escapeRegex } from "..//utilities/helpers.js";
+import { placeholderMessageId } from "../constants/bases.js";
 
 /**
  * The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into $COMMENT#* placeholders.

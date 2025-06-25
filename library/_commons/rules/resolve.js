@@ -1,5 +1,6 @@
+import { flattenedConfigPlaceholderRegex } from "comment-variables-resolve-config";
+
 import { placeholderMessageId } from "../constants/bases.js";
-import { flattenedConfigPlaceholderRegex } from "../constants/regexes.js";
 
 /**
  * The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT#* placeholders into actual comments.
