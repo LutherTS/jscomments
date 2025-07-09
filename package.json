@@ -28,9 +28,6 @@
     "@eslint/markdown": "^6.5.0",
     "comment-variables-resolve-config": "file:../comment-variables-resolve-config",
     "eslint": "^9.29.0",
-    "find-all-js-imports": "^1.0.0",
-    "tsconfig-paths": "^4.2.0",
-    "typescript-eslint": "^8.34.1",
     "zod": "^3.25.67"
   },
   "devDependencies": {
