@@ -70,6 +70,8 @@ if (!resolveConfigResults.success) {
   exitDueToFailure();
 }
 
+console.log("Config resolved.");
+
 const {
   config,
   flattenedConfigData,
