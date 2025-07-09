@@ -62,6 +62,8 @@ const passedConfigPath =
 // defaults to comments.config.js if no --config flag is set
 const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
+console.log(`Resolving config at ${rawConfigPath}...`);
+
 const resolveConfigResults = await resolveConfig(rawConfigPath);
 if (!resolveConfigResults.success) {
   resolveConfigResults.errors.forEach((e) => logError(e));
@@ -91,8 +93,8 @@ skipDetails || console.log("Passed ignores are:", passedIgnores);
 
 const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
 const rawConfigPathIgnores = lintConfigImports
-  ? rawConfigAndImportPaths
-  : [configPath];
+  ? [configPath]
+  : rawConfigAndImportPaths;
 
 // the ignore paths must be relative
 const configPathIgnores = rawConfigPathIgnores.map((e) =>
