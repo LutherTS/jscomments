@@ -3,12 +3,15 @@ import markdown from "@eslint/markdown";
 
 import {
   commentVariablesPluginName,
+  typeScriptAndJSXCompatible,
+} from "comment-variables-resolve-config";
+
+import {
   resolveRuleName,
   compressRuleName,
   allJSTSFileGlobs,
   allMDFileGlobs,
   allMDVirtualJSTSFileGlobs,
-  typeScriptAndJSXCompatible,
 } from "../constants/bases.js";
 import { ruleNames_makeRules } from "../constants/rules.js";
 

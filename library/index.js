@@ -10,7 +10,6 @@ import resolveConfig, {
   myIgnoresOnlyFlag,
   knownIgnores,
 } from "comment-variables-resolve-config";
-import { findAllImports } from "find-all-js-imports";
 
 import {
   cwd,
@@ -75,6 +74,7 @@ const {
   reversedFlattenedConfigData,
   configPath,
   passedIgnores,
+  rawConfigAndImportPaths,
 } = resolveConfigResults;
 
 skipDetails || console.log("Running with config:", config);
@@ -90,21 +90,9 @@ skipDetails || console.log("Passed ignores are:", passedIgnores);
 // ADDRESSES THE --lint-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
 const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
-let rawConfigPathIgnores = [configPath];
-
-if (!lintConfigImports) {
-  const findAllImportsResults = findAllImports(configPath);
-  if (!findAllImportsResults.success) {
-    findAllImportsResults.errors.forEach((e) => logError(e));
-    console.warn(
-      "Defaulting to --lint-config-imports flag behavior, not ignoring config path imports, only the config path itself."
-    );
-  } else {
-    rawConfigPathIgnores = [...findAllImportsResults.visitedSet] ?? [
-      configPath,
-    ];
-  }
-}
+const rawConfigPathIgnores = lintConfigImports
+  ? rawConfigAndImportPaths
+  : [configPath];
 
 // the ignore paths must be relative
 const configPathIgnores = rawConfigPathIgnores.map((e) =>
