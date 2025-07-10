@@ -118,4 +118,4 @@ export default config;
 
 And yes, even comments within JavaScript and TypeScript blocks in Markdown files are addressed.
 
-_Leverage the full power of JavaScript to programmatically design your JavaScript comments._
+_Leverage the power of JavaScript to programmatically design your JavaScript comments._
