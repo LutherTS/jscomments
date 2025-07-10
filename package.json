@@ -26,7 +26,7 @@
   "type": "module",
   "dependencies": {
     "@eslint/markdown": "^6.5.0",
-    "comment-variables-resolve-config": "^1.3.0",
+    "comment-variables-resolve-config": "^1.3.2",
     "eslint": "^9.29.0",
     "zod": "^3.25.67"
   },

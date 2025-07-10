@@ -1,7 +1,7 @@
 import {
   $COMMENT,
-  escapeRegex,
   placeholderMessageId,
+  makeIsolatedStringRegex,
 } from "comment-variables-resolve-config";
 
 /**
@@ -44,10 +44,7 @@ const makeRule = (reversedFlattenedConfigData) => {
           resolvedValue,
           commentKey,
         ] of sortedReversedFlattenedConfigData) {
-          const pattern = new RegExp(
-            `(?<=\\s|^)${escapeRegex(resolvedValue)}(?=\\s|$)`,
-            "g"
-          );
+          const pattern = makeIsolatedStringRegex(resolvedValue);
 
           fixedText = fixedText.replace(pattern, () => {
             modified = true;
