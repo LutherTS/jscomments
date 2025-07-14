@@ -76,6 +76,7 @@ const {
   config,
   flattenedConfigData,
   reversedFlattenedConfigData,
+  aliases_flattenedKeys,
   configPath,
   passedIgnores,
   rawConfigAndImportPaths,
@@ -88,6 +89,7 @@ skipDetails ||
     "Reversed flattened config data is:",
     reversedFlattenedConfigData
   );
+skipDetails || console.log("Aliases are:", aliases_flattenedKeys);
 skipDetails || console.log("Config path is:", configPath);
 skipDetails || console.log("Passed ignores are:", passedIgnores);
 
