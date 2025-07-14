@@ -2,8 +2,8 @@ const data = {
   // for testing
   levelOne: {
     levelTwo: {
-      levelThree: "Level three.",
-      stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key // now is an alias
+      levelThree: "Level three.", // $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE
+      stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key // now is an alias // $COMMENT#LEVELONE#STILLLEVELTHREE (alias linking needs to be done)
       // levelthree: "Also level three.", // errors, duplicate normalized key
       // alsoLevelThree: "Level three.", // errors, duplicate value
       // tooLevelThree: 2, // errors, value is invalid

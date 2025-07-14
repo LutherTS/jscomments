@@ -17,13 +17,21 @@ import { ruleNames_makeRules } from "../constants/rules.js";
 
 /* coreCommentsFlow */
 
+// $COMMENT#LEVELONE#STILLLEVELTHREE
+
 /**
  * The core flow at the heart of resolving and compressing comments.
  * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`.)
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
  * @param {{[key: string]: string}} flattenedConfigData Either the flattened config data or the reversed flattened config data, since they share the same structure.
+ * @param {{[key: string]: string} | undefined} aliases_flattenedKeys
  */
-const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
+const coreCommentsFlow = async (
+  ruleName,
+  ignores,
+  flattenedConfigData,
+  aliases_flattenedKeys
+) => {
   const eslint = new ESLint({
     fix: true,
     errorOnUnmatchedPattern: false,
@@ -36,7 +44,10 @@ const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
         plugins: {
           [commentVariablesPluginName]: {
             rules: {
-              [ruleName]: ruleNames_makeRules[ruleName](flattenedConfigData),
+              [ruleName]: ruleNames_makeRules[ruleName](
+                flattenedConfigData,
+                aliases_flattenedKeys
+              ),
             },
           },
         },
@@ -94,10 +105,20 @@ const coreCommentsFlow = async (ruleName, ignores, flattenedConfigData) => {
  * The flow that resolves $COMMENT#* placeholders intro actual comments.
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
  * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.
+ * @param {{[key: string]: string}} aliases_flattenedKeys
  * @returns
  */
-export const resolveCommentsFlow = async (ignores, flattenedConfigData) =>
-  coreCommentsFlow(resolveRuleName, ignores, flattenedConfigData);
+export const resolveCommentsFlow = async (
+  ignores,
+  flattenedConfigData,
+  aliases_flattenedKeys
+) =>
+  coreCommentsFlow(
+    resolveRuleName,
+    ignores,
+    flattenedConfigData,
+    aliases_flattenedKeys
+  );
 
 /* compressCommentsFlow */
 
