@@ -119,16 +119,6 @@ const ignores = myIgnoresOnly ? rawIgnores : [...rawIgnores, ...knownIgnores];
 
 skipDetails || console.log("Ignores are:", ignores);
 
-/* TEST START */
-
-// const key = "LEVELONE#LEVELTWO#STILLLEVELTHREE"; // e.g. LEVELONE#LEVELTWO // key
-// const remplacementData = flattenedConfigData[key];
-// console.log("remplacementData is:", remplacementData);
-// const remplacementAliases = flattenedConfigData[aliases_flattenedKeys?.[key]];
-// console.log("remplacementAliases is:", remplacementAliases);
-
-/* TEST END */
-
 // ADDRESSES THE CORE COMMANDS "resolve" AND "compress".
 
 switch (coreCommand) {
