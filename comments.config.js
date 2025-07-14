@@ -3,8 +3,8 @@ const data = {
   levelOne: {
     levelTwo: {
       levelThree: "Level three.",
+      stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key // now is an alias
       // levelthree: "Also level three.", // errors, duplicate normalized key
-      stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key // should now be an aliases
       // alsoLevelThree: "Level three.", // errors, duplicate value
       // tooLevelThree: 2, // errors, value is invalid
       // $levelThree: "Dollar sign", // errors, key as "$" character
