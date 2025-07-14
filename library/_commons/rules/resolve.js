@@ -3,7 +3,7 @@ import {
   placeholderMessageId,
 } from "comment-variables-resolve-config";
 
-// $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE
+// Level three.
 // $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE
 
 /**
