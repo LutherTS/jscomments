@@ -3,6 +3,9 @@ import {
   placeholderMessageId,
 } from "comment-variables-resolve-config";
 
+// $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE
+// $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE
+
 /**
  * The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT#* placeholders into actual comments.
  * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.
@@ -47,6 +50,9 @@ const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
           const replacement =
             flattenedConfigData[key] ||
             flattenedConfigData[aliases_flattenedKeys?.[key]];
+          console.log("Full match is:", fullMatch);
+          console.log("Key is:", key);
+          console.log("Replacement is:", replacement);
 
           if (replacement) {
             fixedText = fixedText.replace(fullMatch, replacement);

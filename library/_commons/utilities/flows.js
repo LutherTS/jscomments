@@ -17,8 +17,6 @@ import { ruleNames_makeRules } from "../constants/rules.js";
 
 /* coreCommentsFlow */
 
-// $COMMENT#LEVELONE#STILLLEVELTHREE
-
 /**
  * The core flow at the heart of resolving and compressing comments.
  * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`.)

@@ -124,7 +124,11 @@ skipDetails || console.log("Ignores are:", ignores);
 switch (coreCommand) {
   case resolveRuleName:
     console.log(`Running ${resolveRuleName}...`);
-    await resolveCommentsFlow(ignores, flattenedConfigData);
+    await resolveCommentsFlow(
+      ignores,
+      flattenedConfigData,
+      aliases_flattenedKeys
+    );
     break;
   case compressRuleName:
     console.log(`Running ${compressRuleName}...`);
