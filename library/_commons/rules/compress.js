@@ -5,8 +5,8 @@ import {
 } from "comment-variables-resolve-config";
 
 /**
- * The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into $COMMENT#* placeholders.
- * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and $COMMENT#* placeholders as values.
+ * The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into comment variables placeholders.
+ * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and comment variables placeholders as values.
  * @returns The compress rule based on the reversed flattened config data.
  */
 const makeRule = (reversedFlattenedConfigData) => {

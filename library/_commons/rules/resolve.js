@@ -4,8 +4,8 @@ import {
 } from "comment-variables-resolve-config";
 
 /**
- * The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT#* placeholders into actual comments.
- * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.
+ * The utility that creates the resolve rule based on the flattened config data, used to transform comment variables placeholders into actual comments.
+ * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with comment variables placeholders as keys and actual comments as values.
  * @param {{[key: string]: string}} aliases_flattenedKeys
  * @returns The resolve rule based on the flattened config data.
  */

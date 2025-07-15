@@ -15,6 +15,9 @@ import {
 } from "../constants/bases.js";
 import { ruleNames_makeRules } from "../constants/rules.js";
 
+// Level three.
+// Level three. Level three.
+
 /* coreCommentsFlow */
 
 /**
@@ -100,9 +103,9 @@ const coreCommentsFlow = async (
 /* resolveCommentsFlow */
 
 /**
- * The flow that resolves $COMMENT#* placeholders intro actual comments.
+ * The flow that resolves comment variables placeholders into actual comments.
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
- * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with $COMMENT#* placeholders as keys and actual comments as values.
+ * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with comment variables placeholders as keys and actual comments as values.
  * @param {{[key: string]: string}} aliases_flattenedKeys
  * @returns
  */
@@ -123,7 +126,7 @@ export const resolveCommentsFlow = async (
 /**
  * The flow that compresses actual comments into $COMMENT#* placeholders.
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
- * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and $COMMENT#* placeholders as values.
+ * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and comment variables placeholders as values.
  * @returns
  */
 export const compressCommentsFlow = async (
