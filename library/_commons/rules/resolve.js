@@ -1,13 +1,13 @@
 import {
-  flattenedConfigPlaceholderRegex,
+  flattenedConfigPlaceholderGlobalRegex,
   placeholderMessageId,
 } from "comment-variables-resolve-config";
 
 /**
- * The utility that creates the resolve rule based on the flattened config data, used to transform comment variables placeholders into actual comments.
- * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with comment variables placeholders as keys and actual comments as values.
+ * $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE
+ * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
  * @param {{[key: string]: string}} aliases_flattenedKeys
- * @returns The resolve rule based on the flattened config data.
+ * @returns $COMMENT#JSDOC#RETURNS#MAKERULERESOLVE
  */
 const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
@@ -33,7 +33,7 @@ const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
 
       for (const comment of comments) {
         const matches = [
-          ...comment.value.matchAll(flattenedConfigPlaceholderRegex),
+          ...comment.value.matchAll(flattenedConfigPlaceholderGlobalRegex),
         ];
 
         if (matches.length === 0) continue;

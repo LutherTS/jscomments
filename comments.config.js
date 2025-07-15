@@ -3,9 +3,9 @@ const data = {
   levelOne: {
     levelTwo: {
       levelThree: "Level three.", // $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE
-      stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key // now is an alias // $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE (alias linking needs to be done)
+      stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // errors, value is also a normalized key // now is an alias // $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE (Alias linking needs to be done. (?) Indeed, hover needs to work on aliases, and because their string values are not unique, command+clicking on them should go to the original, and the original should have the aliases in its list of references. / That's going to be done after composed variables.)
       composedVariable:
-        "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE",
+        "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE", // $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE // This is a composed variable. What's the beauty in this? It always for the concatenated efficiency of template literals within regular strings, so that my method of gathering value locations can still apply. It allows for each comment variable to be its own single source of truth that can be reused still within the Comment Variables ecosystem. All while preventing the use of comment variables placeholders as values in the config. AND as a matter of fact, it even works... with aliases. (Personal note: And that part is free and included in the CLI tool.) (Composed variables are completely part of the command+click family. Now missing the part where I resolve composed variables on hover.)
       // levelthree: "Also level three.", // errors, duplicate normalized key
       // alsoLevelThree: "Level three.", // errors, duplicate value
       // tooLevelThree: 2, // errors, value is invalid
