@@ -16,7 +16,10 @@ import {
 import { ruleNames_makeRules } from "../constants/rules.js";
 
 // $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE
+("$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE"); // hover won't be supposed to happen, once distinction between comments and code made // DONE.
 // $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE
+// $COMMENT#LEVELONE#LEVELTWO#OTHERLEVELTHREE
+
 // $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE
 
 /* coreCommentsFlow */
@@ -134,3 +137,5 @@ export const compressCommentsFlow = async (
   ignores,
   reversedFlattenedConfigData
 ) => coreCommentsFlow(compressRuleName, ignores, reversedFlattenedConfigData);
+
+("Level three."); // "Level three." Really messed up that this is getting picked up by the References API, making it quite frankly unreliable. That means I'm going to have stick to the definitions API, even though this won't really be references then. I'm gonna need to go all-in on the definitions API, especially since it can actually return arrays. // References API retired.
