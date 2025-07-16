@@ -15,18 +15,13 @@ import {
 } from "../constants/bases.js";
 import { ruleNames_makeRules } from "../constants/rules.js";
 
-// $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE
-// $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE
-// $COMMENT#LEVELONE#LEVELTWO#OTHERLEVELTHREE
-// $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE
-
 /* coreCommentsFlow */
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#CORECOMMENTSFLOW
- * @param {typeof resolveRuleName | typeof compressRuleName} ruleName $COMMENT#JSDOC#PARAMS#RULENAME
- * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
- * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA
+ * The core flow at the heart of resolving and compressing comments.
+ * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`.)
+ * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
+ * @param {{[key: string]: string}} flattenedConfigData Either the flattened config data or the reversed flattened config data, since they share the same structure.
  * @param {{[key: string]: string} | undefined} aliases_flattenedKeys
  */
 const coreCommentsFlow = async (
@@ -105,9 +100,9 @@ const coreCommentsFlow = async (
 /* resolveCommentsFlow */
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
- * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
- * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
+ * The flow that resolves $COMMENT placeholders into actual comments.
+ * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
+ * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with $COMMENT placeholders as keys and actual comments as values.
  * @param {{[key: string]: string}} aliases_flattenedKeys
  * @returns
  */
@@ -127,8 +122,8 @@ export const resolveCommentsFlow = async (
 
 /**
  * The flow that compresses actual comments into $COMMENT#* placeholders.
- * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
- * @param {{[key: string]: string}} reversedFlattenedConfigData $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA
+ * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
+ * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and $COMMENT placeholders as values.
  * @returns
  */
 export const compressCommentsFlow = async (

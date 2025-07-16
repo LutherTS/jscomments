@@ -4,10 +4,10 @@ import {
 } from "comment-variables-resolve-config";
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE
- * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
+ * The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT placeholders into actual comments.
+ * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with $COMMENT placeholders as keys and actual comments as values.
  * @param {{[key: string]: string}} aliases_flattenedKeys
- * @returns $COMMENT#JSDOC#RETURNS#MAKERULERESOLVE
+ * @returns The resolve rule based on the flattened config data.
  */
 const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
@@ -47,9 +47,6 @@ const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
           const replacement =
             flattenedConfigData[key] || // original
             flattenedConfigData[aliases_flattenedKeys?.[key]]; // alias
-          console.log("Full match is:", fullMatch);
-          console.log("Key is:", key);
-          console.log("Replacement is:", replacement);
 
           if (replacement) {
             fixedText = fixedText.replace(fullMatch, replacement);
