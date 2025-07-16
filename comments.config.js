@@ -6,7 +6,7 @@ const data = {
       stillLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // now is an alias // $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE
       otherLevelThree: "LEVELONE#LEVELTWO#LEVELTHREE", // also an alias // $COMMENT#LEVELONE#LEVELTWO#OTHERLEVELTHREE
       composedVariable:
-        // For hovers here, and for the correct command+clicks too, I'm going to need to know if the position is a comment or not.
+        // For hovers here, and for the correct command+clicks too, I'm going to need to know if the position is a comment or not. // IN PROGRESS.
         "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE", // $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE // This is a composed variable. What's the beauty in this? It always for the concatenated efficiency of template literals within regular strings, so that my method of gathering value locations can still apply. It allows for each comment variable to be its own single source of truth that can be reused still within the Comment Variables ecosystem. All while preventing the use of comment variables placeholders as values in the config. AND as a matter of fact, it even works... with aliases. (Personal note: And that part is free and included in the CLI tool.) (Composed variables are completely part of the command+click family. Now missing the part where I resolve composed variables on hover.)
       // levelthree: "Also level three.", // errors, duplicate normalized key
       // alsoLevelThree: "Level three.", // errors, duplicate value
@@ -23,23 +23,23 @@ const data = {
       exitDueToFailure:
         "Terminates the whole process with a 'failure' code (1).", // $COMMENT#JSDOC#DEFINITIONS#EXITDUETOFAILURE
       makeRuleResolve:
-        "The utility that creates the resolve rule based on the flattened config data, used to transform comment variables placeholders into actual comments.", // $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE
+        "The utility that creates the resolve rule based on the flattened config data, used to transform $COMMENT placeholders into actual comments.", // $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE
       makeRuleCompress:
-        "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into comment variables placeholders.", // $COMMENT#JSDOC#DEFINITIONS#MAKERULECOMPRESS
+        "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into $COMMENT placeholders.", // $COMMENT#JSDOC#DEFINITIONS#MAKERULECOMPRESS
       coreCommentsFlow:
         "The core flow at the heart of resolving and compressing comments.", // $COMMENT#JSDOC#DEFINITIONS#CORECOMMENTSFLOW
       resolveCommentsFlow:
-        "The flow that resolves comment variables placeholders into actual comments.", // $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
+        "The flow that resolves $COMMENT placeholders into actual comments.", // $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
       compressCommentsFlow:
-        "The flow that compresses actual comments into comment variables placeholders.", // $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW
+        "The flow that compresses actual comments into $COMMENT placeholders.", // $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW
       logError:
         'Logs an error to the console depending on its type. (`"error"` or `"warning"`.)', // $COMMENT#JSDOC#DEFINITIONS#LOGERROR
     }),
     params: Object.freeze({
       flattenedConfigData:
-        "The flattened config data, with comment variables placeholders as keys and actual comments as values.", // $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
+        "The flattened config data, with $COMMENT placeholders as keys and actual comments as values.", // $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
       reversedFlattenedConfigData:
-        "The reversed flattened config data, with actual comments as keys and comment variables placeholders as values.", // $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA
+        "The reversed flattened config data, with actual comments as keys and $COMMENT placeholders as values.", // $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA
       ruleName:
         'The name of the rule currently used. (Either `"resolve"` or `"compress"`.)', // $COMMENT#JSDOC#PARAMS#RULENAME
       ignores:
