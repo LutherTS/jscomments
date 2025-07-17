@@ -16,6 +16,8 @@ const data = {
       // "#levelThree": "Hashtag", // errors, key as "#" character
       // ".levelThree": "Punctuation", // errors, key is invalid
       // unrecognized: `Unrecognized value.`, // errors, is not a string literal
+      // emptyString: "", // errors, string is empty
+      // "": "emptyKey", // errors, key is empty caught by the regex
     },
   },
   // for deving
