@@ -18,7 +18,9 @@ const data = {
       composedVariableAlias: "LEVELONE#LEVELTWO#COMPOSEDVARIABLE",
       // wrongComposedVariableToo:
       //   "$COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE", // errors, can't make composed variables with composed variables even as aliases
+
       // levelthree: "Also level three.", // errors, duplicate normalized key
+      // levelThree: "Also level three.", // errors, duplicate key with original overriden by legal JavaScript object value overrides
       // alsoLevelThree: "Level three.", // errors, duplicate value
       // tooLevelThree: 2, // errors, value is invalid
       // $levelThree: "Dollar sign", // errors, key as "$" character
