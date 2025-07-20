@@ -4,6 +4,7 @@ import markdown from "@eslint/markdown";
 import {
   $COMMENT,
   commentVariablesPluginName,
+  extractRuleName,
   typeScriptAndJSXCompatible,
   extractObjectStringLiteralValues,
 } from "comment-variables-resolve-config";
