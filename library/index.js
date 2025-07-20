@@ -48,7 +48,9 @@ const commands = process.argv;
 const coreCommand = commands[2];
 
 const skipDetails =
-  coreCommand === resolveRuleName || coreCommand === compressRuleName;
+  coreCommand === resolveRuleName ||
+  coreCommand === compressRuleName ||
+  coreCommand === placeholdersRuleName;
 
 // OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, CONFIG PATH, AND PASSED IGNORES.
 
@@ -147,11 +149,11 @@ switch (coreCommand) {
   default:
     if (coreCommand && !coreCommand.startsWith("--"))
       console.error(
-        `ERROR. Core command not recognized. Choose between "resolve" and "compress".`
+        `ERROR. Core command not recognized. Choose between "resolve" and "compress" or "placeholders".`
       );
     else
       console.log(
-        `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT forms.${
+        `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT forms. You can also generate the placeholders with the command "placeholders".${
           passedConfigPath || lintConfigImports || myIgnoresOnly
             ? " (And DON'T FORGET YOUR FLAGS!)"
             : ""
