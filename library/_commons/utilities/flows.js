@@ -2,8 +2,10 @@ import { ESLint } from "eslint";
 import markdown from "@eslint/markdown";
 
 import {
+  $COMMENT,
   commentVariablesPluginName,
   typeScriptAndJSXCompatible,
+  extractObjectStringLiteralValues,
 } from "comment-variables-resolve-config";
 
 import {
@@ -76,7 +78,7 @@ const coreCommentsFlow = async (
   ]);
   await ESLint.outputFixes(results);
 
-  console.log("Results are:", results);
+  console.log(`Results for ${ruleName} are:`, results);
 
   const resolvedOrCompressed =
     ruleName === resolveRuleName
@@ -130,3 +132,86 @@ export const compressCommentsFlow = async (
   ignores,
   reversedFlattenedConfigData
 ) => coreCommentsFlow(compressRuleName, ignores, reversedFlattenedConfigData);
+
+/* placeholdersCommentsFlow */
+
+/**
+ *
+ * @param {string[]} configPathIgnores
+ * @param {{[k: string]: string;}} originalFlattenedConfigData
+ */
+export const placeholdersCommentsFlow = async (
+  configPathIgnores,
+  originalFlattenedConfigData
+) => {
+  /* TEST START
+  only for the jscomments/comment-variables placeholders command
+  meaning this should actually be only in the JSComments CLI, */
+
+  /** @type {Record<string, string>} */
+  const composedValues_originalKeys = {};
+  /** @type {Record<string, string>} */
+  const aliasValues_originalKeys = {};
+  /** @type {Record<string, string>} */
+  const regularValuesOnly_originalKeys = {};
+
+  for (const [key, value] of Object.entries(originalFlattenedConfigData)) {
+    if (value.includes(`${$COMMENT}#`))
+      // composed Comment Variables
+      composedValues_originalKeys[value] = key;
+    else if (originalFlattenedConfigData[value])
+      // alias Comment Variables
+      aliasValues_originalKeys[value] = key;
+    // regular Comment Variables
+    else regularValuesOnly_originalKeys[value] = key;
+  } // no need for continues, potential collisions are caught in resolveConfig run prior
+
+  const makePlaceholders = {
+    composedValues_originalKeys,
+    aliasValues_originalKeys,
+    regularValuesOnly_originalKeys,
+  };
+  const makePlaceholdersAsObject = { makePlaceholders };
+
+  const eslintForMakePlaceholders = new ESLint({
+    fix: true,
+    errorOnUnmatchedPattern: false,
+    overrideConfigFile: true,
+    overrideConfig: [
+      {
+        files: configPathIgnores,
+        languageOptions: typeScriptAndJSXCompatible,
+        plugins: {
+          [commentVariablesPluginName]: {
+            rules: {
+              [extractRuleName]: extractObjectStringLiteralValues,
+            },
+          },
+        },
+        rules: {
+          [`${commentVariablesPluginName}/${extractRuleName}`]: [
+            "warn",
+            makePlaceholdersAsObject,
+          ],
+        },
+      },
+    ],
+  });
+
+  const resultsForMakePlaceholders = await eslintForMakePlaceholders.lintFiles(
+    configPathIgnores
+  );
+  await ESLint.outputFixes(resultsForMakePlaceholders);
+
+  console.log("Results for placeholders are:", resultsForMakePlaceholders);
+
+  const total = resultsForMakePlaceholders.reduce((sum, r) => {
+    const add = r.output ? 1 : 0;
+    return sum + add;
+  }, 0);
+
+  console.log(
+    `✅ Made placeholders on ${total} file${total === 1 ? "" : "s"}.`
+  );
+  /* TEST END */
+};

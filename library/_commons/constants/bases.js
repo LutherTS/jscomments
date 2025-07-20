@@ -4,6 +4,7 @@ import path from "path";
 // rule names
 export const resolveRuleName = "resolve";
 export const compressRuleName = "compress";
+export const placeholdersRuleName = "placeholders"; // rule?
 
 // current working directory
 export const cwd = process.cwd();

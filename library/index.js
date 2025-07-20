@@ -17,12 +17,14 @@ import {
   hasGitFolder,
   resolveRuleName,
   compressRuleName,
+  placeholdersRuleName,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
 import {
   resolveCommentsFlow,
   compressCommentsFlow,
+  placeholdersCommentsFlow,
 } from "./_commons/utilities/flows.js";
 
 // ENSURES THE CLI TOOL ONLY RUNS IN FOLDERS THAT POSSESS A package.json FILE AND A .git FOLDER.
@@ -74,6 +76,7 @@ console.log("Config resolved.");
 
 const {
   config,
+  originalFlattenedConfigData,
   flattenedConfigData,
   reversedFlattenedConfigData,
   aliases_flattenedKeys,
@@ -134,6 +137,13 @@ switch (coreCommand) {
     console.log(`Running ${compressRuleName}...`);
     await compressCommentsFlow(ignores, reversedFlattenedConfigData);
     break;
+  case placeholdersRuleName:
+    console.log(`Running ${placeholdersRuleName}...`);
+    await placeholdersCommentsFlow(
+      configPathIgnores,
+      originalFlattenedConfigData
+    );
+    break;
   default:
     if (coreCommand && !coreCommand.startsWith("--"))
       console.error(
@@ -141,7 +151,7 @@ switch (coreCommand) {
       );
     else
       console.log(
-        `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT#* forms.${
+        `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT forms.${
           passedConfigPath || lintConfigImports || myIgnoresOnly
             ? " (And DON'T FORGET YOUR FLAGS!)"
             : ""
