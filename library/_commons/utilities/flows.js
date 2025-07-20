@@ -25,7 +25,7 @@ import { ruleNames_makeRules } from "../constants/rules.js";
  * @param {typeof resolveRuleName | typeof compressRuleName} ruleName $COMMENT#JSDOC#PARAMS#RULENAME
  * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
  * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA
- * @param {{[key: string]: string} | undefined} aliases_flattenedKeys
+ * @param {Record<string, string> | undefined} aliases_flattenedKeys
  */
 const coreCommentsFlow = async (
   ruleName,
@@ -105,8 +105,8 @@ const coreCommentsFlow = async (
 /**
  * $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
  * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
- * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
- * @param {{[key: string]: string}} aliases_flattenedKeys
+ * @param {Record<string, string>} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
+ * @param {Record<string, string>} aliases_flattenedKeys
  * @returns
  */
 export const resolveCommentsFlow = async (
@@ -140,10 +140,12 @@ export const compressCommentsFlow = async (
  *
  * @param {string[]} configPathIgnores
  * @param {{[k: string]: string;}} originalFlattenedConfigData
+ * @param {Record<string, string>} aliases_flattenedKeys
  */
 export const placeholdersCommentsFlow = async (
   configPathIgnores,
-  originalFlattenedConfigData
+  originalFlattenedConfigData,
+  aliases_flattenedKeys
 ) => {
   /* TEST START
   only for the jscomments/comment-variables placeholders command
@@ -162,7 +164,7 @@ export const placeholdersCommentsFlow = async (
       composedValues_originalKeys[value] = key;
     else if (originalFlattenedConfigData[value])
       // alias Comment Variables
-      aliasValues_originalKeys[value] = key;
+      aliasValues_originalKeys[aliasValues_originalKeys[value]] = key;
     // regular Comment Variables
     else regularValuesOnly_originalKeys[value] = key;
   } // no need for continues, potential collisions are caught in resolveConfig run prior

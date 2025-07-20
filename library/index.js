@@ -143,7 +143,8 @@ switch (coreCommand) {
     console.log(`Running ${placeholdersRuleName}...`);
     await placeholdersCommentsFlow(
       configPathIgnores,
-      originalFlattenedConfigData
+      originalFlattenedConfigData,
+      aliasValues_originalKeys
     );
     break;
   default:
