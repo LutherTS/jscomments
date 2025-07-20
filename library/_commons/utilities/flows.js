@@ -164,7 +164,7 @@ export const placeholdersCommentsFlow = async (
       composedValues_originalKeys[value] = key;
     else if (originalFlattenedConfigData[value])
       // alias Comment Variables
-      aliasValues_originalKeys[aliasValues_originalKeys[value]] = key;
+      aliasValues_originalKeys[value] = aliases_flattenedKeys[key];
     // regular Comment Variables
     else regularValuesOnly_originalKeys[value] = key;
   } // no need for continues, potential collisions are caught in resolveConfig run prior

@@ -144,7 +144,7 @@ switch (coreCommand) {
     await placeholdersCommentsFlow(
       configPathIgnores,
       originalFlattenedConfigData,
-      aliasValues_originalKeys
+      aliases_flattenedKeys
     );
     break;
   default:
