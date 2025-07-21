@@ -12,14 +12,14 @@ const data = {
       otherLevelThree:
         "LEVELONE#LEVELTWO#LEVELTHREE" /* $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE */, // also an alias
       composedVariable:
-        "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE" /* $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE */, // This is a composed variable. What's the beauty in this? It allows for each comment variable to be its own single source of truth that can be reused still within the Comment Variables ecosystem. All while preventing the use of comment variables placeholders as values in the config. AND as a matter of fact, it even works... with aliases. (Personal note: And that part is free and included in the CLI tool.)
-      // wrongComposedVariable:
-      //   "$COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE", // errors, can't make composed variables with composed variables
+        "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE" /* $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE */, // This is a composed variable. What's the beauty in this? It allows for each comment variable to be its own single source of truth that can be reused still within the Comment Variables ecosystem. All while preventing the use of comment variables placeholders as values in the config. AND as a matter of fact, it even works... with aliases.
       composedVariableAlias:
         "LEVELONE#LEVELTWO#COMPOSEDVARIABLE" /* $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS */,
+
+      // wrongComposedVariable:
+      //   "$COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE", // errors, can't make composed variables with composed variables
       // wrongComposedVariableToo:
       //   "$COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE", // errors, can't make composed variables with composed variables even as aliases
-
       // levelthree: "Also level three.", // errors, duplicate normalized key
       // levelThree: "Also level three.", // errors, duplicate key with original overriden by legal JavaScript object value overrides
       // alsoLevelThree: "Level three.", // errors, duplicate value
@@ -48,6 +48,8 @@ const data = {
         "The flow that resolves `$COMMENT` placeholders into actual comments." /* $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW */,
       compressCommentsFlow:
         "The flow that compresses actual comments into `$COMMENT` placeholders." /* $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW */,
+      placeholdersCommentsFlow:
+        "The flow that creates `$COMMENT` placeholders right next to where they're defined.",
       logError:
         'Logs an error to the console depending on its type. (`"error"` or `"warning"`.)' /* $COMMENT#JSDOC#DEFINITIONS#LOGERROR */,
     }),
@@ -70,6 +72,10 @@ const data = {
         "The additional options as follows:" /* $COMMENT#JSDOC#PARAMS#OPTIONS */,
       settings:
         "The required settings as follows:" /* $COMMENT#JSDOC#PARAMS#SETTINGS */,
+      configPathIgnores:
+        'The array of paths linked to the config file, (named "ignores" given it is ignored the "compress" and "resolve" commands).',
+      originalFlattenedConfigData:
+        "The original flattened config data, before changes to Aliases Variables and Composed Variables are applied.",
     }),
     returns: Object.freeze({
       exitDueToFailure:

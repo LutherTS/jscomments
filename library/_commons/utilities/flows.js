@@ -25,7 +25,8 @@ import { ruleNames_makeRules } from "../constants/rules.js";
  * @param {typeof resolveRuleName | typeof compressRuleName} ruleName $COMMENT#JSDOC#PARAMS#RULENAME
  * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
  * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA
- * @param {Record<string, string> | undefined} aliases_flattenedKeys
+ * @param {Record<string, string> | undefined} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
+ * @returns
  */
 const coreCommentsFlow = async (
   ruleName,
@@ -106,7 +107,7 @@ const coreCommentsFlow = async (
  * $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
  * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
  * @param {Record<string, string>} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
- * @param {Record<string, string>} aliases_flattenedKeys
+ * @param {Record<string, string>} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
  * @returns
  */
 export const resolveCommentsFlow = async (
@@ -137,20 +138,17 @@ export const compressCommentsFlow = async (
 /* placeholdersCommentsFlow */
 
 /**
- *
- * @param {string[]} configPathIgnores
- * @param {{[k: string]: string;}} originalFlattenedConfigData
- * @param {Record<string, string>} aliases_flattenedKeys
+ * The flow that creates `$COMMENT` placeholders right next to where they're defined.
+ * @param {string[]} configPathIgnores The array of paths linked to the config file, (named "ignores" given it is ignored the "compress" and "resolve" commands).
+ * @param {{[k: string]: string;}} originalFlattenedConfigData The original flattened config data, before changes to Aliases Variables and Composed Variables are applied.
+ * @param {Record<string, string>} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
+ * @returns
  */
 export const placeholdersCommentsFlow = async (
   configPathIgnores,
   originalFlattenedConfigData,
   aliases_flattenedKeys
 ) => {
-  /* TEST START
-  only for the jscomments/comment-variables placeholders command
-  meaning this should actually be only in the JSComments CLI, */
-
   /** @type {Record<string, string>} */
   const composedValues_originalKeys = {};
   /** @type {Record<string, string>} */
@@ -216,5 +214,4 @@ export const placeholdersCommentsFlow = async (
   console.log(
     `✅ Made placeholders on ${total} file${total === 1 ? "" : "s"}.`
   );
-  /* TEST END */
 };
