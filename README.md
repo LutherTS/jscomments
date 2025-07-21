@@ -30,6 +30,10 @@ _The `compress` and `resolve` commands make each other entirely reversible._
 
 ### New command: `comment-variables placeholders`
 
+```
+comment-variables placeholders
+```
+
 Creates Comment Variables placeholders right next to the single sources of truth where Comment Variables are defined. (See in config example below.)
 
 ## Flags
