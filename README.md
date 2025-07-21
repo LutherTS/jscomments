@@ -28,7 +28,7 @@ Scans your line and block comments for `$COMMENT#*` tokens (like `$COMMENT#COMME
 
 _The `compress` and `resolve` commands make each other entirely reversible._
 
-### New command: `comment-variables placeholders`
+**New command: `comment-variables placeholders`**
 
 ```
 comment-variables placeholders
