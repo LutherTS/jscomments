@@ -11,6 +11,7 @@ export const exitDueToFailure = () => process.exit(1);
 /**
  * $COMMENT#JSDOC#DEFINITIONS#LOGERROR
  * @param {{type: "error" | "warning"; message: string}} error $COMMENT#JSDOC#PARAMS#ERROR
+ * @returns
  */
 export const logError = (error) => {
   switch (error.type) {

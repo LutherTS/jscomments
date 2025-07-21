@@ -28,6 +28,10 @@ Scans your line and block comments for `$COMMENT#*` tokens (like `$COMMENT#COMME
 
 _The `compress` and `resolve` commands make each other entirely reversible._
 
+### New command: `comment-variables placeholders`
+
+Creates Comment Variables placeholders right next to the single sources of truth where Comment Variables are defined. (See in config example below.)
+
 ## Flags
 
 **The CLI tool also comes with three flags initially:**
@@ -67,41 +71,53 @@ const data = {
   jsDoc: Object.freeze({
     definitions: Object.freeze({
       exitDueToFailure:
-        "Terminates the whole process with a 'failure' code (1).", // $COMMENT#JSDOC#DEFINITIONS#EXITDUETOFAILURE
+        "Terminates the whole process with a 'failure' code (1)." /* $COMMENT#JSDOC#DEFINITIONS#EXITDUETOFAILURE */,
       makeRuleResolve:
-        "The utility that creates the resolve rule based on the flattened config data, used to transform comment variables placeholders into actual comments.", // $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE
+        "The utility that creates the resolve rule based on the flattened config data, used to transform `$COMMENT` placeholders into actual comments." /* $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE */,
       makeRuleCompress:
-        "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into comment variables placeholders.", // $COMMENT#JSDOC#DEFINITIONS#MAKERULECOMPRESS
+        "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into `$COMMENT` placeholders." /* $COMMENT#JSDOC#DEFINITIONS#MAKERULECOMPRESS */,
       coreCommentsFlow:
-        "The core flow at the heart of resolving and compressing comments.", // $COMMENT#JSDOC#DEFINITIONS#CORECOMMENTSFLOW
+        "The core flow at the heart of resolving and compressing comments." /* $COMMENT#JSDOC#DEFINITIONS#CORECOMMENTSFLOW */,
       resolveCommentsFlow:
-        "The flow that resolves comment variables placeholders into actual comments.", // $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
+        "The flow that resolves `$COMMENT` placeholders into actual comments." /* $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW */,
       compressCommentsFlow:
-        "The flow that compresses actual comments into comment variables placeholders.", // $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW
+        "The flow that compresses actual comments into `$COMMENT` placeholders." /* $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW */,
+      placeholdersCommentsFlow:
+        "The flow that creates `$COMMENT` placeholders right next to where they're defined." /* $COMMENT#JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW */,
       logError:
-        'Logs an error to the console depending on its type. (`"error"` or `"warning"`.)', // $COMMENT#JSDOC#DEFINITIONS#LOGERROR
+        'Logs an error to the console depending on its type. (`"error"` or `"warning"`.)' /* $COMMENT#JSDOC#DEFINITIONS#LOGERROR */,
     }),
     params: Object.freeze({
       flattenedConfigData:
-        "The flattened config data, with comment variables placeholders as keys and actual comments as values.", // $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
+        "The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values." /* $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA */,
       reversedFlattenedConfigData:
-        "The reversed flattened config data, with actual comments as keys and comment variables placeholders as values.", // $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA
+        "The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values." /* $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA */,
+      aliases_flattenedKeys:
+        "The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias." /* $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS */,
       ruleName:
-        'The name of the rule currently used. (Either `"resolve"` or `"compress"`.)', // $COMMENT#JSDOC#PARAMS#RULENAME
+        'The name of the rule currently used. (Either `"resolve"` or `"compress"`.)' /* $COMMENT#JSDOC#PARAMS#RULENAME */,
       ignores:
-        "The array of paths and globs for the flow's ESLint instance to ignore.", // $COMMENT#JSDOC#PARAMS#IGNORES
+        "The array of paths and globs for the flow's ESLint instance to ignore." /* $COMMENT#JSDOC#PARAMS#IGNORES */,
       eitherFlattenedConfigData:
-        "Either the flattened config data or the reversed flattened config data, since they share the same structure.", // $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA
-      error: "The error object being handle for the logging.", // $COMMENT#JSDOC#PARAMS#ERROR
-      options: "The additional options as follows:", // $COMMENT#JSDOC#PARAMS#OPTIONS
-      settings: "The required settings as follows:", // $COMMENT#JSDOC#PARAMS#SETTINGS
+        "Either the flattened config data or the reversed flattened config data, since they share the same structure." /* $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA */,
+      error:
+        "The error object being handle for the logging." /* $COMMENT#JSDOC#PARAMS#ERROR */,
+      options:
+        "The additional options as follows:" /* $COMMENT#JSDOC#PARAMS#OPTIONS */,
+      settings:
+        "The required settings as follows:" /* $COMMENT#JSDOC#PARAMS#SETTINGS */,
+      configPathIgnores:
+        'The array of paths linked to the config file, (named "ignores" given it is ignored by the "compress" and "resolve" commands).' /* $COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES */,
+      originalFlattenedConfigData:
+        "The original flattened config data, before changes to Aliases Variables and Composed Variables are applied." /* $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA */,
     }),
     returns: Object.freeze({
       exitDueToFailure:
-        "Never. (Somehow typing needs to be explicit for unreachable code inference.)", // $COMMENT#JSDOC#RETURNS#EXITDUETOFAILURE
-      makeRuleResolve: "The resolve rule based on the flattened config data.", // $COMMENT#JSDOC#RETURNS#MAKERULERESOLVE
+        "Never. (Somehow typing needs to be explicit for unreachable code inference.)" /* $COMMENT#JSDOC#RETURNS#EXITDUETOFAILURE */,
+      makeRuleResolve:
+        "The resolve rule based on the flattened config data." /* $COMMENT#JSDOC#RETURNS#MAKERULERESOLVE */,
       makeRuleCompress:
-        "The compress rule based on the reversed flattened config data.", // $COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS
+        "The compress rule based on the reversed flattened config data." /* $COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS */,
     }),
   }),
 };

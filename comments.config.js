@@ -49,7 +49,7 @@ const data = {
       compressCommentsFlow:
         "The flow that compresses actual comments into `$COMMENT` placeholders." /* $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW */,
       placeholdersCommentsFlow:
-        "The flow that creates `$COMMENT` placeholders right next to where they're defined.",
+        "The flow that creates `$COMMENT` placeholders right next to where they're defined." /* $COMMENT#JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW */,
       logError:
         'Logs an error to the console depending on its type. (`"error"` or `"warning"`.)' /* $COMMENT#JSDOC#DEFINITIONS#LOGERROR */,
     }),
@@ -73,9 +73,9 @@ const data = {
       settings:
         "The required settings as follows:" /* $COMMENT#JSDOC#PARAMS#SETTINGS */,
       configPathIgnores:
-        'The array of paths linked to the config file, (named "ignores" given it is ignored the "compress" and "resolve" commands).',
+        'The array of paths linked to the config file, (named "ignores" given it is ignored by the "compress" and "resolve" commands).' /* $COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES */,
       originalFlattenedConfigData:
-        "The original flattened config data, before changes to Aliases Variables and Composed Variables are applied.",
+        "The original flattened config data, before changes to Aliases Variables and Composed Variables are applied." /* $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA */,
     }),
     returns: Object.freeze({
       exitDueToFailure:

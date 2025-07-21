@@ -138,9 +138,9 @@ export const compressCommentsFlow = async (
 /* placeholdersCommentsFlow */
 
 /**
- * The flow that creates `$COMMENT` placeholders right next to where they're defined.
- * @param {string[]} configPathIgnores The array of paths linked to the config file, (named "ignores" given it is ignored the "compress" and "resolve" commands).
- * @param {{[k: string]: string;}} originalFlattenedConfigData The original flattened config data, before changes to Aliases Variables and Composed Variables are applied.
+ * $COMMENT#JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW
+ * @param {string[]} configPathIgnores $COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES
+ * @param {{[k: string]: string;}} originalFlattenedConfigData $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA
  * @param {Record<string, string>} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
  * @returns
  */
