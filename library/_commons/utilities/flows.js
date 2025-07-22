@@ -171,6 +171,7 @@ export const placeholdersCommentsFlow = async (
     composedValues_originalKeys,
     aliasValues_originalKeys,
     regularValuesOnly_originalKeys,
+    aliases_flattenedKeys,
   };
   const makePlaceholdersAsObject = { makePlaceholders };
 
