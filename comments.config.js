@@ -14,8 +14,10 @@ const data = {
       composedVariable:
         "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE" /* $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE */, // This is a composed variable. What's the beauty in this? It allows for each comment variable to be its own single source of truth that can be reused still within the Comment Variables ecosystem. All while preventing the use of comment variables placeholders as values in the config. AND as a matter of fact, it even works... with aliases.
       composedVariableAlias:
-        "LEVELONE#LEVELTWO#COMPOSEDVARIABLE" /* $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS */,
+        "LEVELONE#LEVELTWO#COMPOSEDVARIABLE" /* $COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS */, // The alias of a composed variable. SO just like composed variables can incorporate aliases, aliases can be aliases for composed variables.
 
+      // otherLevelThreeAlias:
+      //   "LEVELONE#LEVELTWO#OTHERLEVELTHREE" /* $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE */, // errors, can't be the alias of another alias
       // wrongComposedVariable:
       //   "$COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE", // errors, can't make composed variables with composed variables
       // wrongComposedVariableToo:
