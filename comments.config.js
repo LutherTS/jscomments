@@ -28,7 +28,7 @@ const data = {
       // tooLevelThree: 2, // errors, value is invalid
       // $levelThree: "Dollar sign", // errors, key as "$" character
       // "#levelThree": "Hashtag", // errors, key as "#" character
-      // ".levelThree": "Punctuation", // errors, key is invalid
+      // ".levelThree": "Punctuation", // errors, key is invalid due to punctuation
       // unrecognized: `Unrecognized value.`, // errors, is not a string literal
       // emptyString: "", // errors, string is empty
       // "": "emptyKey", // errors, key is empty caught by the regex

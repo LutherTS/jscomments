@@ -6,7 +6,7 @@ npm install -g comment-variables
 
 ## Commands
 
-**`comment-variables` comes with three commands in this initial release:**
+**`comment-variables`/`jscomments` comes with three commands in this initial release:**
 
 ```
 comment-variables
