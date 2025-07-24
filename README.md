@@ -6,13 +6,13 @@ npm install -g comment-variables
 
 ## Commands
 
-**`comment-variables`/`jscomments` comes with three commands in this initial release:**
+**`comment-variables` (alias `jscomments`) comes with three commands in this initial release:**
 
 ```
 comment-variables
 ```
 
-Interacts with your `comments.config.js` default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long the printed parameters correspond to what you've expected from your defined config.
+Interacts with your `comments.config.js` default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file.)
 
 ```
 comment-variables compress
