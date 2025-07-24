@@ -75,7 +75,7 @@ const data = {
   jsDoc: Object.freeze({
     definitions: Object.freeze({
       exitDueToFailure:
-        "Terminates the whole process with a 'failure' code (1)." /* $COMMENT#JSDOC#DEFINITIONS#EXITDUETOFAILURE */,
+        "Terminates the whole process with a 'failure' code (`1`)." /* $COMMENT#JSDOC#DEFINITIONS#EXITDUETOFAILURE */,
       makeRuleResolve:
         "The utility that creates the resolve rule based on the flattened config data, used to transform `$COMMENT` placeholders into actual comments." /* $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE */,
       makeRuleCompress:

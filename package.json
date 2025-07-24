@@ -9,7 +9,8 @@
   "main": "library/index.js",
   "files": [
     "library",
-    "comments.config.js"
+    "comments.config.js",
+    "comments.config.json"
   ],
   "repository": {
     "type": "git",
@@ -26,7 +27,7 @@
   "type": "module",
   "dependencies": {
     "@eslint/markdown": "^6.5.0",
-    "comment-variables-resolve-config": "^1.9.3",
+    "comment-variables-resolve-config": "^1.9.4",
     "eslint": "^9.29.0"
   },
   "devDependencies": {

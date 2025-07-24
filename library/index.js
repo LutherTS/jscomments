@@ -142,7 +142,7 @@ fs.writeFileSync(jsonPath, jsonData, "utf8");
 
 console.log(`JSON resolved config data written to: \n${jsonPath}`);
 
-// ADDRESSES THE CORE COMMANDS "resolve" AND "compress".
+// ADDRESSES THE CORE COMMANDS "resolve", "compress", AND "placeholders".
 
 switch (coreCommand) {
   case resolveRuleName:
@@ -168,11 +168,11 @@ switch (coreCommand) {
   default:
     if (coreCommand && !coreCommand.startsWith("--"))
       console.error(
-        `ERROR. Core command not recognized. Choose between "resolve" and "compress" or "placeholders".`
+        `ERROR. Core command not recognized. Choose between "${resolveRuleName}" and "${compressRuleName}" or "${placeholdersRuleName}".`
       );
     else
       console.log(
-        `If these settings are correct with you, feel free to initiate the command "resolve" to resolve comments, or "compress" to compress them back to their $COMMENT forms. You can also generate the placeholders with the command "placeholders".${
+        `If these settings are correct with you, feel free to initiate the command "${resolveRuleName}" to resolve comments, or "${compressRuleName}" to compress them back to their $COMMENT forms. You can also generate the placeholders at their definitions locations with the command "${placeholdersRuleName}".${
           passedConfigPath || lintConfigImports || myIgnoresOnly
             ? " (And DON'T FORGET YOUR FLAGS!)"
             : ""

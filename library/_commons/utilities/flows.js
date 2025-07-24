@@ -21,11 +21,11 @@ import { ruleNames_makeRules } from "../constants/rules.js";
 /* coreCommentsFlow */
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#CORECOMMENTSFLOW
- * @param {typeof resolveRuleName | typeof compressRuleName} ruleName $COMMENT#JSDOC#PARAMS#RULENAME
- * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
- * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA
- * @param {Record<string, string> | undefined} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
+ * The core flow at the heart of resolving and compressing comments.
+ * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`.)
+ * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
+ * @param {{[key: string]: string}} flattenedConfigData Either the flattened config data or the reversed flattened config data, since they share the same structure.
+ * @param {Record<string, string> | undefined} aliases_flattenedKeys The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.
  * @returns
  */
 const coreCommentsFlow = async (
@@ -104,10 +104,10 @@ const coreCommentsFlow = async (
 /* resolveCommentsFlow */
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW
- * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
- * @param {Record<string, string>} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
- * @param {Record<string, string>} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
+ * The flow that resolves `$COMMENT` placeholders into actual comments.
+ * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
+ * @param {Record<string, string>} flattenedConfigData The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values.
+ * @param {Record<string, string>} aliases_flattenedKeys The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.
  * @returns
  */
 export const resolveCommentsFlow = async (
@@ -125,9 +125,9 @@ export const resolveCommentsFlow = async (
 /* compressCommentsFlow */
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW
- * @param {string[]} ignores $COMMENT#JSDOC#PARAMS#IGNORES
- * @param {{[key: string]: string}} reversedFlattenedConfigData $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA
+ * The flow that compresses actual comments into `$COMMENT` placeholders.
+ * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
+ * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values.
  * @returns
  */
 export const compressCommentsFlow = async (
@@ -138,10 +138,10 @@ export const compressCommentsFlow = async (
 /* placeholdersCommentsFlow */
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW
- * @param {string[]} configPathIgnores $COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES
- * @param {{[k: string]: string;}} originalFlattenedConfigData $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA
- * @param {Record<string, string>} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
+ * The flow that creates `$COMMENT` placeholders right next to where they're defined.
+ * @param {string[]} configPathIgnores The array of paths linked to the config file, (named "ignores" given it is ignored by the "compress" and "resolve" commands).
+ * @param {{[k: string]: string;}} originalFlattenedConfigData The original flattened config data, before changes to Aliases Variables and Composed Variables are applied.
+ * @param {Record<string, string>} aliases_flattenedKeys The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.
  * @returns
  */
 export const placeholdersCommentsFlow = async (
@@ -158,12 +158,12 @@ export const placeholdersCommentsFlow = async (
 
   for (const [key, value] of Object.entries(originalFlattenedConfigData)) {
     if (value.includes(`${$COMMENT}#`))
-      // composed Comment Variables
+      // composed variables
       composedValues_originalKeys[value] = key;
     else if (originalFlattenedConfigData[value])
-      // alias Comment Variables
+      // alias variables
       aliasValues_originalKeys[value] = aliases_flattenedKeys[key];
-    // regular Comment Variables
+    // comment variables
     else regularValuesOnly_originalKeys[value] = key;
   } // no need for continues, potential collisions are caught in resolveConfig run prior
 
@@ -216,7 +216,3 @@ export const placeholdersCommentsFlow = async (
     `✅ Made placeholders on ${total} file${total === 1 ? "" : "s"}.`
   );
 };
-
-// export const variablesCommentsFlow = () => {
-
-// }
