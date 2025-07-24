@@ -1,0 +1,42 @@
+{
+  "levelOne": {
+    "levelTwo": {
+      "levelThree": "Level three.",
+      "levelThreeEscape": "Level three.       fdff",
+      "stillLevelThree": "Level three.",
+      "otherLevelThree": "Level three.",
+      "composedVariable": "Level three. Level three.",
+      "composedVariableAlias": "Level three. Level three."
+    }
+  },
+  "jsDoc": {
+    "definitions": {
+      "exitDueToFailure": "Terminates the whole process with a 'failure' code (1).",
+      "makeRuleResolve": "The utility that creates the resolve rule based on the flattened config data, used to transform `$COMMENT` placeholders into actual comments.",
+      "makeRuleCompress": "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into `$COMMENT` placeholders.",
+      "coreCommentsFlow": "The core flow at the heart of resolving and compressing comments.",
+      "resolveCommentsFlow": "The flow that resolves `$COMMENT` placeholders into actual comments.",
+      "compressCommentsFlow": "The flow that compresses actual comments into `$COMMENT` placeholders.",
+      "placeholdersCommentsFlow": "The flow that creates `$COMMENT` placeholders right next to where they're defined.",
+      "logError": "Logs an error to the console depending on its type. (`\"error\"` or `\"warning\"`.)"
+    },
+    "params": {
+      "flattenedConfigData": "The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values.",
+      "reversedFlattenedConfigData": "The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values.",
+      "aliases_flattenedKeys": "The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.",
+      "ruleName": "The name of the rule currently used. (Either `\"resolve\"` or `\"compress\"`.)",
+      "ignores": "The array of paths and globs for the flow's ESLint instance to ignore.",
+      "eitherFlattenedConfigData": "Either the flattened config data or the reversed flattened config data, since they share the same structure.",
+      "error": "The error object being handle for the logging.",
+      "options": "The additional options as follows:",
+      "settings": "The required settings as follows:",
+      "configPathIgnores": "The array of paths linked to the config file, (named \"ignores\" given it is ignored by the \"compress\" and \"resolve\" commands).",
+      "originalFlattenedConfigData": "The original flattened config data, before changes to Aliases Variables and Composed Variables are applied."
+    },
+    "returns": {
+      "exitDueToFailure": "Never. (Somehow typing needs to be explicit for unreachable code inference.)",
+      "makeRuleResolve": "The resolve rule based on the flattened config data.",
+      "makeRuleCompress": "The compress rule based on the reversed flattened config data."
+    }
+  }
+}

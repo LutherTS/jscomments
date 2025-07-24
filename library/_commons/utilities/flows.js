@@ -216,3 +216,7 @@ export const placeholdersCommentsFlow = async (
     `✅ Made placeholders on ${total} file${total === 1 ? "" : "s"}.`
   );
 };
+
+// export const variablesCommentsFlow = () => {
+
+// }

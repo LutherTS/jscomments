@@ -2,6 +2,7 @@
 // The shebang (#!) is necessary to communicate with Unix-based systems, like Linux and macOS. On Windows, it is ignored, but npm tooling bridges the gap by generating wrappers that make the CLI work anyway.
 
 import path from "path";
+import fs from "fs";
 
 import resolveConfig, {
   defaultConfigFileName,
@@ -9,6 +10,7 @@ import resolveConfig, {
   lintConfigImportsFlag,
   myIgnoresOnlyFlag,
   knownIgnores,
+  makeResolvedConfigData,
 } from "comment-variables-resolve-config";
 
 import {
@@ -123,6 +125,22 @@ const rawIgnores = [...configPathIgnores, ...passedIgnores];
 const ignores = myIgnoresOnly ? rawIgnores : [...rawIgnores, ...knownIgnores];
 
 skipDetails || console.log("Ignores are:", ignores);
+
+// NEW: AUTOMATICALLY GENERATE THE JSON OUTPUT OF YOUR RESOLVED CONFIG DATA.
+
+const makeResolvedConfigDataResults =
+  makeResolvedConfigData(resolveConfigResults);
+if (!makeResolvedConfigDataResults.success) {
+  makeResolvedConfigDataResults.errors.forEach((e) => logError(e));
+  exitDueToFailure();
+}
+
+const resolvedConfigData = makeResolvedConfigDataResults.resolvedConfigData;
+const jsonPath = resolveConfigResults.configPath.replace(/\.js$/, ".json");
+const jsonData = JSON.stringify(resolvedConfigData, null, 2);
+fs.writeFileSync(jsonPath, jsonData, "utf8");
+
+console.log(`JSON resolved config data written to: \n${jsonPath}`);
 
 // ADDRESSES THE CORE COMMANDS "resolve" AND "compress".
 
