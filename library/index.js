@@ -136,7 +136,10 @@ if (!makeResolvedConfigDataResults.success) {
 }
 
 const resolvedConfigData = makeResolvedConfigDataResults.resolvedConfigData;
-const jsonPath = resolveConfigResults.configPath.replace(/\.js$/, ".json");
+const jsonPath = resolveConfigResults.configPath.replace(
+  /\.js$/,
+  () => ".json"
+);
 const jsonData = JSON.stringify(resolvedConfigData, null, 2);
 fs.writeFileSync(jsonPath, jsonData, "utf8");
 

@@ -41,6 +41,9 @@ const data = {
       // emptyString: "", // errors, string is empty
       // "": "emptyKey", // errors, key is empty caught by the regex
       // ownAliasKey: "LEVELONE#LEVELTWO#OWNALIASKEY", // errors, is its own key/alias
+      // key: "key not allowed", // errors, "key", "value" and "placeholder" not allowed
+      // value: "value not allowed", // errors, "key", "value" and "placeholder" not allowed
+      // placeholder: "placeholder not allowed", // errors, "key", "value" and "placeholder" not allowed
     },
   },
   // for deving
