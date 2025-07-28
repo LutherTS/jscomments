@@ -6,11 +6,6 @@
         "key": "LEVELONE#LEVELTWO#LEVELTHREE",
         "placeholder": "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE"
       },
-      "levelThreeEscape": {
-        "value": "Level three.       fdff",
-        "key": "LEVELONE#LEVELTWO#LEVELTHREEESCAPE",
-        "placeholder": "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREEESCAPE"
-      },
       "stillLevelThree": {
         "value": "Level three.",
         "key": "LEVELONE#LEVELTWO#STILLLEVELTHREE",

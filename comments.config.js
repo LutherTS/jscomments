@@ -1,12 +1,14 @@
+// const obj = { test: "Testing." }; // errors, object string values in config files are reserved for exports from the config.
+
 const data = {
   // for testing
   levelOne: {
     levelTwo: {
       levelThree: "Level three." /* $COMMENT#LEVELONE#LEVELTWO#LEVELTHREE */, // New placeholder structure. Not as sexy, but first and foremost guaranteed to be functional appended right at the end of the value as a Block comment, and last but not least also guaranteed to not modify Value Locations in the process. So `comment-variables placeholders` it is, and this justifies enforcing strings only for values even outside of the use of the VS Code extension.
-      levelThreeEscape:
-        "Level three. \
-      fdff\
-" /* $COMMENT#LEVELONE#LEVELTWO#LEVELTHREEESCAPE */, // valid
+      // levelThreeEscape:
+      //   "Level three. \
+      //       fdff\
+      // " /* $COMMENT#LEVELONE#LEVELTWO#LEVELTHREEESCAPE */, // NOW ERRORS AS INTENDED, unrecognizedValuesSet
       stillLevelThree:
         "LEVELONE#LEVELTWO#LEVELTHREE" /* $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE */, // now is an alias
       otherLevelThree:
@@ -44,6 +46,7 @@ const data = {
       // key: "key not allowed", // errors, "key", "value" and "placeholder" not allowed
       // value: "value not allowed", // errors, "key", "value" and "placeholder" not allowed
       // placeholder: "placeholder not allowed", // errors, "key", "value" and "placeholder" not allowed
+      // noConcat: "no" + "concat", // errors, unrecognized value
     },
   },
   // for deving
