@@ -72,8 +72,6 @@ const passedConfigPath =
 // defaults to comments.config.js if no --config flag is set
 let rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
-/* TEST START */
-
 if (!fs.existsSync(rawConfigPath)) {
   console.log(
     `No Comment Variables config file found at ${rawConfigPath}. Switching to tutorial mode.`
@@ -104,8 +102,6 @@ if (!fs.existsSync(rawConfigPath)) {
 
   rawConfigPath = templateFilePath;
 }
-
-/* TEST END */
 
 console.log(`Resolving config at ${rawConfigPath}...`);
 
