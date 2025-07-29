@@ -44,26 +44,27 @@ Creates Comment Variables placeholders right next to the single sources of truth
 comment-variables --config <your-config.js>
 ```
 
-Pass a different file as your config instead of the default `comments.config.js` (like `comment-variables --config your-config.js`).
+Passes a different file as your config instead of the default `comments.config.js` (like `comment-variables --config your-config.js`), through a path relative to the root of your project.
 
 ```
-~~comment-variables --lint-config-imports~~ (now part of the config at the `lintConfigImports` key)
+comment-variables --lint-config-imports, now part of the config at the `lintConfigImports` key
 ```
 
 By default, `comment-variables` excludes your config file and all the (JavaScript/TypeScript) files it recursively imports. This flag cancels this mechanism, linting config imports. (The config file however still remains excluded from linting.)
 
 ```
-~~comment-variables --my-ignores-only~~ (now part of the config at the `myIgnoresOnly` key)
+comment-variables --my-ignores-only, (now part of the config at the `myIgnoresOnly` key)
 ```
 
 By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). This flag cancels this mechanism so that you can have full control over your ignored files and folders.
 
-_All ~~three~~ flags can be composed ~~together, and~~ with any of the three commands:_
+_The --config flag can be composed with any of the commands:_
 
 ```
 comment-variables --config your-config.js
-~~comment-variables compress --config your-config.js --lint-config-imports~~
-~~comment-variables resolve --config your-config.js --lint-config-imports --my-ignores-only~~
+comment-variables compress --config your-config.js
+comment-variables resolve --config your-config.js
+comment-variables resolve --config your-config.js
 ```
 
 ## **`comments.config.js`**
