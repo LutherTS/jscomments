@@ -80,31 +80,26 @@ if (!fs.existsSync(rawConfigPath)) {
   );
 
   const templateFilePath = path.join(cwd, templateFileName);
+  const exampleFilePath = path.join(cwd, exampleFileName);
+  const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
   if (fs.existsSync(templateFilePath)) {
     console.log(`Proceeding with template file found at ${templateFilePath}.`);
   } else {
-    const dirname = path.dirname(url.fileURLToPath(import.meta.url));
-
     const sourceTemplateFilePath = path.join(
       dirname,
       "../generate.template.js"
     );
     console.log(`Generating template file at ${templateFilePath}.`);
     fs.copyFileSync(sourceTemplateFilePath, templateFilePath);
+  }
 
-    const exampleFilePath = path.join(cwd, exampleFileName);
-
-    if (fs.existsSync(exampleFilePath)) {
-      console.log(`Proceeding with example file found at ${exampleFilePath}.`);
-    } else {
-      const sourceExampleFilePath = path.join(
-        dirname,
-        "../generate.example.js"
-      );
-      console.log(`Generating example file at ${exampleFilePath}.`);
-      fs.copyFileSync(sourceExampleFilePath, exampleFilePath);
-    }
+  if (fs.existsSync(exampleFilePath)) {
+    console.log(`Proceeding with example file found at ${exampleFilePath}.`);
+  } else {
+    const sourceExampleFilePath = path.join(dirname, "../generate.example.js");
+    console.log(`Generating example file at ${exampleFilePath}.`);
+    fs.copyFileSync(sourceExampleFilePath, exampleFilePath);
   }
 
   rawConfigPath = templateFilePath;

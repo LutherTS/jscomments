@@ -1,4 +1,8 @@
-// A Comment Variables config template generated upon approval in case no config file has been found. Feel free to use it as a steping stone to learn how to use Comment Variables.
+// A Comment Variables config template generated in case no config file has been found. Feel free to use it as a stepping stone to learn how to use Comment Variables.
+
+// As a first step, go ahead and run the command `comment-variables placeholders`.
+// Then rename the $COMMENT#COMMENT placeholder next to `alias` to $COMMENT#COMMENT and run `comment-variables placeholders` to see what happens.
+// You can now use and explore Comment Variables on the accompanying `comments.example.js` file that has also been generated.
 
 const data = Object.freeze({
   comment: "This is a comment.",
