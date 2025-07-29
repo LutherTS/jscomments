@@ -10,12 +10,12 @@ import resolveConfig, {
   templateFileName,
   exampleFileName,
   configFlag,
+  cwd,
   knownIgnores,
   makeResolvedConfigData,
 } from "comment-variables-resolve-config";
 
 import {
-  cwd,
   hasPackageJson,
   hasGitFolder,
   resolveRuleName,

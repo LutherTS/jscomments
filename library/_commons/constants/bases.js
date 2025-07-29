@@ -1,13 +1,12 @@
 import fs from "fs";
 import path from "path";
 
+import { cwd } from "comment-variables-resolve-config";
+
 // rule names
 export const resolveRuleName = "resolve";
 export const compressRuleName = "compress";
 export const placeholdersRuleName = "placeholders"; // rule?
-
-// current working directory
-export const cwd = process.cwd();
 
 // to prevent accidental changes
 export const hasPackageJson = fs.existsSync(path.join(cwd, "package.json"));
