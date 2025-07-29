@@ -10,7 +10,9 @@
   "files": [
     "library",
     "comments.config.js",
-    "comments.config.json"
+    "comments.config.json",
+    "comments.template.js",
+    "comments.example.js"
   ],
   "repository": {
     "type": "git",
