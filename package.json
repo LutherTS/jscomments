@@ -11,8 +11,8 @@
     "library",
     "comments.config.js",
     "comments.config.json",
-    "comments.template.js",
-    "comments.example.js"
+    "generate.template.js",
+    "generate.example.js"
   ],
   "repository": {
     "type": "git",
