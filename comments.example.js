@@ -1,0 +1,1 @@
+// A JavaScript file that acts as an example file for the generated Comment Variables template config. Use the `comment-variables compress` and `comment-variables resolve` to see how the following comments go back and forth from Comment Variables placeholders to actual comments reversibly.

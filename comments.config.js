@@ -106,9 +106,16 @@ const data = {
 
 const ignores = ["README.md"];
 
+// FORMER CLI FLAGS NOW TO BE INCLUDED INSIDE THE CONFIG ITSELF
+
+const lintConfigImports = false; // can be ommitted
+const myIgnoresOnly = false; // can be ommitted
+
 const config = {
   data,
   ignores,
+  lintConfigImports,
+  myIgnoresOnly,
 };
 
 export default config;

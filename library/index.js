@@ -7,8 +7,6 @@ import fs from "fs";
 import resolveConfig, {
   defaultConfigFileName,
   configFlag,
-  lintConfigImportsFlag,
-  myIgnoresOnlyFlag,
   knownIgnores,
   makeResolvedConfigData,
 } from "comment-variables-resolve-config";
@@ -29,21 +27,6 @@ import {
   placeholdersCommentsFlow,
 } from "./_commons/utilities/flows.js";
 
-// ENSURES THE CLI TOOL ONLY RUNS IN FOLDERS THAT POSSESS A package.json FILE AND A .git FOLDER.
-
-if (!hasPackageJson) {
-  console.error(
-    "ERROR. No package.json file found in this directory. Aborting to prevent accidental changes."
-  );
-  exitDueToFailure();
-}
-if (!hasGitFolder) {
-  console.error(
-    "ERROR. No git folder found in this directory. Aborting to prevent irreversible changes."
-  );
-  exitDueToFailure();
-}
-
 // GATHERS COMMANDS.
 
 const commands = process.argv;
@@ -53,6 +36,24 @@ const skipDetails =
   coreCommand === resolveRuleName ||
   coreCommand === compressRuleName ||
   coreCommand === placeholdersRuleName;
+
+// ENSURES THE CLI TOOL ONLY RUNS IN FOLDERS THAT POSSESS A package.json FILE AND A .git FOLDER.
+
+if (!hasPackageJson) {
+  console.error(
+    "ERROR. No package.json file found in this directory. Aborting to prevent accidental changes."
+  );
+  exitDueToFailure();
+}
+skipDetails || console.log("package.json file noticed. Allowed to proceed.");
+
+if (!hasGitFolder) {
+  console.error(
+    "ERROR. No git folder found in this directory. Aborting to prevent irreversible changes."
+  );
+  exitDueToFailure();
+}
+skipDetails || console.log("git folder noticed. Allowed to proceed.");
 
 // OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, CONFIG PATH, AND PASSED IGNORES.
 
@@ -87,6 +88,9 @@ const {
   configPath,
   passedIgnores,
   rawConfigAndImportPaths,
+  // NEW
+  lintConfigImports,
+  myIgnoresOnly,
 } = resolveConfigResults;
 
 skipDetails || console.log("Running with config:", config);
@@ -99,10 +103,19 @@ skipDetails ||
 skipDetails || console.log("Aliases are:", aliases_flattenedKeys);
 skipDetails || console.log("Config path is:", configPath);
 skipDetails || console.log("Passed ignores are:", passedIgnores);
+// NEW
+skipDetails || console.log("lintConfigImports is:", lintConfigImports);
+skipDetails || console.log("myIgnoresOnly are:", myIgnoresOnly);
 
-// ADDRESSES THE --lint-config-imports FLAG, GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
+/* IMPORTANT 
+Aside from the config flag, all other flags (`--lint-config-imports`, `--my-ignores-only`) should be included in the config so that they can be shared across the CLI and the extension within a single source of truth, invalidating the need to scream " (And DON'T FORGET YOUR FLAGS!)".
+This didn't come to mind originally because the idea of these flags came into play before I reliably made the VS Code extension.
+The goal therefore becomes that ONLY the config path remains the SOLE available flag for the CLI and config option for the extension that users will have to manage manually across both solutions.
+And then I can start working on the template for Comment Variables to unleash upon asking if no config file is found. comments.template.js */
 
-const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2;
+// ADDRESSES THE --lint-config-imports FLAG (lintConfigImports, no longer a flag), GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
+
+// const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2; // NOW FROM CONFIG
 const rawConfigPathIgnores = lintConfigImports
   ? [configPath]
   : rawConfigAndImportPaths;
@@ -118,9 +131,9 @@ skipDetails ||
     configPathIgnores
   );
 
-// ADDRESSES THE --my-ignores-only FLAG, GIVEN THAT KNOWN IGNORES ARE IGNORED BY DEFAULT
+// ADDRESSES THE --my-ignores-only FLAG (myIgnoresOnly, no longer a flag, GIVEN THAT KNOWN IGNORES ARE IGNORED BY DEFAULT
 
-const myIgnoresOnly = commands.indexOf(myIgnoresOnlyFlag) >= 2;
+// const myIgnoresOnly = commands.indexOf(myIgnoresOnlyFlag) >= 2; // NOW FROM CONFIG
 const rawIgnores = [...configPathIgnores, ...passedIgnores];
 const ignores = myIgnoresOnly ? rawIgnores : [...rawIgnores, ...knownIgnores];
 
@@ -176,9 +189,7 @@ switch (coreCommand) {
     else
       console.log(
         `If these settings are correct with you, feel free to initiate the command "${resolveRuleName}" to resolve comments, or "${compressRuleName}" to compress them back to their $COMMENT forms. You can also generate the placeholders at their definitions locations with the command "${placeholdersRuleName}".${
-          passedConfigPath || lintConfigImports || myIgnoresOnly
-            ? " (And DON'T FORGET YOUR FLAGS!)"
-            : ""
+          passedConfigPath ? " (And DON'T FORGET YOUR --config FLAG!)" : ""
         }`
       );
     break;

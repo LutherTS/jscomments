@@ -47,23 +47,23 @@ comment-variables --config <your-config.js>
 Pass a different file as your config instead of the default `comments.config.js` (like `comment-variables --config your-config.js`).
 
 ```
-comment-variables --lint-config-imports
+~~comment-variables --lint-config-imports~~ (now part of the config at the `lintConfigImports` key)
 ```
 
 By default, `comment-variables` excludes your config file and all the (JavaScript/TypeScript) files it recursively imports. This flag cancels this mechanism, linting config imports. (The config file however still remains excluded from linting.)
 
 ```
-comment-variables --my-ignores-only
+~~comment-variables --my-ignores-only~~ (now part of the config at the `myIgnoresOnly` key)
 ```
 
 By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). This flag cancels this mechanism so that you can have full control over your ignored files and folders.
 
-_All three flags can be composed together, and with any of the three commands:_
+_All ~~three~~ flags can be composed ~~together, and~~ with any of the three commands:_
 
 ```
 comment-variables --config your-config.js
-comment-variables compress --config your-config.js --lint-config-imports
-comment-variables resolve --config your-config.js --lint-config-imports --my-ignores-only
+~~comment-variables compress --config your-config.js --lint-config-imports~~
+~~comment-variables resolve --config your-config.js --lint-config-imports --my-ignores-only~~
 ```
 
 ## **`comments.config.js`**
@@ -128,9 +128,14 @@ const data = {
 
 const ignores = ["README.md"];
 
+const lintConfigImports = false; // can be ommitted
+const myIgnoresOnly = false; // can be ommitted
+
 const config = {
   data,
   ignores,
+  lintConfigImports,
+  myIgnoresOnly,
 };
 
 export default config;
