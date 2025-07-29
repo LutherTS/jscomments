@@ -1,10 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-// tutorial file names
-export const templateFileName = "comments.template.js";
-export const exampleFileName = "comments.example.js";
-
 // rule names
 export const resolveRuleName = "resolve";
 export const compressRuleName = "compress";

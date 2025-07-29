@@ -7,14 +7,14 @@ import url from "url";
 
 import resolveConfig, {
   defaultConfigFileName,
+  templateFileName,
+  exampleFileName,
   configFlag,
   knownIgnores,
   makeResolvedConfigData,
 } from "comment-variables-resolve-config";
 
 import {
-  templateFileName,
-  exampleFileName,
   cwd,
   hasPackageJson,
   hasGitFolder,
