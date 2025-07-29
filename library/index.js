@@ -3,6 +3,7 @@
 
 import path from "path";
 import fs from "fs";
+import url from "url";
 
 import resolveConfig, {
   defaultConfigFileName,
@@ -12,6 +13,8 @@ import resolveConfig, {
 } from "comment-variables-resolve-config";
 
 import {
+  templateFileName,
+  exampleFileName,
   cwd,
   hasPackageJson,
   hasGitFolder,
@@ -67,7 +70,47 @@ const passedConfig = commands[configFlagIndex + 1];
 const passedConfigPath =
   hasConfigFlag && passedConfig ? path.join(cwd, passedConfig) : null;
 // defaults to comments.config.js if no --config flag is set
-const rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
+let rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
+
+/* TEST START */
+
+if (!fs.existsSync(rawConfigPath)) {
+  console.log(
+    `No Comment Variables config file found at ${rawConfigPath}. Switching to tutorial mode.`
+  );
+
+  const templateFilePath = path.join(cwd, templateFileName);
+
+  if (fs.existsSync(templateFilePath)) {
+    console.log(`Proceeding with template file found at ${templateFilePath}.`);
+  } else {
+    const dirname = path.dirname(url.fileURLToPath(import.meta.url));
+
+    const sourceTemplateFilePath = path.join(
+      dirname,
+      "../generate.template.js"
+    );
+    console.log(`Generating template file at ${templateFilePath}.`);
+    fs.copyFileSync(sourceTemplateFilePath, templateFilePath);
+
+    const exampleFilePath = path.join(cwd, exampleFileName);
+
+    if (fs.existsSync(exampleFilePath)) {
+      console.log(`Proceeding with example file found at ${exampleFilePath}.`);
+    } else {
+      const sourceExampleFilePath = path.join(
+        dirname,
+        "../generate.example.js"
+      );
+      console.log(`Generating example file at ${exampleFilePath}.`);
+      fs.copyFileSync(sourceExampleFilePath, exampleFilePath);
+    }
+  }
+
+  rawConfigPath = templateFilePath;
+}
+
+/* TEST END */
 
 console.log(`Resolving config at ${rawConfigPath}...`);
 

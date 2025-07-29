@@ -23,3 +23,5 @@ const config = {
 };
 
 export default config;
+
+// Once you've grasped these concepts, simply copy or rename this file to `comments.config.js` and you're good to go.
