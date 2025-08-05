@@ -38,10 +38,10 @@ const coreCommentsFlow = async (
     fix: true,
     errorOnUnmatchedPattern: false,
     overrideConfigFile: true,
+    ignorePatterns: ignores,
     overrideConfig: [
       {
         files: allJSTSFileGlobs,
-        ignores,
         languageOptions: typeScriptAndJSXCompatible,
         plugins: {
           [commentVariablesPluginName]: {
@@ -59,13 +59,11 @@ const coreCommentsFlow = async (
       },
       {
         files: allMDFileGlobs,
-        ignores,
         plugins: { markdown },
         processor: "markdown/markdown",
       },
       {
         files: allMDVirtualJSTSFileGlobs,
-        ignores,
         languageOptions: typeScriptAndJSXCompatible,
         rules: {
           [`${commentVariablesPluginName}/${ruleName}`]: "warn",
