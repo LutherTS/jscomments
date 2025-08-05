@@ -28,4 +28,4 @@ const config = {
 
 export default config;
 
-// Once you've grasped these concepts, simply rename this file and its JSON counterpart to `comments.config.js` and `comments.config.json` respectively and you're good to go.
+// Once you've grasped these concepts, simply rename this file and its JSON counterpart to `comments.config.js` and `comments.config.json` respectively and you're good to go. (If you're using the extension, make sure to run VS Code's "Developer: Reload Window" command for the extension to operate based on your new `comments.config.js` file.)
