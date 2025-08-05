@@ -7,6 +7,7 @@ import { cwd } from "comment-variables-resolve-config";
 export const resolveRuleName = "resolve";
 export const compressRuleName = "compress";
 export const placeholdersRuleName = "placeholders"; // rule?
+export const startRuleName = "start"; // rule?
 
 // to prevent accidental changes
 export const hasPackageJson = fs.existsSync(path.join(cwd, "package.json"));

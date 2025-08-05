@@ -21,6 +21,7 @@ import {
   resolveRuleName,
   compressRuleName,
   placeholdersRuleName,
+  startRuleName,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
@@ -58,6 +59,57 @@ if (!hasGitFolder) {
 }
 skipDetails || console.log("git folder noticed. Allowed to proceed.");
 
+/* TEST START */
+
+// IMMEDIATELY HANDLES THE START COMMAND (that's a flow, startFlow)
+
+if (coreCommand === startRuleName) {
+  const templateFilePath = path.join(cwd, templateFileName);
+  if (!fs.existsSync(templateFilePath)) {
+    console.error(
+      `ERROR. ${templateFilePath} does not exist. Cancelling "start" command.`
+    );
+    exitDueToFailure();
+  }
+  const templateJsonPath = templateFilePath.replace(/\.js$/, () => ".json");
+  if (!fs.existsSync(templateJsonPath)) {
+    console.error(
+      `ERROR. ${templateJsonPath} does not exist. Cancelling "start" command.`
+    );
+    exitDueToFailure();
+  }
+
+  const defaultConfigFilePath = path.join(cwd, defaultConfigFileName);
+  if (fs.existsSync(defaultConfigFilePath)) {
+    console.error(
+      `ERROR. ${defaultConfigFilePath} already exists. Cancelling "start" command.`
+    );
+    exitDueToFailure();
+  }
+  const defaultConfigJsonPath = defaultConfigFilePath.replace(
+    /\.js$/,
+    () => ".json"
+  );
+  if (fs.existsSync(defaultConfigJsonPath)) {
+    console.error(
+      `ERROR. ${defaultConfigJsonPath} already exists. Cancelling "start" command.`
+    );
+    exitDueToFailure();
+  }
+
+  fs.renameSync(templateFilePath, defaultConfigFilePath);
+  fs.renameSync(templateJsonPath, defaultConfigJsonPath);
+
+  console.log("Template files successfully renamed to config files.");
+  console.log(
+    "Congratulations on completing the Comment Variables tutorial. We wish you the best in your Comment Variables experience."
+  );
+
+  process.exit(0);
+}
+
+/* TEST END */
+
 // OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, CONFIG PATH, AND PASSED IGNORES.
 
 // extracts the position of the --config flag
@@ -71,6 +123,8 @@ const passedConfigPath =
   hasConfigFlag && passedConfig ? path.join(cwd, passedConfig) : null;
 // defaults to comments.config.js if no --config flag is set
 let rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
+
+// HANDLES TUTORIAL MODE (that's a flow, tutorialFlow)
 
 if (!fs.existsSync(rawConfigPath)) {
   console.log(
@@ -102,6 +156,8 @@ if (!fs.existsSync(rawConfigPath)) {
 
   rawConfigPath = templateFilePath;
 }
+
+// RESOLVES THE CONFIG
 
 console.log(`Resolving config at ${rawConfigPath}...`);
 
@@ -140,12 +196,6 @@ skipDetails || console.log("Passed ignores are:", passedIgnores);
 // NEW
 skipDetails || console.log("lintConfigImports is:", lintConfigImports);
 skipDetails || console.log("myIgnoresOnly are:", myIgnoresOnly);
-
-/* IMPORTANT 
-Aside from the config flag, all other flags (`--lint-config-imports`, `--my-ignores-only`) should be included in the config so that they can be shared across the CLI and the extension within a single source of truth, invalidating the need to scream " (And DON'T FORGET YOUR FLAGS!)".
-This didn't come to mind originally because the idea of these flags came into play before I reliably made the VS Code extension.
-The goal therefore becomes that ONLY the config path remains the SOLE available flag for the CLI and config option for the extension that users will have to manage manually across both solutions.
-And then I can start working on the template for Comment Variables to unleash upon asking if no config file is found. comments.template.js */
 
 // ADDRESSES THE --lint-config-imports FLAG (lintConfigImports, no longer a flag), GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
