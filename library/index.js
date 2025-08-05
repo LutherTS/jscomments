@@ -21,7 +21,6 @@ import {
   resolveRuleName,
   compressRuleName,
   placeholdersRuleName,
-  startRuleName,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
@@ -59,57 +58,6 @@ if (!hasGitFolder) {
 }
 skipDetails || console.log("git folder noticed. Allowed to proceed.");
 
-/* TEST START */
-
-// IMMEDIATELY HANDLES THE START COMMAND (that's a flow, startFlow)
-
-if (coreCommand === startRuleName) {
-  const templateFilePath = path.join(cwd, templateFileName);
-  if (!fs.existsSync(templateFilePath)) {
-    console.error(
-      `ERROR. ${templateFilePath} does not exist. Cancelling "start" command.`
-    );
-    exitDueToFailure();
-  }
-  const templateJsonPath = templateFilePath.replace(/\.js$/, () => ".json");
-  if (!fs.existsSync(templateJsonPath)) {
-    console.error(
-      `ERROR. ${templateJsonPath} does not exist. Cancelling "start" command.`
-    );
-    exitDueToFailure();
-  }
-
-  const defaultConfigFilePath = path.join(cwd, defaultConfigFileName);
-  if (fs.existsSync(defaultConfigFilePath)) {
-    console.error(
-      `ERROR. ${defaultConfigFilePath} already exists. Cancelling "start" command.`
-    );
-    exitDueToFailure();
-  }
-  const defaultConfigJsonPath = defaultConfigFilePath.replace(
-    /\.js$/,
-    () => ".json"
-  );
-  if (fs.existsSync(defaultConfigJsonPath)) {
-    console.error(
-      `ERROR. ${defaultConfigJsonPath} already exists. Cancelling "start" command.`
-    );
-    exitDueToFailure();
-  }
-
-  fs.renameSync(templateFilePath, defaultConfigFilePath);
-  fs.renameSync(templateJsonPath, defaultConfigJsonPath);
-
-  console.log("Template files successfully renamed to config files.");
-  console.log(
-    "Congratulations on completing the Comment Variables tutorial. We wish you the best in your Comment Variables experience."
-  );
-
-  process.exit(0);
-}
-
-/* TEST END */
-
 // OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, CONFIG PATH, AND PASSED IGNORES.
 
 // extracts the position of the --config flag
@@ -124,7 +72,7 @@ const passedConfigPath =
 // defaults to comments.config.js if no --config flag is set
 let rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
-// HANDLES TUTORIAL MODE (that's a flow, tutorialFlow)
+// HANDLES TUTORIAL MODE
 
 if (!fs.existsSync(rawConfigPath)) {
   console.log(
