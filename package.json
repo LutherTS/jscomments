@@ -1,6 +1,6 @@
 {
   "name": "comment-variables",
-  "version": "0.14.6",
+  "version": "0.14.7",
   "description": "A CLI tool for configuring, managing and maintaining JavaScript comments as JavaScript variables.",
   "bin": {
     "comment-variables": "./library/index.js",
