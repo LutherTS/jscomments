@@ -4,6 +4,8 @@ A CLI tool for configuring, managing and maintaining JavaScript comments as Java
 npm install -g comment-variables
 ```
 
+![Intro example of going back and forth between Comment Variables placeholders and actual comments using comment-variables's resolve and compress commands.](./assets/README/example.gif)
+
 ## Commands
 
 **`comment-variables` (aliases `jscomments`, `comvar`) comes with three commands in this initial release:**
