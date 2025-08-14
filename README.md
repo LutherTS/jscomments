@@ -151,3 +151,5 @@ export default config;
 And yes, even comments within JavaScript and TypeScript blocks in Markdown files are addressed.
 
 _Leverage the power of JavaScript to programmatically design your JavaScript comments._
+
+The Comment Variables VS Code extension is available [here](https://comvar.lemonsqueezy.com/buy/723b0220-ea5d-4b0a-835a-f0843e431639?logo=0&discount=0).
