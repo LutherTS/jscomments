@@ -104,12 +104,12 @@ const data = {
   }),
 };
 
-const ignores = ["README.md"];
+const ignores = ["README.md", "generate.template.js", "generate.example.js"];
 
 // FORMER CLI FLAGS NOW TO BE INCLUDED INSIDE THE CONFIG ITSELF
 
-const lintConfigImports = false; // can be ommitted
-const myIgnoresOnly = false; // can be ommitted
+const lintConfigImports = false; // can be omitted
+const myIgnoresOnly = false; // can be omitted
 
 const config = {
   data,
