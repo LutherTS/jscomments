@@ -1,7 +1,8 @@
 // A Comment Variables config template generated in case no config file has been found. Feel free to use it as a stepping stone to learn how to use Comment Variables.
 
-// As a first step, go ahead and run the command `comment-variables placeholders`.
-// Then rename the `$COMMENT#COMMENT` placeholder next to `alias` to `$COMMENT#ALIAS` and run again `comment-variables placeholders` to see what happens.
+// As a first step, go ahead and run the command `comment-variables placeholders`. (This generates the Comment Variables placeholders right next to where their values are defined.)
+// Then rename the `$COMMENT#COMMENT` placeholder next to the `alias` key's value in the `data` object to `$COMMENT#ALIAS`, and run again `comment-variables placeholders` to see what happens. (...Which is nothing, and I let you figure out why.)
+
 // You can now use and explore Comment Variables on the accompanying `comments.example.js` file that has also been generated.
 
 const data = Object.freeze({
@@ -16,8 +17,8 @@ const data = Object.freeze({
 
 const ignores = [];
 
-const lintConfigImports = false; // can be ommitted
-const myIgnoresOnly = false; // can be ommitted
+const lintConfigImports = false; // can be omitted
+const myIgnoresOnly = false; // can be omitted
 
 const config = {
   data,
