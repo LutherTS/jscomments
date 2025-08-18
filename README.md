@@ -18,7 +18,7 @@ npm install -g comment-variables
 comment-variables
 ```
 
-Interacts with your root `comments.config.js` file's default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file. If no config file is a found, a tutorial mode is triggered, generating a template config file for you.)
+Interacts with your root `comments.config.js` file's default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file. If no configuration file is found, a tutorial mode is triggered, generating a template config file for you.)
 
 ```
 comment-variables compress
