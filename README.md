@@ -120,7 +120,7 @@ const data = {
       configPathIgnores:
         'The array of paths linked to the config file, (named "ignores" given it is ignored by the "compress" and "resolve" commands).' /* $COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES */,
       originalFlattenedConfigData:
-        "The original flattened config data, before changes to Aliases Variables and Composed Variables are applied." /* $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA */,
+        "The original flattened config data, before changes to aliases variables and composed variables are applied." /* $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA */,
     }),
     returns: Object.freeze({
       exitDueToFailure:
@@ -129,6 +129,10 @@ const data = {
         "The resolve rule based on the flattened config data." /* $COMMENT#JSDOC#RETURNS#MAKERULERESOLVE */,
       makeRuleCompress:
         "The compress rule based on the reversed flattened config data." /* $COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS */,
+    }),
+    constants: Object.freeze({
+      sortedReversedFlattenedConfigData:
+        "The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements." /* $COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA */,
     }),
   }),
 };
