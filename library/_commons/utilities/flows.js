@@ -36,9 +36,9 @@ const coreCommentsFlow = async (
 ) => {
   const eslint = new ESLint({
     fix: true,
+    ignorePatterns: ignores,
     errorOnUnmatchedPattern: false,
     overrideConfigFile: true,
-    ignorePatterns: ignores,
     overrideConfig: [
       {
         files: allJSTSFileGlobs,

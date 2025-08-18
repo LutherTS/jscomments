@@ -10,7 +10,7 @@ import {
  * @returns $COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS
  */
 const makeRule = (reversedFlattenedConfigData) => {
-  /** The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements. */
+  /** $COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA */
   const sortedReversedFlattenedConfigData = Object.entries(
     reversedFlattenedConfigData
   ).sort(([a], [b]) => b.length - a.length);

@@ -123,7 +123,7 @@
         "placeholder": "$COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES"
       },
       "originalFlattenedConfigData": {
-        "value": "The original flattened config data, before changes to Aliases Variables and Composed Variables are applied.",
+        "value": "The original flattened config data, before changes to aliases variables and composed variables are applied.",
         "key": "JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA",
         "placeholder": "$COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA"
       }
@@ -143,6 +143,13 @@
         "value": "The compress rule based on the reversed flattened config data.",
         "key": "JSDOC#RETURNS#MAKERULECOMPRESS",
         "placeholder": "$COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS"
+      }
+    },
+    "constants": {
+      "sortedReversedFlattenedConfigData": {
+        "value": "The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements.",
+        "key": "JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA",
+        "placeholder": "$COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA"
       }
     }
   }

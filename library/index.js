@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The shebang (#!) is necessary to communicate with Unix-based systems, like Linux and macOS. On Windows, it is ignored, but npm tooling bridges the gap by generating wrappers that make the CLI work anyway.
+// The shebang/hashbang (#!) is necessary to communicate with Unix-based systems, like Linux and macOS. On Windows, it is ignored, but npm tooling bridges the gap by generating wrappers that make the CLI work anyway.
 
 import path from "path";
 import fs from "fs";
@@ -58,7 +58,7 @@ if (!hasGitFolder) {
 }
 skipDetails || console.log("git folder noticed. Allowed to proceed.");
 
-// OBTAINS THE VALIDATED FLATTENED CONFIG, REVERSE FLATTENED CONFIG, CONFIG PATH, AND PASSED IGNORES.
+// SORTS OUT THE CONFIG PATH.
 
 // extracts the position of the --config flag
 const configFlagIndex = commands.indexOf(configFlag);
@@ -72,7 +72,7 @@ const passedConfigPath =
 // defaults to comments.config.js if no --config flag is set
 let rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
-// HANDLES TUTORIAL MODE
+// HANDLES TUTORIAL MODE.
 
 if (!fs.existsSync(rawConfigPath)) {
   console.log(
@@ -105,7 +105,7 @@ if (!fs.existsSync(rawConfigPath)) {
   rawConfigPath = templateFilePath;
 }
 
-// RESOLVES THE CONFIG
+// RESOLVES THE CONFIG.
 
 console.log(`Resolving config at ${rawConfigPath}...`);
 
@@ -126,7 +126,6 @@ const {
   configPath,
   passedIgnores,
   rawConfigAndImportPaths,
-  // NEW
   lintConfigImports,
   myIgnoresOnly,
 } = resolveConfigResults;
@@ -147,7 +146,6 @@ skipDetails || console.log("myIgnoresOnly are:", myIgnoresOnly);
 
 // ADDRESSES THE --lint-config-imports FLAG (lintConfigImports, no longer a flag), GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
-// const lintConfigImports = commands.indexOf(lintConfigImportsFlag) >= 2; // NOW FROM CONFIG
 const rawConfigPathIgnores = lintConfigImports
   ? [configPath]
   : rawConfigAndImportPaths;
@@ -163,15 +161,14 @@ skipDetails ||
     configPathIgnores
   );
 
-// ADDRESSES THE --my-ignores-only FLAG (myIgnoresOnly, no longer a flag, GIVEN THAT KNOWN IGNORES ARE IGNORED BY DEFAULT
+// ADDRESSES THE --my-ignores-only FLAG (myIgnoresOnly, no longer a flag, GIVEN THAT KNOWN IGNORES ARE IGNORED BY DEFAULT.
 
-// const myIgnoresOnly = commands.indexOf(myIgnoresOnlyFlag) >= 2; // NOW FROM CONFIG
 const rawIgnores = [...configPathIgnores, ...passedIgnores];
 const ignores = myIgnoresOnly ? rawIgnores : [...rawIgnores, ...knownIgnores];
 
 skipDetails || console.log("Ignores are:", ignores);
 
-// NEW: AUTOMATICALLY GENERATE THE JSON OUTPUT OF YOUR RESOLVED CONFIG DATA.
+// AUTOMATICALLY GENERATES THE JSON OUTPUT OF YOUR RESOLVED CONFIG DATA.
 
 const makeResolvedConfigDataResults =
   makeResolvedConfigData(resolveConfigResults);
