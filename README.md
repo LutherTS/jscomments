@@ -24,7 +24,7 @@ Interacts with your root `comments.config.js` file's default exported object to 
 comment-variables compress
 ```
 
-Scans your line and block comments for string values defined in your root `comments.config.js` file (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` placeholders defined in your root `comments.config.js` file. (`This is a comment.` => `$COMMENT#COMMENT`)
+Scans your line and block comments for string values defined in your root `comments.config.js` file (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` placeholders defined via your root `comments.config.js` file. (`This is a comment.` => `$COMMENT#COMMENT`)
 
 ```
 comment-variables resolve
