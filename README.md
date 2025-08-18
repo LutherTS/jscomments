@@ -50,7 +50,7 @@ Creates Comment Variables placeholders right next to the single sources of truth
 comment-variables --config <your-config.js>
 ```
 
-Passes a different file as your config instead of the default root `comments.config.js` file (like `comment-variables --config your-config.js`), through a path relative to the root of your project.
+Passes a different file as your config file instead of the default root `comments.config.js` file (like `comment-variables --config your-config.js`), through a path relative to the root of your project.
 
 ```
 --lint-config-imports is now part of the config at the `lintConfigImports` key
