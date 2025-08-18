@@ -18,13 +18,13 @@ npm install -g comment-variables
 comment-variables
 ```
 
-Interacts with your root `comments.config.js` file's default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file.)
+Interacts with your root `comments.config.js` file's default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file. If no config file is a found, a tutorial mode is triggered, generating a template config file for you.)
 
 ```
 comment-variables compress
 ```
 
-Scans your line and block comments for string values defined in your root `comments.config.js` file (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` placeholders defined in your `comments.config.js`. (`This is a comment.` => `$COMMENT#COMMENT`)
+Scans your line and block comments for string values defined in your root `comments.config.js` file (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` placeholders defined in your root `comments.config.js` file. (`This is a comment.` => `$COMMENT#COMMENT`)
 
 ```
 comment-variables resolve
