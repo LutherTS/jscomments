@@ -18,19 +18,19 @@ npm install -g comment-variables
 comment-variables
 ```
 
-Interacts with your `comments.config.js` default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file.)
+Interacts with your root `comments.config.js` file's default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file.)
 
 ```
 comment-variables compress
 ```
 
-Scans your line and block comments for string values defined in your `comments.config.js` (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` placeholders defined in your `comments.config.js`. (`This is a comment.` => `$COMMENT#COMMENT`)
+Scans your line and block comments for string values defined in your root `comments.config.js` file (like `"This is a comment"`) to turn them into their corresponding `$COMMENT#*` placeholders defined in your `comments.config.js`. (`This is a comment.` => `$COMMENT#COMMENT`)
 
 ```
 comment-variables resolve
 ```
 
-Scans your line and block comments for `$COMMENT#*` placeholders (like `$COMMENT#COMMENT`) to turn them into their corresponding string values defined in your `comments.config.js`. (`$COMMENT#COMMENT` => `This is a comment.`)
+Scans your line and block comments for `$COMMENT#*` placeholders (like `$COMMENT#COMMENT`) to turn them into their corresponding string values defined in your root `comments.config.js` file. (`$COMMENT#COMMENT` => `This is a comment.`)
 
 _The `compress` and `resolve` commands make each other entirely reversible._
 
@@ -50,19 +50,19 @@ Creates Comment Variables placeholders right next to the single sources of truth
 comment-variables --config <your-config.js>
 ```
 
-Passes a different file as your config instead of the default `comments.config.js` (like `comment-variables --config your-config.js`), through a path relative to the root of your project.
+Passes a different file as your config instead of the default root `comments.config.js` file (like `comment-variables --config your-config.js`), through a path relative to the root of your project.
 
 ```
 --lint-config-imports is now part of the config at the `lintConfigImports` key
 ```
 
-By default, `comment-variables` excludes your config file and all the (JavaScript/TypeScript) files it recursively imports. This flag cancels this mechanism, linting config imports. (The config file however still remains excluded from linting.)
+By default, `comment-variables` excludes your config file and all the (JavaScript/TypeScript) files it recursively imports. This config option cancels this mechanism, linting config imports. (The config file however still remains excluded from linting.)
 
 ```
 --my-ignores-only is now part of the config at the `myIgnoresOnly` key
 ```
 
-By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). This flag cancels this mechanism so that you can have full control over your ignored files and folders.
+By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). This config option cancels this mechanism so that you can have full control over your ignored files and folders.
 
 _The --config flag can be composed with any of the commands:_
 
@@ -75,7 +75,7 @@ comment-variables placeholders --config your-config.js
 
 ## **`comments.config.js`**
 
-A `comments.config.js` file looks like this. (This is the config file I'm using to manage my JavaScript comments in this library.)
+A root `comments.config.js` file looks like this. (This is the config file I'm using to manage my JavaScript comments in this library.)
 
 ```js
 const data = {
