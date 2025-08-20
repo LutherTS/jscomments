@@ -6,10 +6,15 @@ import {
 /**
  * $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE
  * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
+ * @param {string[]} composedVariablesExclusives $COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES
  * @param {{[key: string]: string}} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
  * @returns $COMMENT#JSDOC#RETURNS#MAKERULERESOLVE
  */
-const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
+const makeRule = (
+  flattenedConfigData,
+  composedVariablesExclusives,
+  aliases_flattenedKeys
+) => {
   // NEW!!
   // Transform flattenedConfigData to exclude keys that include... no, that takes compute time. Just ignore.
 
@@ -50,10 +55,18 @@ const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
           const replacement =
             flattenedConfigData[key] || // original
             flattenedConfigData[aliases_flattenedKeys?.[key]]; // alias
+
+          // NEW
+          const trueKey = aliases_flattenedKeys?.[key] || key; // The idea is that only comment variables... Okay.
+          // The issue is that having a pattern is way too powerful, and can lead to unplanned inconsistencies. It is true that doing it instance by instance, comment variable by comment variable, is painstaking. But it's the more secure in order to fix an issue that is essentially purely cosmetic.
+          // Also, focusing exclusively on comment variables and barring aliases (and composed) solves many issues at once and can be checked within resolveConfig.
           if (
-            replacement
-            // && !composedVariablesExclusives.some((e) => key.startsWith(e))
-          ) {
+            replacement &&
+            composedVariablesExclusives.some((e) => trueKey === e)
+          )
+            continue;
+
+          if (replacement) {
             fixedText = fixedText.replace(fullMatch, () => replacement);
             hasValidFix = true;
           }

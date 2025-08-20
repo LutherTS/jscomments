@@ -7,9 +7,10 @@ import {
 /**
  * $COMMENT#JSDOC#DEFINITIONS#MAKERULECOMPRESS
  * @param {{[key: string]: string}} reversedFlattenedConfigData $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA
+ * @param {string[]} composedVariablesExclusives $COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES
  * @returns $COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS
  */
-const makeRule = (reversedFlattenedConfigData) => {
+const makeRule = (reversedFlattenedConfigData, composedVariablesExclusives) => {
   /** $COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA */
   const sortedReversedFlattenedConfigData = Object.entries(
     reversedFlattenedConfigData
@@ -44,7 +45,10 @@ const makeRule = (reversedFlattenedConfigData) => {
           resolvedValue,
           commentKey,
         ] of sortedReversedFlattenedConfigData) {
-          // if (composedVariablesExclusives.some((e) => commentKey.startsWith(e))) continue
+          // NEW
+          if (composedVariablesExclusives.some((e) => commentKey === e))
+            continue;
+
           const pattern = makeIsolatedStringRegex(resolvedValue);
 
           fixedText = fixedText.replace(pattern, () => {

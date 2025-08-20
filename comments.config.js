@@ -75,7 +75,7 @@ const data = {
       reversedFlattenedConfigData:
         "The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values." /* $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA */,
       composedVariablesExclusives:
-        "The array of Comment Variables keys and Comment Variables start patterns, exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands." /* $COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES */,
+        "The array of comment variables keys (implying their aliases as well) exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands." /* $COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES */,
       aliases_flattenedKeys:
         "The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias." /* $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS */,
       ruleName:
