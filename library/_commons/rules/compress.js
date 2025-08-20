@@ -46,7 +46,7 @@ const makeRule = (reversedFlattenedConfigData, composedVariablesExclusives) => {
           commentKey,
         ] of sortedReversedFlattenedConfigData) {
           // NEW
-          if (composedVariablesExclusives.some((e) => commentKey.startsWith(e)))
+          if (composedVariablesExclusives.some((e) => commentKey === e))
             continue;
 
           const pattern = makeIsolatedStringRegex(resolvedValue);
