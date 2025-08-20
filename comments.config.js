@@ -115,7 +115,6 @@ const ignores = ["README.md", "generate.template.js", "generate.example.js"];
 const lintConfigImports = false; // can be omitted
 const myIgnoresOnly = false; // can be omitted
 
-// NEW
 const composedVariablesExclusives = []; // can be omitted
 
 const config = {

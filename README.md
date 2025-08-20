@@ -166,11 +166,14 @@ const ignores = ["README.md", "generate.template.js", "generate.example.js"];
 const lintConfigImports = false; // can be omitted
 const myIgnoresOnly = false; // can be omitted
 
+const composedVariablesExclusives = []; // can be omitted
+
 const config = {
   data,
   ignores,
   lintConfigImports,
   myIgnoresOnly,
+  composedVariablesExclusives,
 };
 
 export default config;
