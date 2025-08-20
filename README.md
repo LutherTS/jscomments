@@ -83,19 +83,19 @@ Your dedicated array defining your files and folders to be ignored by the `compr
 lintConfigImports:
 ```
 
-By default, `comment-variables` excludes your config file and all the (JavaScript/TypeScript) files it recursively imports. This config option cancels this mechanism, linting config imports. (The config file however still remains excluded from linting.)
+By default, `comment-variables` excludes your config file and all the (JavaScript/TypeScript) files it recursively imports. Passing `true` to this config option cancels this mechanism, linting config imports. (The config file however still remains excluded from linting.)
 
 ```
 myIgnoresOnly:
 ```
 
-By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). This config option cancels this mechanism so that you can have full control over your ignored files and folders.
+By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). Passing `true` to this config option cancels this mechanism so that you can have full control over your ignored files and folders.
 
 ```
 composedVariablesExclusives:
 ```
 
-In due time, you may end up creating Comment Variables that are exclusively meant to be used to create other Comment Variables – the latter classified as composed variables. By passing an array comprised of the keys of these original comment variables (for example, if a Comment Variable placeholder is `$COMMENT#COMMENT` its related key is `COMMENT`), this config option prevents these original comment variables from being affected by the `compress` and `resolve` commands.
+In due time, you may end up creating Comment Variables that are exclusively meant to be used to create other Comment Variables – the latter classified as composed variables. Ppassing an array comprised of the keys of these original comment variables (for example, if a Comment Variable placeholder is `$COMMENT#COMMENT` its related key is `COMMENT`) to this config option prevents these original comment variables from being affected by the `compress` and `resolve` commands.
 
 ## **`comments.config.js`**
 
