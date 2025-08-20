@@ -5,13 +5,13 @@ import {
   $COMMENT,
   commentVariablesPluginName,
   extractRuleName,
+  resolveRuleName,
+  compressRuleName,
   typeScriptAndJSXCompatible,
   extractObjectStringLiteralValues,
 } from "comment-variables-resolve-config";
 
 import {
-  resolveRuleName,
-  compressRuleName,
   allJSTSFileGlobs,
   allMDFileGlobs,
   allMDVirtualJSTSFileGlobs,

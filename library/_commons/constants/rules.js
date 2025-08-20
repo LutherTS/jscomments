@@ -1,4 +1,7 @@
-import { resolveRuleName, compressRuleName } from "../constants/bases.js";
+import {
+  resolveRuleName,
+  compressRuleName,
+} from "comment-variables-resolve-config";
 
 import makeResolveRule from "../rules/resolve.js";
 import makeCompressRule from "../rules/compress.js";

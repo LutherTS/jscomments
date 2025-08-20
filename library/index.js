@@ -9,19 +9,16 @@ import resolveConfig, {
   defaultConfigFileName,
   templateFileName,
   exampleFileName,
+  resolveRuleName,
+  compressRuleName,
+  placeholdersRuleName,
   configFlag,
   cwd,
   knownIgnores,
   makeResolvedConfigData,
 } from "comment-variables-resolve-config";
 
-import {
-  hasPackageJson,
-  hasGitFolder,
-  resolveRuleName,
-  compressRuleName,
-  placeholdersRuleName,
-} from "./_commons/constants/bases.js";
+import { hasPackageJson, hasGitFolder } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
 import {
