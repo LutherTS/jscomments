@@ -12,13 +12,19 @@ npm install -g comment-variables
 
 ## Commands
 
-**`comment-variables` (aliases `jscomments`/`comvar`) comes with three commands in this initial release:**
+**`comment-variables` (aliases `jscomments`/`comvar`) comes with four commands in this initial release:**
 
 ```
 comment-variables
 ```
 
 Interacts with your root `comments.config.js` file's default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file. If no configuration file is found, a tutorial mode is triggered, generating a template config file for you.)
+
+```
+comment-variables placeholders
+```
+
+Creates Comment Variables placeholders right next to the single sources of truth where Comment Variables are defined. (See in config example below.)
 
 ```
 comment-variables compress
@@ -34,35 +40,15 @@ Scans your line and block comments for `$COMMENT#*` placeholders (like `$COMMENT
 
 _The `compress` and `resolve` commands make each other entirely reversible._
 
-**New command: `comment-variables placeholders`**
-
-```
-comment-variables placeholders
-```
-
-Creates Comment Variables placeholders right next to the single sources of truth where Comment Variables are defined. (See in config example below.)
-
 ## Flags
 
-**The CLI tool also comes with three flags initially:**
+**The CLI tool comes with a single flag:**
 
 ```
 comment-variables --config <your-config.js>
 ```
 
 Passes a different file as your config file instead of the default root `comments.config.js` file (like `comment-variables --config your-config.js`), through a path relative to the root of your project.
-
-```
---lint-config-imports is now part of the config at the `lintConfigImports` key
-```
-
-By default, `comment-variables` excludes your config file and all the (JavaScript/TypeScript) files it recursively imports. This config option cancels this mechanism, linting config imports. (The config file however still remains excluded from linting.)
-
-```
---my-ignores-only is now part of the config at the `myIgnoresOnly` key
-```
-
-By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). This config option cancels this mechanism so that you can have full control over your ignored files and folders.
 
 _The --config flag can be composed with any of the commands:_
 
@@ -72,6 +58,44 @@ comment-variables compress --config your-config.js
 comment-variables resolve --config your-config.js
 comment-variables placeholders --config your-config.js
 ```
+
+## Settings
+
+**The config object requires the following settings:**
+
+```
+data
+```
+
+Your dedicated object defining your Comment Variables through nested key value pairs of string literals.
+
+```
+ignores
+```
+
+Your dedicated array defining your files and folders to be ignored by the `compress` and `resolve` commands.
+
+## Options
+
+**The config object supports the following options:**
+
+```
+lintConfigImports
+```
+
+By default, `comment-variables` excludes your config file and all the (JavaScript/TypeScript) files it recursively imports. This config option cancels this mechanism, linting config imports. (The config file however still remains excluded from linting.)
+
+```
+myIgnoresOnly
+```
+
+By default, `comment-variables` includes a preset list of ignored folders (`"node_modules"`, `".next"`, `".react-router"`...). This config option cancels this mechanism so that you can have full control over your ignored files and folders.
+
+```
+composedVariablesExclusives
+```
+
+In due time, you may end up creating Comment Variables that are exclusively meant to be used to create other Comment Variables – the latter classified as composed variables. By passing an array comprised of the keys of these original comment variables (for example, if a Comment Variable placeholder is `$COMMENT#COMMENT` its related key is `COMMENT`), this config option prevents these original comment variables from being affected by the `compress` and `resolve` commands.
 
 ## **`comments.config.js`**
 

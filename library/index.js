@@ -142,7 +142,10 @@ skipDetails || console.log("lintConfigImports is:", lintConfigImports);
 skipDetails || console.log("myIgnoresOnly are:", myIgnoresOnly);
 // NEW
 skipDetails ||
-  console.log("composedVariablesExclusives are:", composedVariablesExclusives);
+  console.log(
+    "Composed variables exclusives are:",
+    composedVariablesExclusives
+  );
 
 // ADDRESSES THE --lint-config-imports FLAG (lintConfigImports, no longer a flag), GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
