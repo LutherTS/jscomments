@@ -51,18 +51,19 @@ const makeRule = (
 
         for (const match of matches) {
           const fullMatch = match[0]; // e.g. $COMMENT#LEVELONE#LEVELTWO
-          const key = match[1]; // e.g. LEVELONE#LEVELTWO
-          const replacement =
-            flattenedConfigData[key] || // original
-            flattenedConfigData[aliases_flattenedKeys?.[key]]; // alias
+          const rawKey = match[1]; // e.g. LEVELONE#LEVELTWO
+          const key =
+            aliases_flattenedKeys?.[rawKey] || // alias
+            rawKey; // original
+          const replacement = flattenedConfigData[key];
 
           // NEW
-          const trueKey = aliases_flattenedKeys?.[key] || key; // The idea is that only comment variables... Okay.
+          // The idea is that only comment variables... Okay.
           // The issue is that having a pattern is way too powerful, and can lead to unplanned inconsistencies. It is true that doing it instance by instance, comment variable by comment variable, is painstaking. But it's the more secure in order to fix an issue that is essentially purely cosmetic.
           // Also, focusing exclusively on comment variables and barring aliases (and composed) solves many issues at once and can be checked within resolveConfig.
           if (
             replacement &&
-            composedVariablesExclusives.some((e) => trueKey === e)
+            composedVariablesExclusives.some((e) => key.startsWith(e))
           )
             continue;
 
