@@ -15,7 +15,7 @@ const makeRule = (
   composedVariablesExclusives,
   aliases_flattenedKeys
 ) => {
-  // makes a set out of composed variables exclusives
+  /** A local Set out of composed variables exclusives for speed. */
   const composedVariablesExclusivesSet = new Set(composedVariablesExclusives);
 
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
@@ -58,11 +58,8 @@ const makeRule = (
           const replacement = flattenedConfigData[key];
 
           // NEW
-          // The idea is that only comment variables... Okay.
-          // The issue is that having a pattern is way too powerful, and can lead to unplanned inconsistencies. It is true that doing it instance by instance, comment variable by comment variable, is painstaking. But it's the more secure in order to fix an issue that is essentially purely cosmetic.
-          // Also, focusing exclusively on comment variables and barring aliases (and composed) solves many issues at once and can be checked within resolveConfig. // Done.
-
-          // if (replacement && composedVariablesExclusives.some((e) => key === e))
+          // The issue is that having patterns instead of the exact keys is way too powerful, effectively slow, and can lead to unplanned inconsistencies. It is true that doing it instance by instance, comment variable by comment variable, is painstaking. But it's the more secure in order to fix an issue that is essentially purely cosmetic.
+          // Also, focusing exclusively on comment variables and barring aliases (and composed) solves many issues at once, notably by covering aliases in one go.
           if (replacement && composedVariablesExclusivesSet.has(key)) continue;
 
           if (replacement) {

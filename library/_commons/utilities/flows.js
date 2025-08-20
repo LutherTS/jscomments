@@ -33,6 +33,7 @@ const coreCommentsFlow = async (
   ruleName,
   ignores,
   flattenedConfigData,
+  // NEW
   composedVariablesExclusives,
   aliases_flattenedKeys
 ) => {
@@ -50,6 +51,7 @@ const coreCommentsFlow = async (
             rules: {
               [ruleName]: ruleNames_makeRules[ruleName](
                 flattenedConfigData,
+                // NEW
                 composedVariablesExclusives,
                 aliases_flattenedKeys
               ),
@@ -115,6 +117,7 @@ const coreCommentsFlow = async (
 export const resolveCommentsFlow = async (
   ignores,
   flattenedConfigData,
+  // NEW
   composedVariablesExclusives,
   aliases_flattenedKeys
 ) =>
@@ -122,6 +125,7 @@ export const resolveCommentsFlow = async (
     resolveRuleName,
     ignores,
     flattenedConfigData,
+    // NEW
     composedVariablesExclusives,
     aliases_flattenedKeys
   );
@@ -138,12 +142,14 @@ export const resolveCommentsFlow = async (
 export const compressCommentsFlow = async (
   ignores,
   reversedFlattenedConfigData,
+  // NEW
   composedVariablesExclusives
 ) =>
   coreCommentsFlow(
     compressRuleName,
     ignores,
     reversedFlattenedConfigData,
+    // NEW
     composedVariablesExclusives
   );
 

@@ -155,6 +155,11 @@
         "value": "The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements.",
         "key": "JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA",
         "placeholder": "$COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA"
+      },
+      "composedVariablesExclusivesSet": {
+        "value": "A local Set out of composed variables exclusives for speed.",
+        "key": "JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET",
+        "placeholder": "$COMMENT#JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET"
       }
     }
   }

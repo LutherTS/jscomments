@@ -198,6 +198,7 @@ switch (coreCommand) {
     await resolveCommentsFlow(
       ignores,
       flattenedConfigData,
+      // NEW
       composedVariablesExclusives,
       aliases_flattenedKeys
     );
@@ -207,6 +208,7 @@ switch (coreCommand) {
     await compressCommentsFlow(
       ignores,
       reversedFlattenedConfigData,
+      // NEW
       composedVariablesExclusives
     );
     break;

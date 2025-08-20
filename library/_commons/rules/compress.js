@@ -16,7 +16,7 @@ const makeRule = (reversedFlattenedConfigData, composedVariablesExclusives) => {
     reversedFlattenedConfigData
   ).sort(([a], [b]) => b.length - a.length);
 
-  // makes a set out of composed variables exclusives
+  /** A local Set out of composed variables exclusives for speed. */
   const composedVariablesExclusivesSet = new Set(composedVariablesExclusives);
 
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
@@ -49,7 +49,6 @@ const makeRule = (reversedFlattenedConfigData, composedVariablesExclusives) => {
           commentKey,
         ] of sortedReversedFlattenedConfigData) {
           // NEW
-          // if (composedVariablesExclusives.some((e) => commentKey === e))
           if (composedVariablesExclusivesSet.has(commentKey)) continue;
 
           const pattern = makeIsolatedStringRegex(resolvedValue);

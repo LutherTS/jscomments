@@ -106,6 +106,8 @@ const data = {
     constants: Object.freeze({
       sortedReversedFlattenedConfigData:
         "The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements." /* $COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA */,
+      composedVariablesExclusivesSet:
+        "A local Set out of composed variables exclusives for speed." /* $COMMENT#JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET */,
     }),
   }),
 };
