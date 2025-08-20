@@ -73,7 +73,7 @@ Your dedicated object defining your Comment Variables through nested key-value p
 ignores:
 ```
 
-Your dedicated array defining your files and folders to be ignored by the `compress` and `resolve` commands.
+Your dedicated array defining your files and folders to be ignored by the `compress` and `resolve` commands through strings of paths relative to the root of your project.
 
 ## Options
 
