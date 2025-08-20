@@ -5,16 +5,19 @@ import {
 } from "comment-variables-resolve-config";
 
 /**
- * $COMMENT#JSDOC#DEFINITIONS#MAKERULECOMPRESS
- * @param {{[key: string]: string}} reversedFlattenedConfigData $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA
- * @param {string[]} composedVariablesExclusives $COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES
- * @returns $COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS
+ * The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into `$COMMENT` placeholders.
+ * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values.
+ * @param {string[]} composedVariablesExclusives The array of comment variables keys (implying their aliases as well) exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.
+ * @returns The compress rule based on the reversed flattened config data.
  */
 const makeRule = (reversedFlattenedConfigData, composedVariablesExclusives) => {
-  /** $COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA */
+  /** The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements. */
   const sortedReversedFlattenedConfigData = Object.entries(
     reversedFlattenedConfigData
   ).sort(([a], [b]) => b.length - a.length);
+
+  // makes a set out of composed variables exclusives
+  const composedVariablesExclusivesSet = new Set(composedVariablesExclusives);
 
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
   const rule = {
@@ -46,8 +49,8 @@ const makeRule = (reversedFlattenedConfigData, composedVariablesExclusives) => {
           commentKey,
         ] of sortedReversedFlattenedConfigData) {
           // NEW
-          if (composedVariablesExclusives.some((e) => commentKey === e))
-            continue;
+          // if (composedVariablesExclusives.some((e) => commentKey === e))
+          if (composedVariablesExclusivesSet.has(commentKey)) continue;
 
           const pattern = makeIsolatedStringRegex(resolvedValue);
 
