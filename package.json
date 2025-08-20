@@ -30,7 +30,7 @@
   "type": "module",
   "dependencies": {
     "@eslint/markdown": "^6.5.0",
-    "comment-variables-resolve-config": "^1.14.0",
+    "comment-variables-resolve-config": "^1.14.1",
     "eslint": "^9.29.0"
   },
   "devDependencies": {

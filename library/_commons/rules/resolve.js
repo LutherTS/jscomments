@@ -60,7 +60,7 @@ const makeRule = (
           // NEW
           // The idea is that only comment variables... Okay.
           // The issue is that having a pattern is way too powerful, and can lead to unplanned inconsistencies. It is true that doing it instance by instance, comment variable by comment variable, is painstaking. But it's the more secure in order to fix an issue that is essentially purely cosmetic.
-          // Also, focusing exclusively on comment variables and barring aliases (and composed) solves many issues at once and can be checked within resolveConfig.
+          // Also, focusing exclusively on comment variables and barring aliases (and composed) solves many issues at once and can be checked within resolveConfig. // Done.
           if (replacement && composedVariablesExclusives.some((e) => key === e))
             continue;
 
