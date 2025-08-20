@@ -10,6 +10,9 @@ import {
  * @returns The resolve rule based on the flattened config data.
  */
 const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
+  // NEW!!
+  // Transform flattenedConfigData to exclude keys that include... no, that takes compute time. Just ignore.
+
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
   const rule = {
     meta: {
@@ -47,7 +50,10 @@ const makeRule = (flattenedConfigData, aliases_flattenedKeys) => {
           const replacement =
             flattenedConfigData[key] || // original
             flattenedConfigData[aliases_flattenedKeys?.[key]]; // alias
-          if (replacement) {
+          if (
+            replacement
+            // && !composedVariablesExclusives.some((e) => key.startsWith(e))
+          ) {
             fixedText = fixedText.replace(fullMatch, () => replacement);
             hasValidFix = true;
           }

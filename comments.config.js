@@ -74,6 +74,8 @@ const data = {
         "The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values." /* $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA */,
       reversedFlattenedConfigData:
         "The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values." /* $COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA */,
+      composedVariablesExclusives:
+        "The array of Comment Variables keys and Comment Variables start patterns, exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands." /* $COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES */,
       aliases_flattenedKeys:
         "The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias." /* $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS */,
       ruleName:
@@ -110,16 +112,18 @@ const data = {
 
 const ignores = ["README.md", "generate.template.js", "generate.example.js"];
 
-// FORMER CLI FLAGS NOW TO BE INCLUDED INSIDE THE CONFIG ITSELF
-
 const lintConfigImports = false; // can be omitted
 const myIgnoresOnly = false; // can be omitted
+
+// NEW
+const composedVariablesExclusives = [];
 
 const config = {
   data,
   ignores,
   lintConfigImports,
   myIgnoresOnly,
+  composedVariablesExclusives,
 };
 
 export default config;

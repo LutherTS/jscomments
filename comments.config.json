@@ -82,6 +82,11 @@
         "key": "JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA",
         "placeholder": "$COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA"
       },
+      "composedVariablesExclusives": {
+        "value": "The array of Comment Variables keys and Comment Variables start patterns, exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.",
+        "key": "JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES"
+      },
       "aliases_flattenedKeys": {
         "value": "The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.",
         "key": "JSDOC#PARAMS#ALIASES_FLATTENEDKEYS",

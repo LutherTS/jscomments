@@ -128,6 +128,7 @@ const {
   rawConfigAndImportPaths,
   lintConfigImports,
   myIgnoresOnly,
+  composedVariablesExclusives,
 } = resolveConfigResults;
 
 skipDetails || console.log("Running with config:", config);
@@ -140,9 +141,11 @@ skipDetails ||
 skipDetails || console.log("Aliases are:", aliases_flattenedKeys);
 skipDetails || console.log("Config path is:", configPath);
 skipDetails || console.log("Passed ignores are:", passedIgnores);
-// NEW
 skipDetails || console.log("lintConfigImports is:", lintConfigImports);
 skipDetails || console.log("myIgnoresOnly are:", myIgnoresOnly);
+// NEW
+skipDetails ||
+  console.log("composedVariablesExclusives are:", composedVariablesExclusives);
 
 // ADDRESSES THE --lint-config-imports FLAG (lintConfigImports, no longer a flag), GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
@@ -195,12 +198,17 @@ switch (coreCommand) {
     await resolveCommentsFlow(
       ignores,
       flattenedConfigData,
+      composedVariablesExclusives,
       aliases_flattenedKeys
     );
     break;
   case compressRuleName:
     console.log(`Running ${compressRuleName}...`);
-    await compressCommentsFlow(ignores, reversedFlattenedConfigData);
+    await compressCommentsFlow(
+      ignores,
+      reversedFlattenedConfigData,
+      composedVariablesExclusives
+    );
     break;
   case placeholdersRuleName:
     console.log(`Running ${placeholdersRuleName}...`);

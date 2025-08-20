@@ -25,6 +25,7 @@ import { ruleNames_makeRules } from "../constants/rules.js";
  * @param {typeof resolveRuleName | typeof compressRuleName} ruleName The name of the rule currently used. (Either `"resolve"` or `"compress"`.)
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
  * @param {{[key: string]: string}} flattenedConfigData Either the flattened config data or the reversed flattened config data, since they share the same structure.
+ * @param {string[]} composedVariablesExclusives The array of Comment Variables keys and Comment Variables start patterns, exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.
  * @param {Record<string, string> | undefined} aliases_flattenedKeys The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.
  * @returns
  */
@@ -32,6 +33,7 @@ const coreCommentsFlow = async (
   ruleName,
   ignores,
   flattenedConfigData,
+  composedVariablesExclusives,
   aliases_flattenedKeys
 ) => {
   const eslint = new ESLint({
@@ -48,6 +50,7 @@ const coreCommentsFlow = async (
             rules: {
               [ruleName]: ruleNames_makeRules[ruleName](
                 flattenedConfigData,
+                composedVariablesExclusives,
                 aliases_flattenedKeys
               ),
             },
@@ -105,18 +108,21 @@ const coreCommentsFlow = async (
  * The flow that resolves `$COMMENT` placeholders into actual comments.
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
  * @param {Record<string, string>} flattenedConfigData The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values.
+ * @param {string[]} composedVariablesExclusives The array of Comment Variables keys and Comment Variables start patterns, exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.
  * @param {Record<string, string>} aliases_flattenedKeys The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.
  * @returns
  */
 export const resolveCommentsFlow = async (
   ignores,
   flattenedConfigData,
+  composedVariablesExclusives,
   aliases_flattenedKeys
 ) =>
   coreCommentsFlow(
     resolveRuleName,
     ignores,
     flattenedConfigData,
+    composedVariablesExclusives,
     aliases_flattenedKeys
   );
 
@@ -126,12 +132,20 @@ export const resolveCommentsFlow = async (
  * The flow that compresses actual comments into `$COMMENT` placeholders.
  * @param {string[]} ignores The array of paths and globs for the flow's ESLint instance to ignore.
  * @param {{[key: string]: string}} reversedFlattenedConfigData The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values.
+ * @param {string[]} composedVariablesExclusives The array of Comment Variables keys and Comment Variables start patterns, exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.
  * @returns
  */
 export const compressCommentsFlow = async (
   ignores,
-  reversedFlattenedConfigData
-) => coreCommentsFlow(compressRuleName, ignores, reversedFlattenedConfigData);
+  reversedFlattenedConfigData,
+  composedVariablesExclusives
+) =>
+  coreCommentsFlow(
+    compressRuleName,
+    ignores,
+    reversedFlattenedConfigData,
+    composedVariablesExclusives
+  );
 
 /* placeholdersCommentsFlow */
 
