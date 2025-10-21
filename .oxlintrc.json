@@ -1,5 +1,6 @@
 {
   "rules": {
-    "unicorn/no-empty-file": "off" // for generate.example.js
+    "unicorn/no-empty-file": "off", // for generate.example.js
+    "no-unused-expressions": ["warn", { "allowShortCircuit": true }] // for skipDetails || console.log()
   }
 }
