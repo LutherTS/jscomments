@@ -149,9 +149,13 @@ skipDetails ||
 
 // ADDRESSES THE --lint-config-imports FLAG (lintConfigImports, no longer a flag), GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
+// instantiate the JSON and .mjs path proactively
+const jsonPath = configPath.replace(/\.js$/, () => ".json");
+const mjsPath = configPath.replace(/\.js$/, () => ".mjs");
+
 const rawConfigPathIgnores = lintConfigImports
-  ? [configPath]
-  : rawConfigAndImportPaths;
+  ? [configPath, mjsPath]
+  : [...rawConfigAndImportPaths, mjsPath];
 
 // the ignore paths must be relative
 const configPathIgnores = rawConfigPathIgnores.map((e) =>
@@ -181,10 +185,7 @@ if (!makeResolvedConfigDataResults.success) {
 }
 
 const resolvedConfigData = makeResolvedConfigDataResults.resolvedConfigData;
-const jsonPath = resolveConfigResults.configPath.replace(
-  /\.js$/,
-  () => ".json"
-);
+
 const jsonData = JSON.stringify(resolvedConfigData, null, 2);
 fs.writeFileSync(jsonPath, jsonData, "utf8");
 
@@ -192,7 +193,6 @@ console.log(`JSON resolved config data written to: \n${jsonPath}`);
 
 // NEW!! comments.config.mjs to directly access resolvedConfigData.
 
-const mjsPath = resolveConfigResults.configPath.replace(/\.js$/, () => ".mjs");
 const mjsData = `/** @typedef {${JSON.stringify(
   resolvedConfigData
 )}} ResolvedConfigData */\n\n/** @type {ResolvedConfigData} */\nexport const resolvedConfigData = ${JSON.stringify(
