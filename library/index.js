@@ -190,6 +190,20 @@ fs.writeFileSync(jsonPath, jsonData, "utf8");
 
 console.log(`JSON resolved config data written to: \n${jsonPath}`);
 
+/* START */
+
+// NEW!! comments.config.mjs.
+
+const mjsPath = resolveConfigResults.configPath.replace(/\.js$/, () => ".mjs");
+const mjsData = `/** @typedef {${JSON.stringify(
+  resolvedConfigData
+)}} ResolvedConfigData */\n\n/** @type {ResolvedConfigData} */\nexport const resolvedConfigData = ${JSON.stringify(
+  resolvedConfigData
+)}`;
+fs.writeFileSync(mjsPath, mjsData, "utf8");
+
+/* END */
+
 // ADDRESSES THE CORE COMMANDS "resolve", "compress", AND "placeholders".
 
 switch (coreCommand) {
