@@ -1,0 +1,169 @@
+/** @typedef {{"levelOne":{"levelTwo":{"levelThree":{"value":"Level three.","key":"LEVELONE#LEVELTWO#LEVELTHREE","placeholder":"$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE"},"stillLevelThree":{"value":"Level three.","key":"LEVELONE#LEVELTWO#STILLLEVELTHREE","placeholder":"$COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE"},"otherLevelThree":{"value":"Level three.","key":"LEVELONE#LEVELTWO#OTHERLEVELTHREE","placeholder":"$COMMENT#LEVELONE#LEVELTWO#OTHERLEVELTHREE"},"composedVariable":{"value":"Level three. Level three.","key":"LEVELONE#LEVELTWO#COMPOSEDVARIABLE","placeholder":"$COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE"},"composedVariableAlias":{"value":"Level three. Level three.","key":"LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS","placeholder":"$COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS"}}},"jsDoc":{"definitions":{"exitDueToFailure":{"value":"Terminates the whole process with a 'failure' code (`1`).","key":"JSDOC#DEFINITIONS#EXITDUETOFAILURE","placeholder":"$COMMENT#JSDOC#DEFINITIONS#EXITDUETOFAILURE"},"makeRuleResolve":{"value":"The utility that creates the resolve rule based on the flattened config data, used to transform `$COMMENT` placeholders into actual comments.","key":"JSDOC#DEFINITIONS#MAKERULERESOLVE","placeholder":"$COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE"},"makeRuleCompress":{"value":"The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into `$COMMENT` placeholders.","key":"JSDOC#DEFINITIONS#MAKERULECOMPRESS","placeholder":"$COMMENT#JSDOC#DEFINITIONS#MAKERULECOMPRESS"},"coreCommentsFlow":{"value":"The core flow at the heart of resolving and compressing comments.","key":"JSDOC#DEFINITIONS#CORECOMMENTSFLOW","placeholder":"$COMMENT#JSDOC#DEFINITIONS#CORECOMMENTSFLOW"},"resolveCommentsFlow":{"value":"The flow that resolves `$COMMENT` placeholders into actual comments.","key":"JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW","placeholder":"$COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW"},"compressCommentsFlow":{"value":"The flow that compresses actual comments into `$COMMENT` placeholders.","key":"JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW","placeholder":"$COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW"},"placeholdersCommentsFlow":{"value":"The flow that creates `$COMMENT` placeholders right next to where they're defined.","key":"JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW","placeholder":"$COMMENT#JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW"},"logError":{"value":"Logs an error to the console depending on its type. (`\"error\"` or `\"warning\"`.)","key":"JSDOC#DEFINITIONS#LOGERROR","placeholder":"$COMMENT#JSDOC#DEFINITIONS#LOGERROR"}},"params":{"flattenedConfigData":{"value":"The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values.","key":"JSDOC#PARAMS#FLATTENEDCONFIGDATA","placeholder":"$COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA"},"reversedFlattenedConfigData":{"value":"The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values.","key":"JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA","placeholder":"$COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA"},"composedVariablesExclusives":{"value":"The array of comment variables keys (implying their aliases as well) exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.","key":"JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES","placeholder":"$COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES"},"aliases_flattenedKeys":{"value":"The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.","key":"JSDOC#PARAMS#ALIASES_FLATTENEDKEYS","placeholder":"$COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS"},"ruleName":{"value":"The name of the rule currently used. (Either `\"resolve\"` or `\"compress\"`.)","key":"JSDOC#PARAMS#RULENAME","placeholder":"$COMMENT#JSDOC#PARAMS#RULENAME"},"ignores":{"value":"The array of paths and globs for the flow's ESLint instance to ignore.","key":"JSDOC#PARAMS#IGNORES","placeholder":"$COMMENT#JSDOC#PARAMS#IGNORES"},"eitherFlattenedConfigData":{"value":"Either the flattened config data or the reversed flattened config data, since they share the same structure.","key":"JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA","placeholder":"$COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA"},"error":{"value":"The error object being handle for the logging.","key":"JSDOC#PARAMS#ERROR","placeholder":"$COMMENT#JSDOC#PARAMS#ERROR"},"options":{"value":"The additional options as follows:","key":"JSDOC#PARAMS#OPTIONS","placeholder":"$COMMENT#JSDOC#PARAMS#OPTIONS"},"settings":{"value":"The required settings as follows:","key":"JSDOC#PARAMS#SETTINGS","placeholder":"$COMMENT#JSDOC#PARAMS#SETTINGS"},"configPathIgnores":{"value":"The array of paths linked to the config file, (named \"ignores\" given it is ignored by the \"compress\" and \"resolve\" commands).","key":"JSDOC#PARAMS#CONFIGPATHIGNORES","placeholder":"$COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES"},"originalFlattenedConfigData":{"value":"The original flattened config data, before changes to aliases variables and composed variables are applied.","key":"JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA","placeholder":"$COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA"}},"returns":{"exitDueToFailure":{"value":"Never. (Somehow typing needs to be explicit for unreachable code inference.)","key":"JSDOC#RETURNS#EXITDUETOFAILURE","placeholder":"$COMMENT#JSDOC#RETURNS#EXITDUETOFAILURE"},"makeRuleResolve":{"value":"The resolve rule based on the flattened config data.","key":"JSDOC#RETURNS#MAKERULERESOLVE","placeholder":"$COMMENT#JSDOC#RETURNS#MAKERULERESOLVE"},"makeRuleCompress":{"value":"The compress rule based on the reversed flattened config data.","key":"JSDOC#RETURNS#MAKERULECOMPRESS","placeholder":"$COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS"}},"constants":{"sortedReversedFlattenedConfigData":{"value":"The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements.","key":"JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA","placeholder":"$COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA"},"composedVariablesExclusivesSet":{"value":"A local Set out of composed variables exclusives for speed.","key":"JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET","placeholder":"$COMMENT#JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET"}}}}} ResolvedConfigData */
+
+/** @type {ResolvedConfigData} */
+export const resolvedConfigData = {
+  "levelOne": {
+    "levelTwo": {
+      "levelThree": {
+        "value": "Level three.",
+        "key": "LEVELONE#LEVELTWO#LEVELTHREE",
+        "placeholder": "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE"
+      },
+      "stillLevelThree": {
+        "value": "Level three.",
+        "key": "LEVELONE#LEVELTWO#STILLLEVELTHREE",
+        "placeholder": "$COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE"
+      },
+      "otherLevelThree": {
+        "value": "Level three.",
+        "key": "LEVELONE#LEVELTWO#OTHERLEVELTHREE",
+        "placeholder": "$COMMENT#LEVELONE#LEVELTWO#OTHERLEVELTHREE"
+      },
+      "composedVariable": {
+        "value": "Level three. Level three.",
+        "key": "LEVELONE#LEVELTWO#COMPOSEDVARIABLE",
+        "placeholder": "$COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLE"
+      },
+      "composedVariableAlias": {
+        "value": "Level three. Level three.",
+        "key": "LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS",
+        "placeholder": "$COMMENT#LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS"
+      }
+    }
+  },
+  "jsDoc": {
+    "definitions": {
+      "exitDueToFailure": {
+        "value": "Terminates the whole process with a 'failure' code (`1`).",
+        "key": "JSDOC#DEFINITIONS#EXITDUETOFAILURE",
+        "placeholder": "$COMMENT#JSDOC#DEFINITIONS#EXITDUETOFAILURE"
+      },
+      "makeRuleResolve": {
+        "value": "The utility that creates the resolve rule based on the flattened config data, used to transform `$COMMENT` placeholders into actual comments.",
+        "key": "JSDOC#DEFINITIONS#MAKERULERESOLVE",
+        "placeholder": "$COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE"
+      },
+      "makeRuleCompress": {
+        "value": "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into `$COMMENT` placeholders.",
+        "key": "JSDOC#DEFINITIONS#MAKERULECOMPRESS",
+        "placeholder": "$COMMENT#JSDOC#DEFINITIONS#MAKERULECOMPRESS"
+      },
+      "coreCommentsFlow": {
+        "value": "The core flow at the heart of resolving and compressing comments.",
+        "key": "JSDOC#DEFINITIONS#CORECOMMENTSFLOW",
+        "placeholder": "$COMMENT#JSDOC#DEFINITIONS#CORECOMMENTSFLOW"
+      },
+      "resolveCommentsFlow": {
+        "value": "The flow that resolves `$COMMENT` placeholders into actual comments.",
+        "key": "JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW",
+        "placeholder": "$COMMENT#JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW"
+      },
+      "compressCommentsFlow": {
+        "value": "The flow that compresses actual comments into `$COMMENT` placeholders.",
+        "key": "JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW",
+        "placeholder": "$COMMENT#JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW"
+      },
+      "placeholdersCommentsFlow": {
+        "value": "The flow that creates `$COMMENT` placeholders right next to where they're defined.",
+        "key": "JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW",
+        "placeholder": "$COMMENT#JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW"
+      },
+      "logError": {
+        "value": "Logs an error to the console depending on its type. (`\"error\"` or `\"warning\"`.)",
+        "key": "JSDOC#DEFINITIONS#LOGERROR",
+        "placeholder": "$COMMENT#JSDOC#DEFINITIONS#LOGERROR"
+      }
+    },
+    "params": {
+      "flattenedConfigData": {
+        "value": "The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values.",
+        "key": "JSDOC#PARAMS#FLATTENEDCONFIGDATA",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA"
+      },
+      "reversedFlattenedConfigData": {
+        "value": "The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values.",
+        "key": "JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA"
+      },
+      "composedVariablesExclusives": {
+        "value": "The array of comment variables keys (implying their aliases as well) exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.",
+        "key": "JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES"
+      },
+      "aliases_flattenedKeys": {
+        "value": "The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.",
+        "key": "JSDOC#PARAMS#ALIASES_FLATTENEDKEYS",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS"
+      },
+      "ruleName": {
+        "value": "The name of the rule currently used. (Either `\"resolve\"` or `\"compress\"`.)",
+        "key": "JSDOC#PARAMS#RULENAME",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#RULENAME"
+      },
+      "ignores": {
+        "value": "The array of paths and globs for the flow's ESLint instance to ignore.",
+        "key": "JSDOC#PARAMS#IGNORES",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#IGNORES"
+      },
+      "eitherFlattenedConfigData": {
+        "value": "Either the flattened config data or the reversed flattened config data, since they share the same structure.",
+        "key": "JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA"
+      },
+      "error": {
+        "value": "The error object being handle for the logging.",
+        "key": "JSDOC#PARAMS#ERROR",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#ERROR"
+      },
+      "options": {
+        "value": "The additional options as follows:",
+        "key": "JSDOC#PARAMS#OPTIONS",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#OPTIONS"
+      },
+      "settings": {
+        "value": "The required settings as follows:",
+        "key": "JSDOC#PARAMS#SETTINGS",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#SETTINGS"
+      },
+      "configPathIgnores": {
+        "value": "The array of paths linked to the config file, (named \"ignores\" given it is ignored by the \"compress\" and \"resolve\" commands).",
+        "key": "JSDOC#PARAMS#CONFIGPATHIGNORES",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES"
+      },
+      "originalFlattenedConfigData": {
+        "value": "The original flattened config data, before changes to aliases variables and composed variables are applied.",
+        "key": "JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA"
+      }
+    },
+    "returns": {
+      "exitDueToFailure": {
+        "value": "Never. (Somehow typing needs to be explicit for unreachable code inference.)",
+        "key": "JSDOC#RETURNS#EXITDUETOFAILURE",
+        "placeholder": "$COMMENT#JSDOC#RETURNS#EXITDUETOFAILURE"
+      },
+      "makeRuleResolve": {
+        "value": "The resolve rule based on the flattened config data.",
+        "key": "JSDOC#RETURNS#MAKERULERESOLVE",
+        "placeholder": "$COMMENT#JSDOC#RETURNS#MAKERULERESOLVE"
+      },
+      "makeRuleCompress": {
+        "value": "The compress rule based on the reversed flattened config data.",
+        "key": "JSDOC#RETURNS#MAKERULECOMPRESS",
+        "placeholder": "$COMMENT#JSDOC#RETURNS#MAKERULECOMPRESS"
+      }
+    },
+    "constants": {
+      "sortedReversedFlattenedConfigData": {
+        "value": "The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements.",
+        "key": "JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA",
+        "placeholder": "$COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA"
+      },
+      "composedVariablesExclusivesSet": {
+        "value": "A local Set out of composed variables exclusives for speed.",
+        "key": "JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET",
+        "placeholder": "$COMMENT#JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET"
+      }
+    }
+  }
+}

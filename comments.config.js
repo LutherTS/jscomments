@@ -47,6 +47,15 @@ const data = {
       // value: "value not allowed", // errors, "key", "value" and "placeholder" not allowed
       // placeholder: "placeholder not allowed", // errors, "key", "value" and "placeholder" not allowed
       // noConcat: "no" + "concat", // errors, unrecognized value
+
+      // already error via regex, but now enhanced:
+      // "//": "key comment error 1",
+      // "/*": "key comment error 2",
+      // "*/": "key comment error 3",
+      // error directly in resolveConfig:
+      // "key comment error 1": "//",
+      // "key comment error 2": "/*",
+      // "key comment error 3": "*/",
     },
   },
   // for deving
