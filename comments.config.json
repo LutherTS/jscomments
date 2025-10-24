@@ -20,6 +20,10 @@
       "composedVariableAlias": {
         "value": "Level three. Level three.",
         "key": "LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS"
+      },
+      "placeholder": {
+        "value": "placeholder now allowed",
+        "key": "LEVELONE#LEVELTWO#PLACEHOLDER"
       }
     }
   },
