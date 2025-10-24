@@ -203,6 +203,8 @@ const mjsData = `/** @typedef {${JSON.stringify(
 )}`;
 fs.writeFileSync(mjsPath, mjsData, "utf8");
 
+console.log(`MJS resolved config data written to: \n${mjsPath}`);
+
 // ADDRESSES THE CORE COMMANDS "resolve", "compress", AND "placeholders".
 
 switch (coreCommand) {
