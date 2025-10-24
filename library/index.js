@@ -149,12 +149,13 @@ skipDetails ||
 
 // ADDRESSES THE --lint-config-imports FLAG (lintConfigImports, no longer a flag), GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
 
-// instantiate the JSON and .mjs path proactively
+// instantiates the JSON and .mjs path proactively
 const jsonPath = configPath.replace(/\.js$/, () => ".json");
 const mjsPath = configPath.replace(/\.js$/, () => ".mjs");
 
 const rawConfigPathIgnores = lintConfigImports
-  ? [configPath, mjsPath]
+  ? // also ignores the .mjs path
+    [configPath, mjsPath]
   : [...rawConfigAndImportPaths, mjsPath];
 
 // the ignore paths must be relative
