@@ -211,7 +211,6 @@ switch (coreCommand) {
     await resolveCommentsFlow(
       ignores,
       flattenedConfigData,
-      // NEW
       composedVariablesExclusives,
       aliases_flattenedKeys
     );
@@ -221,7 +220,6 @@ switch (coreCommand) {
     await compressCommentsFlow(
       ignores,
       reversedFlattenedConfigData,
-      // NEW
       composedVariablesExclusives
     );
     break;
@@ -230,7 +228,8 @@ switch (coreCommand) {
     await placeholdersCommentsFlow(
       configPathIgnores,
       originalFlattenedConfigData,
-      aliases_flattenedKeys
+      aliases_flattenedKeys,
+      path.relative(cwd, mjsPath)
     );
     break;
   default:

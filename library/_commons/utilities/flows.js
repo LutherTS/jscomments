@@ -117,7 +117,6 @@ const coreCommentsFlow = async (
 export const resolveCommentsFlow = async (
   ignores,
   flattenedConfigData,
-  // NEW
   composedVariablesExclusives,
   aliases_flattenedKeys
 ) =>
@@ -125,7 +124,6 @@ export const resolveCommentsFlow = async (
     resolveRuleName,
     ignores,
     flattenedConfigData,
-    // NEW
     composedVariablesExclusives,
     aliases_flattenedKeys
   );
@@ -142,14 +140,12 @@ export const resolveCommentsFlow = async (
 export const compressCommentsFlow = async (
   ignores,
   reversedFlattenedConfigData,
-  // NEW
   composedVariablesExclusives
 ) =>
   coreCommentsFlow(
     compressRuleName,
     ignores,
     reversedFlattenedConfigData,
-    // NEW
     composedVariablesExclusives
   );
 
@@ -160,12 +156,14 @@ export const compressCommentsFlow = async (
  * @param {string[]} configPathIgnores $COMMENT#JSDOC#PARAMS#CONFIGPATHIGNORES
  * @param {{[k: string]: string;}} originalFlattenedConfigData $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA
  * @param {Record<string, string>} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
+ * @param {string} relativeMjsPath $COMMENT#JSDOC#PARAMS#RELATIVEMJSPATH
  * @returns
  */
 export const placeholdersCommentsFlow = async (
   configPathIgnores,
   originalFlattenedConfigData,
-  aliases_flattenedKeys
+  aliases_flattenedKeys,
+  relativeMjsPath
 ) => {
   /** @type {Record<string, string>} */
   const composedValues_originalKeys = {};
@@ -199,7 +197,9 @@ export const placeholdersCommentsFlow = async (
     overrideConfigFile: true,
     overrideConfig: [
       {
+        // The .mjs file is considered part of the config path ignores, albeit being a special case since it is "created" by the config rather than imported by it. "placeholders" is the only flow that targets specifically the config path ignores, but its case, the .mjs file should actually be ignored. As such, I make the decision to retain the current integrity of `configPathIgnores`, and to place the mjsPath as an ESLint ignore pattern, where it is required to be relative to `cwd`.
         files: configPathIgnores,
+        ignores: [relativeMjsPath], // but the docs say ignorePatterns: https://eslint.org/docs/latest/integrate/nodejs-api#parameters
         languageOptions: typeScriptAndJSXCompatible,
         plugins: {
           [commentVariablesPluginName]: {

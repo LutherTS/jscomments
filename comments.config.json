@@ -131,6 +131,11 @@
         "value": "The original flattened config data, before changes to aliases variables and composed variables are applied.",
         "key": "JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA",
         "placeholder": "$COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA"
+      },
+      "relativeMjsPath": {
+        "value": "The relative path of the generated `.mjs` file to be ignored in the \"placeholders\" process.",
+        "key": "JSDOC#PARAMS#RELATIVEMJSPATH",
+        "placeholder": "$COMMENT#JSDOC#PARAMS#RELATIVEMJSPATH"
       }
     },
     "returns": {
