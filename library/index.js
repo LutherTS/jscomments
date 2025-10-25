@@ -16,6 +16,10 @@ import resolveConfig, {
   cwd,
   knownIgnores,
   makeResolvedConfigData,
+  makeJsonData,
+  makeMjsData,
+  makeJsonPathLog,
+  makeMjsPathLog,
 } from "comment-variables-resolve-config";
 
 import { hasPackageJson, hasGitFolder } from "./_commons/constants/bases.js";
@@ -187,23 +191,17 @@ if (!makeResolvedConfigDataResults.success) {
 
 const resolvedConfigData = makeResolvedConfigDataResults.resolvedConfigData;
 
-const jsonData = JSON.stringify(resolvedConfigData, null, 2);
+const jsonData = makeJsonData(resolvedConfigData);
 fs.writeFileSync(jsonPath, jsonData, "utf8");
 
-console.log(`JSON resolved config data written to: \n${jsonPath}`);
+console.log(makeJsonPathLog(jsonPath));
 
 // NEW!! comments.config.mjs to directly access resolvedConfigData.
 
-const mjsData = `/** @typedef {${JSON.stringify(
-  resolvedConfigData
-)}} ResolvedConfigData */\n\n/** @type {ResolvedConfigData} */\nexport const resolvedConfigData = ${JSON.stringify(
-  resolvedConfigData,
-  null,
-  2
-)}`;
+const mjsData = makeMjsData(resolvedConfigData);
 fs.writeFileSync(mjsPath, mjsData, "utf8");
 
-console.log(`MJS resolved config data written to: \n${mjsPath}`);
+console.log(makeMjsPathLog(mjsPath));
 
 // ADDRESSES THE CORE COMMANDS "resolve", "compress", AND "placeholders".
 
