@@ -1,5 +1,7 @@
 # comment-variables
 
+![Name and logo for the Comment Variables ecosystem, dark default variant.](<./assets/README/Name%20dark%20(default).png>)
+
 A CLI tool for configuring, managing and maintaining JavaScript comments as JavaScript variables, via a `comments.config.js` file at the root of your project.
 
 ![Intro example of going back and forth between Comment Variables placeholders and actual comments using comment-variables's resolve and compress commands.](./assets/README/example.gif)
