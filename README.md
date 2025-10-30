@@ -2,11 +2,11 @@
 
 ![Name and logo for the Comment Variables ecosystem, dark default variant.](./assets/README/name-dark-default.png)
 
-<picture>
+<!-- <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/README/name-dark-default.png">
   <source media="(prefers-color-scheme: light)" srcset="./assets/README/name-light.png">
   <img alt="Logo and name for the Comment Variables ecosystem." src="./assets/README/name-dark-default.png">
-</picture>
+</picture> -->
 
 A CLI tool for configuring, managing and maintaining JavaScript comments as JavaScript variables, via a `comments.config.js` file at the root of your project.
 
