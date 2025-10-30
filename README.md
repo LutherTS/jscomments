@@ -1,6 +1,6 @@
 # comment-variables
 
-![Name and logo for the Comment Variables ecosystem, dark default variant.](./assets/README/name-dark-default.png)
+![Logo and name for the Comment Variables ecosystem, dark default variant.](./assets/README/name-dark-default.png)
 
 <!-- <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/README/name-dark-default.png">
