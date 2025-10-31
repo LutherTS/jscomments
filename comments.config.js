@@ -45,8 +45,8 @@ const data = {
       // ownAliasKey: "LEVELONE#LEVELTWO#OWNALIASKEY", // errors, is its own key/alias
       // key: "key not allowed", // errors, "key", "value" and "placeholder" not allowed
       // value: "value not allowed", // errors, "key", "value" and "placeholder" not allowed
-      placeholder: "placeholder now allowed", // doesn't error, "placeholder" is now allowed
       // noConcat: "no" + "concat", // errors, unrecognized value
+      placeholder: "placeholder now allowed", // doesn't error, "placeholder" is now allowed
 
       // already error via regex, but now enhanced:
       // "//": "key comment error 1",
