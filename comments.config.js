@@ -8,6 +8,8 @@ const FRANÇAIS = "français";
 const enTestData = { hello: "Hello." };
 const frTestData = { hello: "Bonjour." };
 
+// const HELLO = "Hello.";
+
 // const data = {
 //   // I didn't do the full freeze on this one.
 //   // for testing
@@ -148,6 +150,7 @@ const variations = {
   },
   variant: EN,
   fallbackData: enTestData,
+  // fallbackData: { hello: HELLO }, // correctly errors
 };
 
 const config = {
