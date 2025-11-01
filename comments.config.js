@@ -1,6 +1,13 @@
 // const obj = { test: "Testing." }; // errors, object string values in config files are reserved for exports from the config.
 
-const data = {
+const EN = "en";
+const ENGLISH = "English";
+const FR = "fr";
+const FRANÇAIS = "français";
+
+// const data = {
+const enData = {
+  // I didn't do the full freeze on this one.
   // for testing
   levelOne: {
     levelTwo: {
@@ -130,12 +137,29 @@ const myIgnoresOnly = false; // can be omitted
 
 const composedVariablesExclusives = []; // can be omitted
 
+// NEW, in development
+// const variations = undefined;
+// Not there yet?
+const variations = {
+  variants: {
+    [EN]: { label: ENGLISH }, // `English`
+    [FR]: { label: FRANÇAIS }, // `français`
+  },
+  variant: EN,
+  fallBackData: enData,
+};
+
 const config = {
-  data,
+  data: enData,
+  // data: {
+  //   [EN]: enData,
+  //   [FR]: enData, // frData
+  // },
   ignores,
   lintConfigImports,
   myIgnoresOnly,
   composedVariablesExclusives,
+  variations,
 };
 
 export default config;
