@@ -148,7 +148,7 @@ const variations = {
     [EN]: { label: ENGLISH }, // `English`
     [FR]: { label: FRANÇAIS }, // `français`
   },
-  variant: EN,
+  variant: FR,
   fallbackData: enTestData,
   // fallbackData: { hello: HELLO }, // correctly errors
 };
