@@ -9,5 +9,14 @@
       "key": "EN#GOODBYE"
     }
   },
-  "fr": {}
+  "fr": {
+    "hello": {
+      "value": "Bonjour.",
+      "key": "FR#HELLO"
+    },
+    "goodbye": {
+      "value": "Au revoir.",
+      "key": "FR#GOODBYE"
+    }
+  }
 }

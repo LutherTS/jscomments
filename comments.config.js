@@ -162,8 +162,8 @@ const config = {
   data: {
     [EN]: enTestData,
     // [FR]: frTestData,
-    // [FR]: { hello: "Bonjour.", goodbye: "Au revoir." }, // goodbye is outstanding
-    [FR]: {}, // variations are allowed to be empty, at the very least they should begin by being represented by an empty object, to be completed step-by-step with error handling by turning errorOnMissingVariationKey true
+    [FR]: { hello: "Bonjour.", goodbye: "Au revoir." }, // goodbye is outstanding (with OG enTestData)
+    // [FR]: {}, // variations are allowed to be empty, at the very least they should begin by being represented by an empty object, to be completed step-by-step with error handling by turning errorOnMissingVariationKey true
   },
   ignores,
   lintConfigImports,
