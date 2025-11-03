@@ -1,4 +1,4 @@
-/** @typedef {{"en":{"hello":{"value":"Hello.","key":"EN#HELLO"}},"fr":{"hello":{"value":"Bonjour.","key":"FR#HELLO"}}}} ResolvedConfigData */
+/** @typedef {{"en":{"hello":{"value":"Hello.","key":"EN#HELLO"},"goodbye":{"value":"Goodbye.","key":"EN#GOODBYE"}},"fr":{}}} ResolvedConfigData */
 
 /** @type {ResolvedConfigData} */
 export const resolvedConfigData = {
@@ -6,12 +6,11 @@ export const resolvedConfigData = {
     "hello": {
       "value": "Hello.",
       "key": "EN#HELLO"
+    },
+    "goodbye": {
+      "value": "Goodbye.",
+      "key": "EN#GOODBYE"
     }
   },
-  "fr": {
-    "hello": {
-      "value": "Bonjour.",
-      "key": "FR#HELLO"
-    }
-  }
+  "fr": {}
 }

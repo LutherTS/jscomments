@@ -3,12 +3,11 @@
     "hello": {
       "value": "Hello.",
       "key": "EN#HELLO"
+    },
+    "goodbye": {
+      "value": "Goodbye.",
+      "key": "EN#GOODBYE"
     }
   },
-  "fr": {
-    "hello": {
-      "value": "Bonjour.",
-      "key": "FR#HELLO"
-    }
-  }
+  "fr": {}
 }
