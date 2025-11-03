@@ -150,7 +150,8 @@ const variations = {
   },
   variant: FR,
   fallbackData: enTestData,
-  // fallbackData: { hello: HELLO }, // correctly errors
+  // fallbackData: { hello: HELLO }, // correctly errors (reference only)
+  // fallbackData: { ...enTestData }, // correctly errors (reference only)
 };
 
 const config = {
@@ -158,6 +159,7 @@ const config = {
   data: {
     [EN]: enTestData,
     [FR]: frTestData,
+    // [FR]: {}, // variations are allowed to be empty, at the very least they should begin by being represented by an empty object, to be completed step-by-step with error handling by turning errorOnMissingVariationKey true
   },
   ignores,
   lintConfigImports,
