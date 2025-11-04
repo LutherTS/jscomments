@@ -136,6 +136,19 @@ let {
   aliases_flattenedKeys,
 } = resolvedCoreData;
 
+// ...for now, on the CLI, let's try to completely reassign these four keys from resolvedCoreData to resolvedVariationData.
+
+if (resolveConfigResults.variations) {
+  const resolvedVariationData = resolveConfigResults.resolvedVariationData;
+  // here come the reassignments
+  originalFlattenedConfigData =
+    resolvedVariationData.originalFlattenedConfigData;
+  flattenedConfigData = resolvedVariationData.flattenedConfigData;
+  reversedFlattenedConfigData =
+    resolvedVariationData.reversedFlattenedConfigData;
+  aliases_flattenedKeys = resolvedVariationData.aliases_flattenedKeys;
+}
+
 skipDetails || console.log("Running with config:", config);
 skipDetails || console.log("Flattened config data is:", flattenedConfigData);
 skipDetails ||

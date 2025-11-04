@@ -149,7 +149,7 @@ const variations = {
     [EN]: { label: ENGLISH }, // `English`
     [FR]: { label: FRANÇAIS }, // `français`
   },
-  variant: FR,
+  variant: EN,
   fallbackData: enTestData,
   // fallbackData: { hello: HELLO }, // correctly errors (reference only)
   // fallbackData: { ...enTestData }, // correctly errors (reference only)

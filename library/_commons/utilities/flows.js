@@ -1,6 +1,11 @@
 import { ESLint } from "eslint";
 import markdown from "@eslint/markdown";
 
+/* TEST START
+$COMMENT#HELLO
+$COMMENT#GOODBYE
+TEST END */
+
 import {
   $COMMENT,
   commentVariablesPluginName,
