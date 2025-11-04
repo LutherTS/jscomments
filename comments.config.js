@@ -151,10 +151,10 @@ const variations = {
   },
   variant: FR,
   fallbackData: enTestData,
-  // also
-  fallbackVariant: EN,
   // fallbackData: { hello: HELLO }, // correctly errors (reference only)
   // fallbackData: { ...enTestData }, // correctly errors (reference only)
+  // also
+  fallbackVariant: EN,
 };
 
 const config = {

@@ -119,18 +119,22 @@ if (!resolveConfigResults.success) {
 console.log("Config resolved.");
 
 const {
-  config,
-  originalFlattenedConfigData,
-  flattenedConfigData,
-  reversedFlattenedConfigData,
-  aliases_flattenedKeys,
   configPath,
   passedIgnores,
+  config,
   rawConfigAndImportPaths,
   lintConfigImports,
   myIgnoresOnly,
   composedVariablesExclusives,
+  resolvedCoreData,
 } = resolveConfigResults;
+
+let {
+  originalFlattenedConfigData,
+  flattenedConfigData,
+  reversedFlattenedConfigData,
+  aliases_flattenedKeys,
+} = resolvedCoreData;
 
 skipDetails || console.log("Running with config:", config);
 skipDetails || console.log("Flattened config data is:", flattenedConfigData);
