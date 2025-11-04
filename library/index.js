@@ -226,6 +226,12 @@ console.log(makeMjsPathLog(mjsPath));
 
 // ADDRESSES THE CORE COMMANDS "resolve", "compress", AND "placeholders".
 
+// ...The complexity here lies in the fact that I need to make completely virtualized data that will be used by the flows below to resolve according to the ongoing variation, notably for alias and composed variables. So that means, all prefix have to go, but also only the current variant need to be taken into account.
+console.debug("flattenedConfigData is:", flattenedConfigData);
+console.debug("reversedFlattenedConfigData is:", reversedFlattenedConfigData);
+console.debug("composedVariablesExclusives are:", composedVariablesExclusives);
+console.debug("aliases_flattenedKeys are:", aliases_flattenedKeys);
+
 switch (coreCommand) {
   case resolveRuleName:
     console.log(`Running ${resolveRuleName}...`);

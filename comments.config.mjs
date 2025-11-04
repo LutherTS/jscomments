@@ -1,4 +1,4 @@
-/** @typedef {{"en":{"hello":{"value":"Hello.","key":"EN#HELLO"},"goodbye":{"value":"Goodbye.","key":"EN#GOODBYE"}},"fr":{"hello":{"value":"Bonjour.","key":"FR#HELLO"},"goodbye":{"value":"Au revoir.","key":"FR#GOODBYE"}}}} ResolvedConfigData */
+/** @typedef {{"en":{"hello":{"value":"Hello.","key":"EN#HELLO"},"goodbye":{"value":"Goodbye.","key":"EN#GOODBYE"},"helloAlias":{"value":"Hello.","key":"EN#HELLOALIAS"}},"fr":{"hello":{"value":"Bonjour.","key":"FR#HELLO"},"goodbye":{"value":"Au revoir.","key":"FR#GOODBYE"},"helloAlias":{"value":"Bonjour.","key":"FR#HELLOALIAS"}}}} ResolvedConfigData */
 
 /** @type {ResolvedConfigData} */
 export const resolvedConfigData = {
@@ -10,6 +10,10 @@ export const resolvedConfigData = {
     "goodbye": {
       "value": "Goodbye.",
       "key": "EN#GOODBYE"
+    },
+    "helloAlias": {
+      "value": "Hello.",
+      "key": "EN#HELLOALIAS"
     }
   },
   "fr": {
@@ -20,6 +24,10 @@ export const resolvedConfigData = {
     "goodbye": {
       "value": "Au revoir.",
       "key": "FR#GOODBYE"
+    },
+    "helloAlias": {
+      "value": "Bonjour.",
+      "key": "FR#HELLOALIAS"
     }
   }
 }

@@ -4,6 +4,7 @@ import markdown from "@eslint/markdown";
 /* TEST START
 $COMMENT#HELLO
 $COMMENT#GOODBYE
+$COMMENT#HELLOALIAS
 TEST END */
 
 import {

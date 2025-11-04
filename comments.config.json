@@ -7,6 +7,10 @@
     "goodbye": {
       "value": "Goodbye.",
       "key": "EN#GOODBYE"
+    },
+    "helloAlias": {
+      "value": "Hello.",
+      "key": "EN#HELLOALIAS"
     }
   },
   "fr": {
@@ -17,6 +21,10 @@
     "goodbye": {
       "value": "Au revoir.",
       "key": "FR#GOODBYE"
+    },
+    "helloAlias": {
+      "value": "Bonjour.",
+      "key": "FR#HELLOALIAS"
     }
   }
 }

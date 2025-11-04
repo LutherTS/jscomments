@@ -6,7 +6,12 @@ const FR = "fr";
 const FRANÇAIS = "français";
 
 // const enTestData = { hello: "Hello." };
-const enTestData = { hello: "Hello.", goodbye: "Goodbye." }; // goodbye is missing
+// const enTestData = { hello: "Hello.", goodbye: "Goodbye." }; // goodbye is missing
+const enTestData = Object.freeze({
+  hello: "Hello.",
+  goodbye: "Goodbye.",
+  helloAlias: "EN#HELLO",
+});
 // const frTestData = { hello: "Bonjour." };
 
 // const HELLO = "Hello.";
@@ -149,7 +154,7 @@ const variations = {
     [EN]: { label: ENGLISH }, // `English`
     [FR]: { label: FRANÇAIS }, // `français`
   },
-  variant: EN,
+  variant: FR,
   fallbackData: enTestData,
   // fallbackData: { hello: HELLO }, // correctly errors (reference only)
   // fallbackData: { ...enTestData }, // correctly errors (reference only)
@@ -162,7 +167,12 @@ const config = {
   data: {
     [EN]: enTestData,
     // [FR]: frTestData,
-    [FR]: { hello: "Bonjour.", goodbye: "Au revoir." }, // goodbye is outstanding (with OG enTestData)
+    // [FR]: { hello: "Bonjour.", goodbye: "Au revoir." }, // goodbye is outstanding (with OG enTestData)
+    [FR]: Object.freeze({
+      hello: "Bonjour.",
+      goodbye: "Au revoir.",
+      helloAlias: "FR#HELLO",
+    }),
     // [FR]: {}, // variations are allowed to be empty, at the very least they should begin by being represented by an empty object, to be completed step-by-step with error handling by turning errorOnMissingVariationKey true
   },
   ignores,
