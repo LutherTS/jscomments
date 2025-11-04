@@ -122,6 +122,7 @@ const {
   configPath,
   passedIgnores,
   config,
+  configDataResultsData,
   rawConfigAndImportPaths,
   lintConfigImports,
   myIgnoresOnly,
@@ -136,12 +137,11 @@ let {
   aliases_flattenedKeys,
 } = resolvedCoreData;
 
-// ...for now, on the CLI, let's try to completely reassign these four keys from resolvedCoreData to resolvedVariationData.
-// !! And so the problem we're facing now is that the new data does not have the composed variables exclusives. This is OK for checks, but not OK for resolutions, since these composed variables exclusives are need to resolve composed variables.
+// Completely reassigns these four keys from resolvedCoreData to resolvedVariationData for the CLI.
 
 if (resolveConfigResults.variations) {
   const resolvedVariationData = resolveConfigResults.resolvedVariationData;
-  // here come the reassignments
+  // Reassignments to the variation data. From then on, using data from resolvedCoreData requires using the resolvedCoreData object itself.
   originalFlattenedConfigData =
     resolvedVariationData.originalFlattenedConfigData;
   flattenedConfigData = resolvedVariationData.flattenedConfigData;
@@ -200,21 +200,17 @@ skipDetails || console.log("Ignores are:", ignores);
 
 // AUTOMATICALLY GENERATES THE JSON OUTPUT OF YOUR RESOLVED CONFIG DATA.
 
-// console.debug("HERE.");
-const makeResolvedConfigDataResults =
-  // makeResolvedConfigData(resolveConfigResults);
-  makeResolvedConfigData({
-    config,
-    aliases_flattenedKeys: resolvedCoreData.aliases_flattenedKeys,
-    flattenedConfigData: resolvedCoreData.flattenedConfigData,
-  });
+const makeResolvedConfigDataResults = makeResolvedConfigData(
+  configDataResultsData,
+  resolvedCoreData.flattenedConfigData,
+  resolvedCoreData.aliases_flattenedKeys
+);
 if (!makeResolvedConfigDataResults.success) {
   makeResolvedConfigDataResults.errors.forEach((e) => logError(e));
   exitDueToFailure();
 }
-// console.debug("THERE.");
 
-const resolvedConfigData = makeResolvedConfigDataResults.resolvedConfigData;
+const { resolvedConfigData } = makeResolvedConfigDataResults;
 
 const jsonData = makeJsonData(resolvedConfigData);
 fs.writeFileSync(jsonPath, jsonData, "utf8");
