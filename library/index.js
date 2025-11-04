@@ -137,6 +137,7 @@ let {
 } = resolvedCoreData;
 
 // ...for now, on the CLI, let's try to completely reassign these four keys from resolvedCoreData to resolvedVariationData.
+// !! And so the problem we're facing now is that the new data does not have the composed variables exclusives. This is OK for checks, but not OK for resolutions, since these composed variables exclusives are need to resolve composed variables.
 
 if (resolveConfigResults.variations) {
   const resolvedVariationData = resolveConfigResults.resolvedVariationData;
@@ -199,12 +200,19 @@ skipDetails || console.log("Ignores are:", ignores);
 
 // AUTOMATICALLY GENERATES THE JSON OUTPUT OF YOUR RESOLVED CONFIG DATA.
 
+// console.debug("HERE.");
 const makeResolvedConfigDataResults =
-  makeResolvedConfigData(resolveConfigResults);
+  // makeResolvedConfigData(resolveConfigResults);
+  makeResolvedConfigData({
+    config,
+    aliases_flattenedKeys: resolvedCoreData.aliases_flattenedKeys,
+    flattenedConfigData: resolvedCoreData.flattenedConfigData,
+  });
 if (!makeResolvedConfigDataResults.success) {
   makeResolvedConfigDataResults.errors.forEach((e) => logError(e));
   exitDueToFailure();
 }
+// console.debug("THERE.");
 
 const resolvedConfigData = makeResolvedConfigDataResults.resolvedConfigData;
 
