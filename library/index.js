@@ -250,6 +250,7 @@ switch (coreCommand) {
       composedVariablesExclusives
     );
     break;
+  // I'm noticing I'm not even using valueLocations to create placeholders.
   case placeholdersRuleName:
     console.log(`Running ${placeholdersRuleName}...`);
     await placeholdersCommentsFlow(

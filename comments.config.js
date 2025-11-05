@@ -11,6 +11,9 @@ const enTestData = Object.freeze({
   hello: "Hello.",
   goodbye: "Goodbye.",
   helloAlias: "EN#HELLO",
+  forComposed1: "Hello",
+  forComposed2: "goodbye.",
+  // composed: "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2",
 });
 // const frTestData = { hello: "Bonjour." };
 
@@ -145,7 +148,8 @@ const ignores = ["README.md", "generate.template.js", "generate.example.js"];
 const lintConfigImports = false; // can be omitted
 const myIgnoresOnly = false; // can be omitted
 
-const composedVariablesExclusives = []; // can be omitted
+// const composedVariablesExclusives = []; // can be omitted
+const composedVariablesExclusives = ["FR#FORCOMPOSED3"]; // can be omitted
 
 // NEW, in development
 // const variations = undefined;
@@ -172,6 +176,10 @@ const config = {
       hello: "Bonjour.",
       goodbye: "Au revoir.",
       helloAlias: "FR#HELLO",
+      forComposed1: "Bonjour",
+      forComposed2: "au revoir.",
+      forComposed3: "au revoir?",
+      // composed: "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2",
     }),
     // [FR]: {}, // variations are allowed to be empty, at the very least they should begin by being represented by an empty object, to be completed step-by-step with error handling by turning errorOnMissingVariationKey true
   },
