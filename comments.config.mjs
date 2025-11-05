@@ -1,4 +1,4 @@
-/** @typedef {{"en":{"hello":{"value":"Hello.","key":"EN#HELLO"},"goodbye":{"value":"Goodbye.","key":"EN#GOODBYE"},"helloAlias":{"value":"Hello.","key":"EN#HELLOALIAS"},"forComposed1":{"value":"Hello","key":"EN#FORCOMPOSED1"},"forComposed2":{"value":"goodbye.","key":"EN#FORCOMPOSED2"}},"fr":{"hello":{"value":"Bonjour.","key":"FR#HELLO"},"goodbye":{"value":"Au revoir.","key":"FR#GOODBYE"},"helloAlias":{"value":"Bonjour.","key":"FR#HELLOALIAS"},"forComposed1":{"value":"Bonjour","key":"FR#FORCOMPOSED1"},"forComposed2":{"value":"au revoir.","key":"FR#FORCOMPOSED2"},"forComposed3":{"value":"au revoir?","key":"FR#FORCOMPOSED3"}}}} ResolvedConfigData */
+/** @typedef {{"en":{"hello":{"value":"Hello.","key":"EN#HELLO"},"goodbye":{"value":"Goodbye.","key":"EN#GOODBYE"},"helloAlias":{"value":"Hello.","key":"EN#HELLOALIAS"},"forComposed1":{"value":"Hello","key":"EN#FORCOMPOSED1"},"forComposed2":{"value":"goodbye.","key":"EN#FORCOMPOSED2"},"composed":{"value":"Hello goodbye.","key":"EN#COMPOSED"},"composedWithAlias":{"value":"Hello goodbye. Hello.","key":"EN#COMPOSEDWITHALIAS"}},"fr":{"hello":{"value":"Bonjour.","key":"FR#HELLO"},"goodbye":{"value":"Au revoir.","key":"FR#GOODBYE"},"helloAlias":{"value":"Bonjour.","key":"FR#HELLOALIAS"},"forComposed1":{"value":"Bonjour","key":"FR#FORCOMPOSED1"},"forComposed2":{"value":"au revoir.","key":"FR#FORCOMPOSED2"},"forComposed3":{"value":"au revoir ?","key":"FR#FORCOMPOSED3"},"composed":{"value":"Bonjour au revoir.","key":"FR#COMPOSED"},"composedWithAlias":{"value":"Bonjour au revoir. Bonjour.","key":"FR#COMPOSEDWITHALIAS"}}}} ResolvedConfigData */
 
 /** @type {ResolvedConfigData} */
 export const resolvedConfigData = {
@@ -22,6 +22,14 @@ export const resolvedConfigData = {
     "forComposed2": {
       "value": "goodbye.",
       "key": "EN#FORCOMPOSED2"
+    },
+    "composed": {
+      "value": "Hello goodbye.",
+      "key": "EN#COMPOSED"
+    },
+    "composedWithAlias": {
+      "value": "Hello goodbye. Hello.",
+      "key": "EN#COMPOSEDWITHALIAS"
     }
   },
   "fr": {
@@ -46,8 +54,16 @@ export const resolvedConfigData = {
       "key": "FR#FORCOMPOSED2"
     },
     "forComposed3": {
-      "value": "au revoir?",
+      "value": "au revoir ?",
       "key": "FR#FORCOMPOSED3"
+    },
+    "composed": {
+      "value": "Bonjour au revoir.",
+      "key": "FR#COMPOSED"
+    },
+    "composedWithAlias": {
+      "value": "Bonjour au revoir. Bonjour.",
+      "key": "FR#COMPOSEDWITHALIAS"
     }
   }
 }

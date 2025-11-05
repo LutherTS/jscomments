@@ -13,7 +13,9 @@ const enTestData = Object.freeze({
   helloAlias: "EN#HELLO",
   forComposed1: "Hello",
   forComposed2: "goodbye.",
-  // composed: "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2",
+  composed: "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2",
+  composedWithAlias:
+    "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2 $COMMENT#EN#HELLOALIAS",
 });
 // const frTestData = { hello: "Bonjour." };
 
@@ -178,8 +180,10 @@ const config = {
       helloAlias: "FR#HELLO",
       forComposed1: "Bonjour",
       forComposed2: "au revoir.",
-      forComposed3: "au revoir?",
-      // composed: "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2",
+      forComposed3: "au revoir ?",
+      composed: "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2",
+      composedWithAlias:
+        "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2 $COMMENT#FR#HELLOALIAS",
     }),
     // [FR]: {}, // variations are allowed to be empty, at the very least they should begin by being represented by an empty object, to be completed step-by-step with error handling by turning errorOnMissingVariationKey true
   },

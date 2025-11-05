@@ -19,6 +19,14 @@
     "forComposed2": {
       "value": "goodbye.",
       "key": "EN#FORCOMPOSED2"
+    },
+    "composed": {
+      "value": "Hello goodbye.",
+      "key": "EN#COMPOSED"
+    },
+    "composedWithAlias": {
+      "value": "Hello goodbye. Hello.",
+      "key": "EN#COMPOSEDWITHALIAS"
     }
   },
   "fr": {
@@ -43,8 +51,16 @@
       "key": "FR#FORCOMPOSED2"
     },
     "forComposed3": {
-      "value": "au revoir?",
+      "value": "au revoir ?",
       "key": "FR#FORCOMPOSED3"
+    },
+    "composed": {
+      "value": "Bonjour au revoir.",
+      "key": "FR#COMPOSED"
+    },
+    "composedWithAlias": {
+      "value": "Bonjour au revoir. Bonjour.",
+      "key": "FR#COMPOSEDWITHALIAS"
     }
   }
 }

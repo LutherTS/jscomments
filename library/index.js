@@ -251,6 +251,7 @@ switch (coreCommand) {
     );
     break;
   // I'm noticing I'm not even using valueLocations to create placeholders.
+  // Which is in fact more reliable because I believe (and I show know) that I'm appending the placeholders specifically to the object string values that I find instead of doing so from locations.
   case placeholdersRuleName:
     console.log(`Running ${placeholdersRuleName}...`);
     await placeholdersCommentsFlow(
