@@ -2,7 +2,6 @@
 // export const enTestData = { hello: "Hello.", goodbye: "Goodbye." }; // goodbye is missing (with OG frTestData)
 export const enTestData = Object.freeze({
   hello: "Hello." /* variations: $COMMENT#HELLO / core: $COMMENT#EN#HELLO */,
-  // from then on I just need to turn /* $COMMENT#EN#HELLO */ into /* core $COMMENT#EN#HELLO variation $COMMENT#HELLO */ there isn't even a need to known the variant
   goodbye:
     "Goodbye." /* variations: $COMMENT#GOODBYE / core: $COMMENT#EN#GOODBYE */,
   helloAlias:
