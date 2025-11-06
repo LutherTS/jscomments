@@ -165,13 +165,15 @@ export const compressCommentsFlow = async (
  * @param {{[k: string]: string;}} originalFlattenedConfigData $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA
  * @param {Record<string, string>} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
  * @param {string} relativeMjsPath $COMMENT#JSDOC#PARAMS#RELATIVEMJSPATH
+ * @param {boolean} variations A boolean that determines the format of the generated placeholders according to whether or not the config is enabling variations.
  * @returns
  */
 export const placeholdersCommentsFlow = async (
   configPathIgnores,
   originalFlattenedConfigData,
   aliases_flattenedKeys,
-  relativeMjsPath
+  relativeMjsPath,
+  variations
 ) => {
   /** @type {Record<string, string>} */
   const composedValues_originalKeys = {};
@@ -196,6 +198,7 @@ export const placeholdersCommentsFlow = async (
     aliasValues_originalKeys,
     regularValuesOnly_originalKeys,
     aliases_flattenedKeys,
+    variations,
   };
   const makePlaceholdersAsObject = { makePlaceholders };
 

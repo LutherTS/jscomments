@@ -8,14 +8,20 @@ const FRANÇAIS = "français";
 // const enTestData = { hello: "Hello." };
 // const enTestData = { hello: "Hello.", goodbye: "Goodbye." }; // goodbye is missing
 const enTestData = Object.freeze({
-  hello: "Hello.",
-  goodbye: "Goodbye.",
-  helloAlias: "EN#HELLO",
-  forComposed1: "Hello",
-  forComposed2: "goodbye.",
-  composed: "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2",
+  hello: "Hello." /* variations: $COMMENT#HELLO / core: $COMMENT#EN#HELLO */,
+  // from then on I just need to turn /* $COMMENT#EN#HELLO */ into /* core $COMMENT#EN#HELLO variation $COMMENT#HELLO */ there isn't even a need to known the variant
+  goodbye:
+    "Goodbye." /* variations: $COMMENT#GOODBYE / core: $COMMENT#EN#GOODBYE */,
+  helloAlias:
+    "EN#HELLO" /* variations: $COMMENT#HELLO / core: $COMMENT#EN#HELLO */,
+  forComposed1:
+    "Hello" /* variations: $COMMENT#FORCOMPOSED1 / core: $COMMENT#EN#FORCOMPOSED1 */,
+  forComposed2:
+    "goodbye." /* variations: $COMMENT#FORCOMPOSED2 / core: $COMMENT#EN#FORCOMPOSED2 */,
+  composed:
+    "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2" /* variations: $COMMENT#COMPOSED / core: $COMMENT#EN#COMPOSED */,
   composedWithAlias:
-    "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2 $COMMENT#EN#HELLOALIAS",
+    "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2 $COMMENT#EN#HELLOALIAS" /* variations: $COMMENT#COMPOSEDWITHALIAS / core: $COMMENT#EN#COMPOSEDWITHALIAS */,
 });
 // const frTestData = { hello: "Bonjour." };
 
@@ -127,6 +133,8 @@ const enTestData = Object.freeze({
 //         "The original flattened config data, before changes to aliases variables and composed variables are applied." /* $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA */,
 //       relativeMjsPath:
 //         'The relative path of the generated `.mjs` file to be ignored in the "placeholders" process.' /* $COMMENT#JSDOC#PARAMS#RELATIVEMJSPATH */,
+//       variations:
+//         'A boolean that determines the format of the generated placeholders according to whether or not the config is enabling variations.' /* $COMMENT#JSDOC#PARAMS#VARIATIONS */,
 //     }),
 //     returns: Object.freeze({
 //       exitDueToFailure:
@@ -175,15 +183,22 @@ const config = {
     // [FR]: frTestData,
     // [FR]: { hello: "Bonjour.", goodbye: "Au revoir." }, // goodbye is outstanding (with OG enTestData)
     [FR]: Object.freeze({
-      hello: "Bonjour.",
-      goodbye: "Au revoir.",
-      helloAlias: "FR#HELLO",
-      forComposed1: "Bonjour",
-      forComposed2: "au revoir.",
-      forComposed3: "au revoir ?",
-      composed: "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2",
+      hello:
+        "Bonjour." /* variations: $COMMENT#HELLO / core: $COMMENT#FR#HELLO */,
+      goodbye:
+        "Au revoir." /* variations: $COMMENT#GOODBYE / core: $COMMENT#FR#GOODBYE */,
+      helloAlias:
+        "FR#HELLO" /* variations: $COMMENT#HELLO / core: $COMMENT#FR#HELLO */,
+      forComposed1:
+        "Bonjour" /* variations: $COMMENT#FORCOMPOSED1 / core: $COMMENT#FR#FORCOMPOSED1 */,
+      forComposed2:
+        "au revoir." /* variations: $COMMENT#FORCOMPOSED2 / core: $COMMENT#FR#FORCOMPOSED2 */,
+      forComposed3:
+        "au revoir ?" /* variations: $COMMENT#FORCOMPOSED3 / core: $COMMENT#FR#FORCOMPOSED3 */,
+      composed:
+        "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2" /* variations: $COMMENT#COMPOSED / core: $COMMENT#FR#COMPOSED */,
       composedWithAlias:
-        "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2 $COMMENT#FR#HELLOALIAS",
+        "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2 $COMMENT#FR#HELLOALIAS" /* variations: $COMMENT#COMPOSEDWITHALIAS / core: $COMMENT#FR#COMPOSEDWITHALIAS */,
     }),
     // [FR]: {}, // variations are allowed to be empty, at the very least they should begin by being represented by an empty object, to be completed step-by-step with error handling by turning errorOnMissingVariationKey true
   },

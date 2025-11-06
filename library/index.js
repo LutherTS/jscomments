@@ -131,7 +131,7 @@ const {
 } = resolveConfigResults;
 
 let {
-  originalFlattenedConfigData,
+  // originalFlattenedConfigData, // currently unused as reassigned
   flattenedConfigData,
   reversedFlattenedConfigData,
   aliases_flattenedKeys,
@@ -142,8 +142,8 @@ let {
 if (resolveConfigResults.variations) {
   const resolvedVariationData = resolveConfigResults.resolvedVariationData;
   // Reassignments to the variation data. From then on, using data from resolvedCoreData requires using the resolvedCoreData object itself.
-  originalFlattenedConfigData =
-    resolvedVariationData.originalFlattenedConfigData;
+  // originalFlattenedConfigData =
+  //   resolvedVariationData.originalFlattenedConfigData;
   flattenedConfigData = resolvedVariationData.flattenedConfigData;
   reversedFlattenedConfigData =
     resolvedVariationData.reversedFlattenedConfigData;
@@ -162,7 +162,6 @@ skipDetails || console.log("Config path is:", configPath);
 skipDetails || console.log("Passed ignores are:", passedIgnores);
 skipDetails || console.log("lintConfigImports is:", lintConfigImports);
 skipDetails || console.log("myIgnoresOnly are:", myIgnoresOnly);
-// NEW
 skipDetails ||
   console.log(
     "Composed variables exclusives are:",
@@ -217,7 +216,7 @@ fs.writeFileSync(jsonPath, jsonData, "utf8");
 
 console.log(makeJsonPathLog(jsonPath));
 
-// NEW!! comments.config.mjs to directly access resolvedConfigData.
+// comments.config.mjs to directly access resolvedConfigData.
 
 const mjsData = makeMjsData(resolvedConfigData);
 fs.writeFileSync(mjsPath, mjsData, "utf8");
@@ -225,12 +224,6 @@ fs.writeFileSync(mjsPath, mjsData, "utf8");
 console.log(makeMjsPathLog(mjsPath));
 
 // ADDRESSES THE CORE COMMANDS "resolve", "compress", AND "placeholders".
-
-// ...The complexity here lies in the fact that I need to make completely virtualized data that will be used by the flows below to resolve according to the ongoing variation, notably for alias and composed variables. So that means, all prefix have to go, but also only the current variant need to be taken into account.
-console.debug("flattenedConfigData is:", flattenedConfigData);
-console.debug("reversedFlattenedConfigData is:", reversedFlattenedConfigData);
-console.debug("composedVariablesExclusives are:", composedVariablesExclusives);
-console.debug("aliases_flattenedKeys are:", aliases_flattenedKeys);
 
 switch (coreCommand) {
   case resolveRuleName:
@@ -250,15 +243,15 @@ switch (coreCommand) {
       composedVariablesExclusives
     );
     break;
-  // I'm noticing I'm not even using valueLocations to create placeholders.
-  // Which is in fact more reliable because I believe (and I show know) that I'm appending the placeholders specifically to the object string values that I find instead of doing so from locations.
+  // I'm noticing I'm not even using valueLocations to create placeholders. Which is in fact more reliable because I'm appending the placeholders specifically to the object string values that I find instead of doing so from locations.
   case placeholdersRuleName:
     console.log(`Running ${placeholdersRuleName}...`);
     await placeholdersCommentsFlow(
       configPathIgnores,
-      originalFlattenedConfigData,
-      aliases_flattenedKeys,
-      path.relative(cwd, mjsPath)
+      resolvedCoreData.originalFlattenedConfigData,
+      resolvedCoreData.aliases_flattenedKeys,
+      path.relative(cwd, mjsPath),
+      resolveConfigResults.variations
     );
     break;
   default:
