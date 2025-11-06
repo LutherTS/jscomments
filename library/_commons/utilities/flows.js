@@ -1,14 +1,6 @@
 import { ESLint } from "eslint";
 import markdown from "@eslint/markdown";
 
-/* TEST START
-$COMMENT#HELLO
-$COMMENT#GOODBYE
-$COMMENT#HELLOALIAS // HELLOALIAS
-$COMMENT#COMPOSED
-$COMMENT#COMPOSEDWITHALIAS
-TEST END */
-
 import {
   $COMMENT,
   commentVariablesPluginName,
@@ -165,7 +157,7 @@ export const compressCommentsFlow = async (
  * @param {{[k: string]: string;}} originalFlattenedConfigData $COMMENT#JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA
  * @param {Record<string, string>} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
  * @param {string} relativeMjsPath $COMMENT#JSDOC#PARAMS#RELATIVEMJSPATH
- * @param {boolean} variations A boolean that determines the format of the generated placeholders according to whether or not the config is enabling variations.
+ * @param {boolean} variations $COMMENT#JSDOC#PARAMS#VARIATIONS
  * @returns
  */
 export const placeholdersCommentsFlow = async (

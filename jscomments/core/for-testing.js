@@ -1,3 +1,5 @@
+// const obj = { test: "Testing." }; // errors, object string values in config files are reserved for exports from the config.
+
 export const forTesting = {
   // for testing (I didn't do the full freeze on this one.)
   levelOne: {
