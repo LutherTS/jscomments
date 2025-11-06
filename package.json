@@ -13,7 +13,8 @@
     "comments.config.js",
     "comments.config.json",
     "generate.template.js",
-    "generate.example.js"
+    "generate.example.js",
+    "jscomments"
   ],
   "repository": {
     "type": "git",
