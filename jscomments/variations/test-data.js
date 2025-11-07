@@ -14,6 +14,7 @@ export const enTestData = Object.freeze({
     "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2" /* variations: $COMMENT#COMPOSED / core: $COMMENT#EN#COMPOSED */,
   composedWithAlias:
     "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2 $COMMENT#EN#HELLOALIAS" /* variations: $COMMENT#COMPOSEDWITHALIAS / core: $COMMENT#EN#COMPOSEDWITHALIAS */,
+  // fr: "something", // now errors, can't have a variant as top-level key of a variation
 });
 
 // export const frTestData = { hello: "Bonjour." };
@@ -35,4 +36,5 @@ export const frTestData = Object.freeze({
     "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2" /* variations: $COMMENT#COMPOSED / core: $COMMENT#FR#COMPOSED */,
   composedWithAlias:
     "$COMMENT#FR#FORCOMPOSED1 $COMMENT#FR#FORCOMPOSED2 $COMMENT#FR#HELLOALIAS" /* variations: $COMMENT#COMPOSEDWITHALIAS / core: $COMMENT#FR#COMPOSEDWITHALIAS */,
+  // fr: "quelque chose", // now errors, can't have a variant as top-level key of a variation
 });
