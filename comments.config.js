@@ -1,13 +1,13 @@
-import {
-  coreData as data,
-  composedVariablesExclusives,
-  variations,
-} from "./jscomments/core/data.js";
 // import {
-//   variationsData as data,
+//   coreData as data,
 //   composedVariablesExclusives,
 //   variations,
-// } from "./jscomments/variations/data.js";
+// } from "./jscomments/core/data.js";
+import {
+  variationsData as data,
+  composedVariablesExclusives,
+  variations,
+} from "./jscomments/variations/data.js";
 
 const ignores = ["README.md", "generate.template.js", "generate.example.js"];
 
