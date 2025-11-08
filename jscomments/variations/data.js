@@ -6,7 +6,7 @@ export const variationsData = Object.freeze({
   [FR]: Object.freeze(frTestData),
 });
 
-export const composedVariablesExclusives = ["FR#FORCOMPOSED3"]; // can be omitted
+export const composedVariablesExclusives = ["FORCOMPOSED3"]; // can be omitted
 
 // const HELLO = "Hello.";
 

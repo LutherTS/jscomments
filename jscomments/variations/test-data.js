@@ -5,7 +5,7 @@ export const enTestData = Object.freeze({
   goodbye:
     "Goodbye." /* variations: $COMMENT#GOODBYE / core: $COMMENT#EN#GOODBYE */,
   helloAlias:
-    "EN#HELLO" /* variations: $COMMENT#HELLO / core: $COMMENT#EN#HELLO */,
+    "EN#HELLO" /* variations: $COMMENT#HELLOALIAS / core: $COMMENT#EN#HELLOALIAS */,
   forComposed1:
     "Hello" /* variations: $COMMENT#FORCOMPOSED1 / core: $COMMENT#EN#FORCOMPOSED1 */,
   forComposed2:
@@ -25,7 +25,7 @@ export const frTestData = Object.freeze({
   goodbye:
     "Au revoir." /* variations: $COMMENT#GOODBYE / core: $COMMENT#FR#GOODBYE */,
   helloAlias:
-    "FR#HELLO" /* variations: $COMMENT#HELLO / core: $COMMENT#FR#HELLO */,
+    "FR#HELLO" /* variations: $COMMENT#HELLOALIAS / core: $COMMENT#FR#HELLOALIAS */,
   forComposed1:
     "Bonjour" /* variations: $COMMENT#FORCOMPOSED1 / core: $COMMENT#FR#FORCOMPOSED1 */,
   forComposed2:
