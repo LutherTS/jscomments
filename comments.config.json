@@ -27,6 +27,10 @@
     "composedWithAlias": {
       "value": "Hello goodbye. Hello.",
       "key": "EN#COMPOSEDWITHALIAS"
+    },
+    "_testFunction": {
+      "value": "A test function, with its JSDoc appropriately shifting being English and French.",
+      "key": "EN#_TESTFUNCTION"
     }
   },
   "fr": {
@@ -61,6 +65,10 @@
     "composedWithAlias": {
       "value": "Bonjour au revoir. Bonjour.",
       "key": "FR#COMPOSEDWITHALIAS"
+    },
+    "_testFunction": {
+      "value": "Une fonction de test, avec sa JSDoc basculant du français à l'anglais sur demande.",
+      "key": "FR#_TESTFUNCTION"
     }
   }
 }

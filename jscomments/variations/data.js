@@ -15,7 +15,7 @@ export const variations = {
     [EN]: { label: ENGLISH }, // `English`
     [FR]: { label: FRANÇAIS }, // `français`
   },
-  variant: FR,
+  variant: EN,
 
   referenceData: enTestData,
   // referenceData: { hello: HELLO }, // correctly errors (reference only) (with OG enTestData)
