@@ -1,148 +1,74 @@
 {
-  "levelOne": {
-    "levelTwo": {
-      "levelThree": {
-        "value": "Level three.",
-        "key": "LEVELONE#LEVELTWO#LEVELTHREE"
-      },
-      "stillLevelThree": {
-        "value": "Level three.",
-        "key": "LEVELONE#LEVELTWO#STILLLEVELTHREE"
-      },
-      "otherLevelThree": {
-        "value": "Level three.",
-        "key": "LEVELONE#LEVELTWO#OTHERLEVELTHREE"
-      },
-      "composedVariable": {
-        "value": "Level three. Level three.",
-        "key": "LEVELONE#LEVELTWO#COMPOSEDVARIABLE"
-      },
-      "composedVariableAlias": {
-        "value": "Level three. Level three.",
-        "key": "LEVELONE#LEVELTWO#COMPOSEDVARIABLEALIAS"
-      },
-      "placeholder": {
-        "value": "placeholder now allowed",
-        "key": "LEVELONE#LEVELTWO#PLACEHOLDER"
-      }
+  "en": {
+    "hello": {
+      "value": "Hello.",
+      "key": "EN#HELLO"
+    },
+    "goodbye": {
+      "value": "Goodbye.",
+      "key": "EN#GOODBYE"
+    },
+    "helloAlias": {
+      "value": "Hello.",
+      "key": "EN#HELLOALIAS"
+    },
+    "forComposed1": {
+      "value": "Hello",
+      "key": "EN#FORCOMPOSED1"
+    },
+    "forComposed2": {
+      "value": "goodbye.",
+      "key": "EN#FORCOMPOSED2"
+    },
+    "composed": {
+      "value": "Hello goodbye.",
+      "key": "EN#COMPOSED"
+    },
+    "composedWithAlias": {
+      "value": "Hello goodbye. Hello.",
+      "key": "EN#COMPOSEDWITHALIAS"
+    },
+    "_testFunction": {
+      "value": "A test function, with its JSDoc appropriately shifting between English and French.",
+      "key": "EN#_TESTFUNCTION"
     }
   },
-  "jsDoc": {
-    "definitions": {
-      "exitDueToFailure": {
-        "value": "Terminates the whole process with a 'failure' code (`1`).",
-        "key": "JSDOC#DEFINITIONS#EXITDUETOFAILURE"
-      },
-      "makeRuleResolve": {
-        "value": "The utility that creates the resolve rule based on the flattened config data, used to transform `$COMMENT` placeholders into actual comments.",
-        "key": "JSDOC#DEFINITIONS#MAKERULERESOLVE"
-      },
-      "makeRuleCompress": {
-        "value": "The utility that creates the compress rule based on the reversed flattened config data, used to transform actual comments into `$COMMENT` placeholders.",
-        "key": "JSDOC#DEFINITIONS#MAKERULECOMPRESS"
-      },
-      "coreCommentsFlow": {
-        "value": "The core flow at the heart of resolving and compressing comments.",
-        "key": "JSDOC#DEFINITIONS#CORECOMMENTSFLOW"
-      },
-      "resolveCommentsFlow": {
-        "value": "The flow that resolves `$COMMENT` placeholders into actual comments.",
-        "key": "JSDOC#DEFINITIONS#RESOLVECOMMENTSFLOW"
-      },
-      "compressCommentsFlow": {
-        "value": "The flow that compresses actual comments into `$COMMENT` placeholders.",
-        "key": "JSDOC#DEFINITIONS#COMPRESSCOMMENTSFLOW"
-      },
-      "placeholdersCommentsFlow": {
-        "value": "The flow that creates `$COMMENT` placeholders right next to where they're defined.",
-        "key": "JSDOC#DEFINITIONS#PLACEHOLDERSCOMMENTSFLOW"
-      },
-      "logError": {
-        "value": "Logs an error to the console depending on its type. (`\"error\"` or `\"warning\"`.)",
-        "key": "JSDOC#DEFINITIONS#LOGERROR"
-      }
+  "fr": {
+    "hello": {
+      "value": "Bonjour.",
+      "key": "FR#HELLO"
     },
-    "params": {
-      "flattenedConfigData": {
-        "value": "The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values.",
-        "key": "JSDOC#PARAMS#FLATTENEDCONFIGDATA"
-      },
-      "reversedFlattenedConfigData": {
-        "value": "The reversed flattened config data, with actual comments as keys and `$COMMENT` placeholders as values.",
-        "key": "JSDOC#PARAMS#REVERSEDFLATTENEDCONFIGDATA"
-      },
-      "composedVariablesExclusives": {
-        "value": "The array of comment variables keys (implying their aliases as well) exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.",
-        "key": "JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES"
-      },
-      "aliases_flattenedKeys": {
-        "value": "The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.",
-        "key": "JSDOC#PARAMS#ALIASES_FLATTENEDKEYS"
-      },
-      "ruleName": {
-        "value": "The name of the rule currently used. (Either `\"resolve\"` or `\"compress\"`.)",
-        "key": "JSDOC#PARAMS#RULENAME"
-      },
-      "ignores": {
-        "value": "The array of paths and globs for the flow's ESLint instance to ignore.",
-        "key": "JSDOC#PARAMS#IGNORES"
-      },
-      "eitherFlattenedConfigData": {
-        "value": "Either the flattened config data or the reversed flattened config data, since they share the same structure.",
-        "key": "JSDOC#PARAMS#EITHERFLATTENEDCONFIGDATA"
-      },
-      "error": {
-        "value": "The error object being handle for the logging.",
-        "key": "JSDOC#PARAMS#ERROR"
-      },
-      "options": {
-        "value": "The additional options as follows:",
-        "key": "JSDOC#PARAMS#OPTIONS"
-      },
-      "settings": {
-        "value": "The required settings as follows:",
-        "key": "JSDOC#PARAMS#SETTINGS"
-      },
-      "configPathIgnores": {
-        "value": "The array of paths linked to the config file, (named \"ignores\" given it is ignored by the \"compress\" and \"resolve\" commands).",
-        "key": "JSDOC#PARAMS#CONFIGPATHIGNORES"
-      },
-      "originalFlattenedConfigData": {
-        "value": "The original flattened config data, before changes to aliases variables and composed variables are applied.",
-        "key": "JSDOC#PARAMS#ORIGINALFLATTENEDCONFIGDATA"
-      },
-      "relativeMjsPath": {
-        "value": "The relative path of the generated `.mjs` file to be ignored in the \"placeholders\" process.",
-        "key": "JSDOC#PARAMS#RELATIVEMJSPATH"
-      },
-      "variations": {
-        "value": "A boolean that determines the format of the generated placeholders according to whether or not the config is enabling variations.",
-        "key": "JSDOC#PARAMS#VARIATIONS"
-      }
+    "goodbye": {
+      "value": "Au revoir.",
+      "key": "FR#GOODBYE"
     },
-    "returns": {
-      "exitDueToFailure": {
-        "value": "Never. (Somehow typing needs to be explicit for unreachable code inference.)",
-        "key": "JSDOC#RETURNS#EXITDUETOFAILURE"
-      },
-      "makeRuleResolve": {
-        "value": "The resolve rule based on the flattened config data.",
-        "key": "JSDOC#RETURNS#MAKERULERESOLVE"
-      },
-      "makeRuleCompress": {
-        "value": "The compress rule based on the reversed flattened config data.",
-        "key": "JSDOC#RETURNS#MAKERULECOMPRESS"
-      }
+    "helloAlias": {
+      "value": "Bonjour.",
+      "key": "FR#HELLOALIAS"
     },
-    "constants": {
-      "sortedReversedFlattenedConfigData": {
-        "value": "The whole `reversedFlattenedConfigData` turned from an object to an array of key-value arrays sorted by the descending length of each key to prevent partial replacements.",
-        "key": "JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA"
-      },
-      "composedVariablesExclusivesSet": {
-        "value": "A local Set out of composed variables exclusives for speed.",
-        "key": "JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET"
-      }
+    "forComposed1": {
+      "value": "Bonjour",
+      "key": "FR#FORCOMPOSED1"
+    },
+    "forComposed2": {
+      "value": "au revoir.",
+      "key": "FR#FORCOMPOSED2"
+    },
+    "forComposed3": {
+      "value": "au revoir ?",
+      "key": "FR#FORCOMPOSED3"
+    },
+    "composed": {
+      "value": "Bonjour au revoir.",
+      "key": "FR#COMPOSED"
+    },
+    "composedWithAlias": {
+      "value": "Bonjour au revoir. Bonjour.",
+      "key": "FR#COMPOSEDWITHALIAS"
+    },
+    "_testFunction": {
+      "value": "Une fonction de test, avec sa JSDoc basculant du français à l'anglais sur demande.",
+      "key": "FR#_TESTFUNCTION"
     }
   }
 }
