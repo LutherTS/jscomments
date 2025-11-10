@@ -4,18 +4,18 @@ import {
 } from "comment-variables-resolve-config";
 
 /**
- * The utility that creates the resolve rule based on the flattened config data, used to transform `$COMMENT` placeholders into actual comments.
- * @param {{[key: string]: string}} flattenedConfigData The flattened config data, with `$COMMENT` placeholders as keys and actual comments as values.
- * @param {string[]} composedVariablesExclusives The array of comment variables keys (implying their aliases as well) exclusively used to craft composed variables, that should be ignored by both the `resolve` and the `compress` commands.
- * @param {{[key: string]: string}} aliases_flattenedKeys The dictionary that connects aliases to their original flattened keys in case an encountered placeholder is actually an alias.
- * @returns The resolve rule based on the flattened config data.
+ * $COMMENT#JSDOC#DEFINITIONS#MAKERULERESOLVE
+ * @param {{[key: string]: string}} flattenedConfigData $COMMENT#JSDOC#PARAMS#FLATTENEDCONFIGDATA
+ * @param {string[]} composedVariablesExclusives $COMMENT#JSDOC#PARAMS#COMPOSEDVARIABLESEXCLUSIVES
+ * @param {{[key: string]: string}} aliases_flattenedKeys $COMMENT#JSDOC#PARAMS#ALIASES_FLATTENEDKEYS
+ * @returns $COMMENT#JSDOC#RETURNS#MAKERULERESOLVE
  */
 const makeRule = (
   flattenedConfigData,
   composedVariablesExclusives,
   aliases_flattenedKeys
 ) => {
-  /** A local Set out of composed variables exclusives for speed. */
+  /** $COMMENT#JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET */
   const composedVariablesExclusivesSet = new Set(composedVariablesExclusives);
 
   /** @type {import('@typescript-eslint/utils').TSESLint.RuleModule<typeof placeholderMessageId, []>} */
