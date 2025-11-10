@@ -29,7 +29,7 @@
       "key": "EN#COMPOSEDWITHALIAS"
     },
     "_testFunction": {
-      "value": "A test function, with its JSDoc appropriately shifting being English and French.",
+      "value": "A test function, with its JSDoc appropriately shifting between English and French.",
       "key": "EN#_TESTFUNCTION"
     }
   },

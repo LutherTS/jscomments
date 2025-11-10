@@ -15,7 +15,7 @@ export const enTestData = Object.freeze({
   composedWithAlias:
     "$COMMENT#EN#FORCOMPOSED1 $COMMENT#EN#FORCOMPOSED2 $COMMENT#EN#HELLOALIAS" /* variations: $COMMENT#COMPOSEDWITHALIAS / core: $COMMENT#EN#COMPOSEDWITHALIAS */,
   _testFunction:
-    "A test function, with its JSDoc appropriately shifting being English and French." /* variations: $COMMENT#_TESTFUNCTION / core: $COMMENT#EN#_TESTFUNCTION */,
+    "A test function, with its JSDoc appropriately shifting between English and French." /* variations: $COMMENT#_TESTFUNCTION / core: $COMMENT#EN#_TESTFUNCTION */,
   // fr: "something", // now errors, can't have a variant as top-level key of a variation
 });
 
