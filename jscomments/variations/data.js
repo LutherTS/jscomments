@@ -15,11 +15,13 @@ export const variations = {
     [EN]: { label: ENGLISH }, // `English`
     [FR]: { label: FRANÇAIS }, // `français`
   },
-  variant: EN,
+  variant: FR,
 
   referenceData: enTestData,
   // referenceData: { hello: HELLO }, // correctly errors (reference only) (with OG enTestData)
   // referenceData: { ...enTestData }, // correctly errors (reference only) (with OG enTestData)
   // also
   referenceVariant: EN,
+
+  allowIncompleteVariations: true,
 };
