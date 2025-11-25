@@ -22,12 +22,15 @@ const myIgnoresOnly = false; // can be omitted
 
 const composedVariablesExclusives = []; // can be omitted
 
+const variations = undefined; // can be omitted
+
 const config = {
   data,
   ignores,
   lintConfigImports,
   myIgnoresOnly,
   composedVariablesExclusives,
+  variations,
 };
 
 export default config;

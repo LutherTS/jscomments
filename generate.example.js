@@ -2,6 +2,5 @@
 
 // This is a comment.
 // $COMMENT#ALIAS // ALIAS
-// Yes.
 // This is a comment. Yes. This is a comment.
 // $COMMENT#COMMENTS#NO
