@@ -107,7 +107,7 @@ In due time, you may end up creating Comment Variables that are exclusively mean
 
 ## **`comments.config.js`**
 
-A root `comments.config.js` file looks like this. (This is the config file I'm using to manage my JavaScript comments in this library.)
+A root `comments.config.js` file looks like this. (This is an earlier version of the config file I'm using to manage my JavaScript comments in this library.)
 
 ```js
 const data = {
