@@ -26,3 +26,7 @@ export const allMDVirtualJSTSFileGlobs = [
   "**/*.md/*.cjs",
   "**/*.md/*.mjs",
 ];
+
+// prompts choices values
+export const classic = "classic";
+export const withVariations = "with variations";

@@ -5,6 +5,8 @@ import path from "path";
 import fs from "fs";
 import url from "url";
 
+import prompts from "prompts";
+
 import resolveConfig, {
   defaultConfigFileName,
   templateFileName,
@@ -22,7 +24,12 @@ import resolveConfig, {
   makeMjsPathLog,
 } from "comment-variables-resolve-config";
 
-import { hasPackageJson, hasGitFolder } from "./_commons/constants/bases.js";
+import {
+  hasPackageJson,
+  hasGitFolder,
+  classic,
+  withVariations,
+} from "./_commons/constants/bases.js";
 
 import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
 import {
@@ -80,17 +87,80 @@ if (!fs.existsSync(rawConfigPath)) {
     `No Comment Variables config file found at ${rawConfigPath}. Switching to tutorial mode.`
   );
 
-  const templateFilePath = path.join(cwd, templateFileName);
-  const exampleFilePath = path.join(cwd, exampleFileName);
+  /* TEST START (success) */
+
+  const tutorialConfig = {
+    templateFilePath: path.join(cwd, templateFileName),
+    generateTemplateFilePath: "",
+    exampleFilePath: path.join(cwd, exampleFileName), // common to "classic" and "with variations", highlights compatibility
+    generateExampleFilePath: "../generate.example.js",
+  };
+
+  const classicOrWithVariations = await prompts({
+    type: "select",
+    name: "value",
+    message:
+      "Would you like to generate a classic template (simple) or a template with variations (advanced) instead?",
+    choices: [
+      {
+        title: classic,
+        description:
+          "Simple. For those who discover Comment Variables and have no immediate need for internationalization.",
+        value: classic,
+      },
+      {
+        title: withVariations,
+        description:
+          "Advanced. For those who know their way around Comment Variables and may want to use its native internationalization features or any configuration of their own that relies on variants.",
+        value: withVariations,
+      },
+    ],
+    initial: 0,
+  });
+
+  /**
+   * @type {typeof classic | typeof withVariations}
+   * `control+C` returns `undefined`.
+   */
+  const classicOrWithVariationsValue = classicOrWithVariations.value;
+
+  if (!classicOrWithVariationsValue) {
+    console.error(
+      "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI."
+    );
+    exitDueToFailure();
+  }
+
+  switch (classicOrWithVariationsValue) {
+    case classic:
+      tutorialConfig.generateTemplateFilePath = "../generate.template.js";
+      break;
+    case withVariations:
+      tutorialConfig.generateTemplateFilePath = "../generate.variations.js";
+      break;
+
+    default:
+      console.error(
+        "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI. (Unreachable code.)" // copypasted same as classicOrWithVariations for now, since this is supposed to be unreachable code.
+      );
+      exitDueToFailure();
+  }
+
+  const {
+    templateFilePath,
+    generateTemplateFilePath,
+    exampleFilePath,
+    generateExampleFilePath,
+  } = tutorialConfig;
+
+  /* TEST END */
+
   const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
   if (fs.existsSync(templateFilePath)) {
     console.log(`Proceeding with template file found at ${templateFilePath}.`);
   } else {
-    const sourceTemplateFilePath = path.join(
-      dirname,
-      "../generate.template.js"
-    );
+    const sourceTemplateFilePath = path.join(dirname, generateTemplateFilePath);
     console.log(`Generating template file at ${templateFilePath}.`);
     fs.copyFileSync(sourceTemplateFilePath, templateFilePath);
   }
@@ -98,7 +168,7 @@ if (!fs.existsSync(rawConfigPath)) {
   if (fs.existsSync(exampleFilePath)) {
     console.log(`Proceeding with example file found at ${exampleFilePath}.`);
   } else {
-    const sourceExampleFilePath = path.join(dirname, "../generate.example.js");
+    const sourceExampleFilePath = path.join(dirname, generateExampleFilePath);
     console.log(`Generating example file at ${exampleFilePath}.`);
     fs.copyFileSync(sourceExampleFilePath, exampleFilePath);
   }

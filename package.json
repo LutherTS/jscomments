@@ -13,6 +13,7 @@
     "comments.config.js",
     "comments.config.json",
     "generate.template.js",
+    "generate.variations.js",
     "generate.example.js",
     "jscomments"
   ],
@@ -32,7 +33,8 @@
   "dependencies": {
     "@eslint/markdown": "^6.5.0",
     "comment-variables-resolve-config": "^1.17.1",
-    "eslint": "^9.29.0"
+    "eslint": "^9.29.0",
+    "prompts": "^2.4.2"
   },
   "devDependencies": {
     "@typescript-eslint/utils": "^8.34.0"
