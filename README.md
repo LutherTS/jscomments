@@ -26,7 +26,11 @@ npm install -g comment-variables
 comment-variables
 ```
 
-Interacts with your root `comments.config.js` file's default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config. (Additionally creates a resolved version of your config data as a JSON file, and as a .mjs file exporting both the typedef `ResolvedConfigData` and the object `resolvedConfigData`. If no configuration file is found, a tutorial mode is triggered, generating a template config file for you.)
+Interacts with your root `comments.config.js` file's default exported object to print all the parameters you need to be aware of before running `compress` or `resolve`. Also acts as a dry run validation check. If no error is printed, it means you can run `compress` or `resolve` safely, as long as the printed parameters correspond to what you've expected from your defined config.
+
+Additionally creates a resolved version of your config data as a JSON file, and as a .mjs file exporting both the typedef `ResolvedConfigData` and the object `resolvedConfigData`.
+
+If no configuration file is found, a **tutorial mode** is triggered, generating a template config file for you.
 
 ```
 comment-variables placeholders
@@ -121,7 +125,7 @@ The `variations` key as an option takes as value an object with the following pr
 - `variations.referenceVariant`: Defines the variant of the reference variation.
 - `variations.allowIncompleteVariations`: Defines the behavior of the error handling in case of variations that do not match one-to-one with the reference variation. If `true`, allows incomplete variations data to remain. If `false`, errors and guides the fixing of missing variations data.
 
-When triggering tutorial mode, please select `with variations` for a thorough and actionable example.
+When triggering **tutorial mode**, please select `with variations` for a thorough and actionable example.
 
 ## `comments.config.js`
 
