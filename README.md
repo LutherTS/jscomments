@@ -105,6 +105,22 @@ composedVariablesExclusives:
 
 In due time, you may end up creating Comment Variables that are exclusively meant to be used to create other Comment Variables – the latter classified as composed variables. Passing an array to this config option, comprised of the keys of these original comment variables (for example, if a Comment Variable placeholder is `$COMMENT#COMMENT` its related key is `COMMENT`), prevents these original comment variables from being affected by the `compress` and `resolve` commands.
 
+**`comment-variables` v2 introduces the concept of variations:**
+
+```
+variations:
+```
+
+Variations provide native support for internationalization to the Comment Variables ecosystem. In fact, since variations aren't limited to languages, they can be applied to any solution of your own based on variants. The `variations` key as an option takes as value an object with the following properties:
+
+- `variations.variants`: Defines all variants that have matching variations duly defined within the top-level keys of `data`.
+- `variations.variant`: Defines the current variant that Comment Variables currently resolves to.
+- `variations.referenceData`: Defines the reference variation that all other variations need to have (or aim to have) matching keys with. Requires a JavaScript variable as it needs to be the exact same object as the one referenced at `data[variations.referenceVariant]`.
+- `variations.referenceVariant`: Defines the variant of the reference variation.
+- `variations.allowIncompleteVariations`: Defines the behavior of the error handling in case of variations that do not match one-to-one with the reference variation. If `true`, allows incomplete variations data to remain. If `false`, errors and guides the fixing of missing variations data.
+
+When triggering tutorial mode, please select `with variations` for a thorough and actionable example.
+
 ## `comments.config.js`
 
 A root `comments.config.js` file looks like this. (This is an earlier version of the config file I'm using to manage my JavaScript comments in this library.)
