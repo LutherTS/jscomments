@@ -28,7 +28,7 @@ import {
   hasPackageJson,
   hasGitFolder,
   classic,
-  withVariations,
+  advanced,
 } from "./_commons/constants/bases.js";
 
 import { exitDueToFailure, logError } from "./_commons/utilities/helpers.js";
@@ -96,11 +96,11 @@ if (!fs.existsSync(rawConfigPath)) {
     generateExampleFilePath: "../generate.example.js",
   };
 
-  const classicOrWithVariations = await prompts({
+  const classicOrAdvanced = await prompts({
     type: "select",
     name: "value",
     message:
-      "Would you like to generate a classic template (simple) or a template with variations (advanced) instead?",
+      "Would you like to generate a simple template (classic) or a template with variations (advanced) instead?",
     choices: [
       {
         title: classic,
@@ -109,39 +109,39 @@ if (!fs.existsSync(rawConfigPath)) {
         value: classic,
       },
       {
-        title: withVariations,
+        title: advanced,
         description:
-          "Advanced. For those who know their way around Comment Variables and may want to use its native internationalization features or any configuration of their own that relies on variants.",
-        value: withVariations,
+          "With variations. For those who know their way around Comment Variables and may want to use its native internationalization features or any configuration of their own that relies on variants.",
+        value: advanced,
       },
     ],
     initial: 0,
   });
 
   /**
-   * @type {typeof classic | typeof withVariations}
+   * @type {typeof classic | typeof advanced}
    * `control+C` returns `undefined`.
    */
-  const classicOrWithVariationsValue = classicOrWithVariations.value;
+  const classicOrAdvancedValue = classicOrAdvanced.value;
 
-  if (!classicOrWithVariationsValue) {
+  if (!classicOrAdvancedValue) {
     console.error(
       "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI."
     );
     exitDueToFailure();
   }
 
-  switch (classicOrWithVariationsValue) {
+  switch (classicOrAdvancedValue) {
     case classic:
       tutorialConfig.generateTemplateFilePath = "../generate.template.js";
       break;
-    case withVariations:
+    case advanced:
       tutorialConfig.generateTemplateFilePath = "../generate.variations.js";
       break;
 
     default:
       console.error(
-        "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI. (Unreachable code.)" // copypasted same as classicOrWithVariations for now, since this is supposed to be unreachable code.
+        "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI. (Unreachable code.)" // copypasted same as classicOrAdvanced for now, since this is supposed to be unreachable code.
       );
       exitDueToFailure();
   }

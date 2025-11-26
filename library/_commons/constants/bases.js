@@ -29,4 +29,4 @@ export const allMDVirtualJSTSFileGlobs = [
 
 // prompts choices values
 export const classic = "classic";
-export const withVariations = "with variations";
+export const advanced = "advanced";
