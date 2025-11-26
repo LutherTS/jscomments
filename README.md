@@ -111,7 +111,9 @@ In due time, you may end up creating Comment Variables that are exclusively mean
 variations:
 ```
 
-Variations provide native support for internationalization to the Comment Variables ecosystem. In fact, since variations aren't limited to languages, they can be applied to any solution of your own based on variants. The `variations` key as an option takes as value an object with the following properties:
+Variations provide native support for internationalization to the Comment Variables ecosystem. In fact, since variations aren't limited to languages, they can be applied to any solution of your own based on variants.
+
+The `variations` key as an option takes as value an object with the following properties:
 
 - `variations.variants`: Defines all variants that have matching variations duly defined within the top-level keys of `data`.
 - `variations.variant`: Defines the current variant that Comment Variables currently resolves to.
