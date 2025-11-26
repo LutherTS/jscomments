@@ -15,7 +15,7 @@ A CLI tool for configuring, managing and maintaining JavaScript comments as Java
 ## Installation
 
 ```
-npm install -g comment-variables
+npm install -g comment-variables@latest
 ```
 
 ## Commands
