@@ -107,7 +107,7 @@ By default, `comment-variables` includes a preset list of ignored folders (`"nod
 composedVariablesExclusives:
 ```
 
-In due time, you may end up creating Comment Variables that are exclusively meant to be used to create other Comment Variables – the latter classified as composed variables. Passing an array to this config option, comprised of the keys of these original comment variables (for example, if a Comment Variable placeholder is `$COMMENT#COMMENT` its related key is `COMMENT`), prevents these original comment variables from being affected by the `compress` and `resolve` commands.
+In due time, you may end up creating Comment Variables that are exclusively meant to be used to create other Comment Variables – the latter classified as composed variables. Passing an array to this config option, comprised of the keys of these original comment variables (for example, if a Comment Variable placeholder is `$COMMENT#COMMENT` its related key is `COMMENT`), prevents these original comment variables from being affected by the `compress` and `resolve` commands. (The list may now include composed variables.)
 
 **`comment-variables` v2 introduces the concept of variations:**
 

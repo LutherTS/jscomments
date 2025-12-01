@@ -20,7 +20,7 @@ const ignores = [];
 const lintConfigImports = false; // can be omitted
 const myIgnoresOnly = false; // can be omitted
 
-const composedVariablesExclusives = []; // can be omitted
+const composedVariablesExclusives = []; // can be omitted, composed variables allowed
 
 const variations = undefined; // can be omitted
 

@@ -57,7 +57,7 @@ const frComposedVariablesExclusives = ["FR#COMMENTS#YES"];
 const composedVariablesExclusives = [
   ...enComposedVariablesExclusives,
   ...frComposedVariablesExclusives,
-]; // can be omitted
+]; // can be omitted, composed variables allowed
 
 /* variations */
 
