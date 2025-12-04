@@ -46,6 +46,9 @@ const coreCommentsFlow = async (
       {
         files: allJSTSFileGlobs,
         languageOptions: typeScriptAndJSXCompatible,
+        linterOptions: {
+          noInlineConfig: true,
+        },
         plugins: {
           [commentVariablesPluginName]: {
             rules: {
@@ -70,6 +73,9 @@ const coreCommentsFlow = async (
       {
         files: allMDVirtualJSTSFileGlobs,
         languageOptions: typeScriptAndJSXCompatible,
+        linterOptions: {
+          noInlineConfig: true,
+        },
         rules: {
           [`${commentVariablesPluginName}/${ruleName}`]: "warn",
         },
@@ -204,6 +210,9 @@ export const placeholdersCommentsFlow = async (
         files: configPathIgnores,
         ignores: [relativeMjsPath], // but the docs say ignorePatterns: https://eslint.org/docs/latest/integrate/nodejs-api#parameters
         languageOptions: typeScriptAndJSXCompatible,
+        linterOptions: {
+          noInlineConfig: true,
+        },
         plugins: {
           [commentVariablesPluginName]: {
             rules: {
