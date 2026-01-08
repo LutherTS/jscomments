@@ -36,6 +36,8 @@ const makeRule = (reversedFlattenedConfigData, composedVariablesExclusives) => {
     },
     create: (context) => {
       const sourceCode = context.sourceCode;
+      if (!sourceCode) return;
+
       const comments = sourceCode
         .getAllComments()
         .filter((e) => e.type !== "Shebang");
