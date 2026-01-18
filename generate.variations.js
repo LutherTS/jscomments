@@ -61,12 +61,12 @@ const composedVariablesExclusives = [
 
 /* variations */
 
-const variations = {
+const variations = Object.freeze({
   // Defines all variants that have matching variations duly defined within the top-level keys of `data`.
-  variants: {
-    [EN]: { label: ENGLISH },
-    [FR]: { label: FRANÇAIS },
-  },
+  variants: Object.freeze({
+    [EN]: Object.freeze({ label: ENGLISH }),
+    [FR]: Object.freeze({ label: FRANÇAIS }),
+  }),
   // Defines the current variant that Comment Variables currently resolves to.
   variant: FR,
   // Defines the reference variation that all other variations need to have (or aim to have) matching keys with. Requires a JavaScript variable as it needs to be the exact same object as the one referenced at `data[variations.referenceVariant]`.
@@ -75,7 +75,7 @@ const variations = {
   referenceVariant: EN,
   // Defines the behavior of the error handling in case of variations that do not match one-to-one with the reference variation. If `true`, allows incomplete variations data to remain. If `false`, errors and guides the fixing of missing variations data.
   allowIncompleteVariations: true,
-}; // can be omitted
+}); // can be omitted
 
 const config = {
   data,
