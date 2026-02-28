@@ -32,7 +32,7 @@
   "type": "module",
   "dependencies": {
     "@eslint/markdown": "^6.5.0",
-    "comment-variables-resolve-config": "^1.18.0",
+    "comment-variables-resolve-config": "^2.0.0",
     "eslint": "^9.29.0",
     "prompts": "^2.4.2"
   },

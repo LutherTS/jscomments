@@ -13,7 +13,7 @@ import {
 const makeRule = (reversedFlattenedConfigData, composedVariablesExclusives) => {
   /** $COMMENT#JSDOC#CONSTANTS#SORTEDREVERSEDFLATTENEDCONFIGDATA */
   const sortedReversedFlattenedConfigData = Object.entries(
-    reversedFlattenedConfigData
+    reversedFlattenedConfigData,
   ).sort(([a], [b]) => b.length - a.length);
 
   /** $COMMENT#JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET */

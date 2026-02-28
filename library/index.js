@@ -52,7 +52,7 @@ const skipDetails =
 
 if (!hasPackageJson) {
   console.error(
-    "ERROR. No package.json file found in this directory. Aborting to prevent accidental changes."
+    "ERROR. No package.json file found in this directory. Aborting to prevent accidental changes.",
   );
   exitDueToFailure();
 }
@@ -60,7 +60,7 @@ skipDetails || console.log("package.json file noticed. Allowed to proceed.");
 
 if (!hasGitFolder) {
   console.error(
-    "ERROR. No git folder found in this directory. Aborting to prevent irreversible changes."
+    "ERROR. No git folder found in this directory. Aborting to prevent irreversible changes.",
   );
   exitDueToFailure();
 }
@@ -84,7 +84,7 @@ let rawConfigPath = passedConfigPath ?? path.join(cwd, defaultConfigFileName);
 
 if (!fs.existsSync(rawConfigPath)) {
   console.log(
-    `No Comment Variables config file found at ${rawConfigPath}. Switching to tutorial mode.`
+    `No Comment Variables config file found at ${rawConfigPath}. Switching to tutorial mode.`,
   );
 
   /* TEST START (success) */
@@ -126,7 +126,7 @@ if (!fs.existsSync(rawConfigPath)) {
 
   if (!classicOrAdvancedValue) {
     console.error(
-      "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI."
+      "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI.",
     );
     exitDueToFailure();
   }
@@ -141,7 +141,7 @@ if (!fs.existsSync(rawConfigPath)) {
 
     default:
       console.error(
-        "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI. (Unreachable code.)" // copypasted same as classicOrAdvanced for now, since this is supposed to be unreachable code.
+        "ERROR. No template selected. Please select a template to begin using comment-variables via this CLI. (Unreachable code.)", // copypasted same as classicOrAdvanced for now, since this is supposed to be unreachable code.
       );
       exitDueToFailure();
   }
@@ -225,7 +225,7 @@ skipDetails || console.log("Flattened config data is:", flattenedConfigData);
 skipDetails ||
   console.log(
     "Reversed flattened config data is:",
-    reversedFlattenedConfigData
+    reversedFlattenedConfigData,
   );
 skipDetails || console.log("Aliases are:", aliases_flattenedKeys);
 skipDetails || console.log("Config path is:", configPath);
@@ -235,7 +235,7 @@ skipDetails || console.log("myIgnoresOnly are:", myIgnoresOnly);
 skipDetails ||
   console.log(
     "Composed variables exclusives are:",
-    composedVariablesExclusives
+    composedVariablesExclusives,
   );
 
 // ADDRESSES THE --lint-config-imports FLAG (lintConfigImports, no longer a flag), GIVEN THAT THE FILES IMPORTED BY THE CONFIG ARE IGNORED BY DEFAULT.
@@ -251,13 +251,13 @@ const rawConfigPathIgnores = lintConfigImports
 
 // the ignore paths must be relative
 const configPathIgnores = rawConfigPathIgnores.map((e) =>
-  path.relative(cwd, e)
+  path.relative(cwd, e),
 );
 
 skipDetails ||
   console.log(
     lintConfigImports ? "Config path ignore is:" : "Config path ignores are:",
-    configPathIgnores
+    configPathIgnores,
   );
 
 // ADDRESSES THE --my-ignores-only FLAG (myIgnoresOnly, no longer a flag, GIVEN THAT KNOWN IGNORES ARE IGNORED BY DEFAULT.
@@ -272,7 +272,7 @@ skipDetails || console.log("Ignores are:", ignores);
 const makeResolvedConfigDataResults = makeResolvedConfigData(
   configDataResultsData,
   resolvedCoreData.flattenedConfigData,
-  resolvedCoreData.aliases_flattenedKeys
+  resolvedCoreData.aliases_flattenedKeys,
 );
 if (!makeResolvedConfigDataResults.success) {
   makeResolvedConfigDataResults.errors.forEach((e) => logError(e));
@@ -302,7 +302,7 @@ switch (coreCommand) {
       ignores,
       flattenedConfigData,
       composedVariablesExclusives,
-      aliases_flattenedKeys
+      aliases_flattenedKeys,
     );
     break;
   case compressRuleName:
@@ -310,7 +310,7 @@ switch (coreCommand) {
     await compressCommentsFlow(
       ignores,
       reversedFlattenedConfigData,
-      composedVariablesExclusives
+      composedVariablesExclusives,
     );
     break;
   // I'm noticing I'm not even using valueLocations to create placeholders. Which is in fact more reliable because I'm appending the placeholders specifically to the object string values that I find instead of doing so from locations.
@@ -321,19 +321,19 @@ switch (coreCommand) {
       resolvedCoreData.originalFlattenedConfigData,
       resolvedCoreData.aliases_flattenedKeys,
       path.relative(cwd, mjsPath),
-      resolveConfigResults.variations
+      resolveConfigResults.variations,
     );
     break;
   default:
     if (coreCommand && !coreCommand.startsWith("--"))
       console.error(
-        `ERROR. Core command not recognized. Choose between "${resolveRuleName}" and "${compressRuleName}" or "${placeholdersRuleName}".`
+        `ERROR. Core command not recognized. Choose between "${resolveRuleName}" and "${compressRuleName}" or "${placeholdersRuleName}".`,
       );
     else
       console.log(
         `If these settings are correct with you, feel free to initiate the command "${resolveRuleName}" to resolve comments, or "${compressRuleName}" to compress them back to their $COMMENT forms. You can also generate the placeholders at their definitions locations with the command "${placeholdersRuleName}".${
           passedConfigPath ? " (And DON'T FORGET YOUR --config FLAG!)" : ""
-        }`
+        }`,
       );
     break;
 }

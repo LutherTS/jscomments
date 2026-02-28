@@ -35,7 +35,7 @@ const coreCommentsFlow = async (
   flattenedConfigData,
   // NEW
   composedVariablesExclusives,
-  aliases_flattenedKeys
+  aliases_flattenedKeys,
 ) => {
   const eslint = new ESLint({
     fix: true,
@@ -56,7 +56,7 @@ const coreCommentsFlow = async (
                 flattenedConfigData,
                 // NEW
                 composedVariablesExclusives,
-                aliases_flattenedKeys
+                aliases_flattenedKeys,
               ),
             },
           },
@@ -95,8 +95,8 @@ const coreCommentsFlow = async (
     ruleName === resolveRuleName
       ? "Resolved"
       : ruleName === compressRuleName
-      ? "Compressed"
-      : "Unknown rule name'd";
+        ? "Compressed"
+        : "Unknown rule name'd";
 
   const total = results.reduce((sum, r) => {
     const add = r.output ? 1 : 0;
@@ -106,7 +106,7 @@ const coreCommentsFlow = async (
   console.log(
     `✅ ${resolvedOrCompressed} comments on ${total} file${
       total === 1 ? "" : "s"
-    }.`
+    }.`,
   );
 };
 
@@ -124,14 +124,14 @@ export const resolveCommentsFlow = async (
   ignores,
   flattenedConfigData,
   composedVariablesExclusives,
-  aliases_flattenedKeys
+  aliases_flattenedKeys,
 ) =>
   coreCommentsFlow(
     resolveRuleName,
     ignores,
     flattenedConfigData,
     composedVariablesExclusives,
-    aliases_flattenedKeys
+    aliases_flattenedKeys,
   );
 
 /* compressCommentsFlow */
@@ -146,13 +146,13 @@ export const resolveCommentsFlow = async (
 export const compressCommentsFlow = async (
   ignores,
   reversedFlattenedConfigData,
-  composedVariablesExclusives
+  composedVariablesExclusives,
 ) =>
   coreCommentsFlow(
     compressRuleName,
     ignores,
     reversedFlattenedConfigData,
-    composedVariablesExclusives
+    composedVariablesExclusives,
   );
 
 /* placeholdersCommentsFlow */
@@ -171,7 +171,7 @@ export const placeholdersCommentsFlow = async (
   originalFlattenedConfigData,
   aliases_flattenedKeys,
   relativeMjsPath,
-  variations
+  variations,
 ) => {
   /** @type {Record<string, string>} */
   const composedValues_originalKeys = {};
@@ -230,9 +230,8 @@ export const placeholdersCommentsFlow = async (
     ],
   });
 
-  const resultsForMakePlaceholders = await eslintForMakePlaceholders.lintFiles(
-    configPathIgnores
-  );
+  const resultsForMakePlaceholders =
+    await eslintForMakePlaceholders.lintFiles(configPathIgnores);
   await ESLint.outputFixes(resultsForMakePlaceholders);
 
   console.log("Results for placeholders are:", resultsForMakePlaceholders);
@@ -243,6 +242,6 @@ export const placeholdersCommentsFlow = async (
   }, 0);
 
   console.log(
-    `✅ Made placeholders on ${total} file${total === 1 ? "" : "s"}.`
+    `✅ Made placeholders on ${total} file${total === 1 ? "" : "s"}.`,
   );
 };

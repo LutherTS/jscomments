@@ -13,7 +13,7 @@ import {
 const makeRule = (
   flattenedConfigData,
   composedVariablesExclusives,
-  aliases_flattenedKeys
+  aliases_flattenedKeys,
 ) => {
   /** $COMMENT#JSDOC#CONSTANTS#COMPOSEDVARIABLESEXCLUSIVESSET */
   const composedVariablesExclusivesSet = new Set(composedVariablesExclusives);
