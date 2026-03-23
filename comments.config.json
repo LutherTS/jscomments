@@ -5,6 +5,10 @@
         "value": "Level three.",
         "key": "LEVELONE#LEVELTWO#LEVELTHREE"
       },
+      "freeComposed": {
+        "value": "Level three.  ",
+        "key": "LEVELONE#LEVELTWO#FREECOMPOSED"
+      },
       "stillLevelThree": {
         "value": "Level three.",
         "key": "LEVELONE#LEVELTWO#STILLLEVELTHREE"

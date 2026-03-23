@@ -9,6 +9,8 @@ export const forTesting = {
       //   "Level three. \
       //       fdff\
       // " /* $COMMENT#LEVELONE#LEVELTWO#LEVELTHREEESCAPE */, // NOW ERRORS AS INTENDED, unrecognizedValuesSet
+      freeComposed:
+        "$COMMENT#LEVELONE#LEVELTWO#LEVELTHREE For real." /* $COMMENT#LEVELONE#LEVELTWO#FREECOMPOSED */,
       stillLevelThree:
         "LEVELONE#LEVELTWO#LEVELTHREE" /* $COMMENT#LEVELONE#LEVELTWO#STILLLEVELTHREE */, // now is an alias
       otherLevelThree:
