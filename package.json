@@ -4,8 +4,7 @@
   "description": "A CLI tool for configuring, managing and maintaining JavaScript comments as JavaScript variables.",
   "bin": {
     "comment-variables": "./library/index.js",
-    "jscomments": "./library/index.js",
-    "comvar": "./library/index.js"
+    "jscomments": "./library/index.js"
   },
   "main": "library/index.js",
   "files": [

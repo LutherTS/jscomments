@@ -20,7 +20,7 @@ npm install -g comment-variables@latest
 
 ## Commands
 
-**`comment-variables` (aliases `jscomments`/`comvar`) comes with four commands in this initial release:**
+**`comment-variables` (aliases `jscomments`) comes with four commands in this initial release:**
 
 ```
 comment-variables
